@@ -38,7 +38,7 @@ private fun NewsListPreview() {
                 searchResult = articles, // emptyList(),
                 favouriteArticles = emptyList(),
                 isLoading = false,
-                selectedTabIndex = 0,
+                selectedTabIndex = 1,
                 error = null // UiText.DynamicString("Unknown error!")
             ),
         ) {}

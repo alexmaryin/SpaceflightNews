@@ -16,7 +16,9 @@ class NewsListViewModel : ViewModel() {
             is NewsListAction.OnSearchQueryChange -> _state.update {
                 it.copy(searchQuery = action.query)
             }
-            is NewsListAction.OnTabSelected -> TODO()
+            is NewsListAction.OnTabSelected -> _state.update {
+                it.copy(selectedTabIndex = action.index)
+            }
         }
     }
 }

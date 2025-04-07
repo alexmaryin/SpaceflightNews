@@ -58,7 +58,7 @@ fun NewsListScreen(
             onQueryChange = {
                 onAction(NewsListAction.OnSearchQueryChange(it))
             },
-            modifier = Modifier.widthIn(max = 400.dp)
+            modifier = Modifier.widthIn(max = 600.dp)
                 .fillMaxWidth()
                 .padding(16.dp)
         )

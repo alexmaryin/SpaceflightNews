@@ -1,6 +1,7 @@
 package ru.alexmaryin.news.ui.news_list.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,9 +33,10 @@ fun ArticleItem(
         modifier = modifier.clickable(onClick = onClick)
     ) {
         Row(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ArticleImage(article.imageUrl, article.title, article.isFavourite)

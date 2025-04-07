@@ -6,4 +6,5 @@
     <string name="articles_tab">News articles</string>
     <string name="favourites_tab">Favourites</string>
     <string name="empty_search_results">Nothing was found for your query</string>
+    <string name="empty_favourite_results">You haven't picked any favourites yet</string>
 </resources>
