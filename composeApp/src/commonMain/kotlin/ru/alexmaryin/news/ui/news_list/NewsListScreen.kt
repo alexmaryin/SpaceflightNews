@@ -1,29 +1,23 @@
 package ru.alexmaryin.news.ui.news_list
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.koin.compose.viewmodel.koinViewModel
 import ru.alexmaryin.core.ui.components.SearchBar
 import ru.alexmaryin.news.domain.models.Article
-import ru.alexmaryin.news.ui.news_list.components.ArticlesPage
+import ru.alexmaryin.news.ui.news_list.components.NewsListPager
 import ru.alexmaryin.news.ui.news_list.components.TabsBar
 
 @Composable
@@ -50,7 +44,7 @@ fun NewsListScreen(
     state: NewsListState,
     onAction: (NewsListAction) -> Unit
 ) {
-    val pagerState = rememberPagerState { 2 }
+
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -73,29 +67,7 @@ fun NewsListScreen(
             onAction(NewsListAction.OnTabSelected(index))
         }
 
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.fillMaxSize().weight(1f)
-        ) { pageIndex ->
-            Box(
-                modifier = Modifier.fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surface),
-                contentAlignment = Alignment.Center
-            ) {
-                when (pageIndex) {
-                    Tabs.ARTICLES_TAB -> {
-                        ArticlesPage(
-                            isLoading = state.isLoading,
-                            searchResult = state.searchResult,
-                            error = state.error,
-                            onAction = onAction
-                        )
-                    }
-
-                    Tabs.FAVOURITES_TAB -> {}
-                }
-            }
-        }
+        NewsListPager(state, onAction)
     }
 }
 
