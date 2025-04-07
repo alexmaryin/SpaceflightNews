@@ -7,4 +7,11 @@
     <string name="favourites_tab">Favourites</string>
     <string name="empty_search_results">Nothing was found for your query</string>
     <string name="empty_favourite_results">You haven't picked any favourites yet</string>
+    <string name="disk_error">Can't read from local storage</string>
+    <string name="unknown_error">Impossible error</string>
+    <string name="request_timeout_error">Request timeout</string>
+    <string name="too_many_requests_error">Check your quota for requests from remote API</string>
+    <string name="no_internet_error">Check your internet connection</string>
+    <string name="server_error">Server unreachable</string>
+    <string name="serialization_error">Wrong response format from remote API</string>
 </resources>

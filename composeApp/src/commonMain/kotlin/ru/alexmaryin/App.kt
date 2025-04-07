@@ -2,20 +2,29 @@ package ru.alexmaryin
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.remember
+import io.ktor.client.engine.cio.CIO
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import ru.alexmaryin.news.domain.models.Article
-import ru.alexmaryin.news.domain.models.Author
-import ru.alexmaryin.news.ui.news_list.NewsListScreen
+import ru.alexmaryin.core.data.HttpClientFactory
+import ru.alexmaryin.news.data.remote_api.KtorRemoteNewsDataSource
+import ru.alexmaryin.news.data.repository.DefaultSpaceNewsRepository
 import ru.alexmaryin.news.ui.news_list.NewsListScreenRoot
-import ru.alexmaryin.news.ui.news_list.NewsListState
 import ru.alexmaryin.news.ui.news_list.NewsListViewModel
-import kotlin.random.Random
 
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
-        NewsListScreenRoot(viewModel = NewsListViewModel()) {  }
+        NewsListScreenRoot(
+            viewModel = NewsListViewModel(
+                repository = DefaultSpaceNewsRepository(
+                    remoteDataSource = KtorRemoteNewsDataSource(
+                        httpClient = HttpClientFactory.create(
+                            engine =    remember { CIO.create() }
+                        )
+                    )
+                )
+            )
+        ) { }
     }
 }
