@@ -27,8 +27,7 @@ fun ColumnScope.TabsBar(
     onClick: (Int) -> Unit
 ) {
     Surface(
-        modifier = Modifier.weight(1f)
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {

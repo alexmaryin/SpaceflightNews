@@ -3,6 +3,7 @@ package ru.alexmaryin.previews
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import ru.alexmaryin.core.ui.UiText
 import ru.alexmaryin.news.domain.models.Article
 import ru.alexmaryin.news.domain.models.Author
 import ru.alexmaryin.news.ui.news_list.components.ArticlesList
@@ -34,11 +35,11 @@ private fun NewsListPreview() {
         NewsListScreen(
             NewsListState(
                 searchQuery = "",
-                searchResult = articles,
+                searchResult = articles, // emptyList(),
                 favouriteArticles = emptyList(),
                 isLoading = false,
                 selectedTabIndex = 0,
-                error = null
+                error = null // UiText.DynamicString("Unknown error!")
             ),
         ) {}
     }

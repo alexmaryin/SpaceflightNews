@@ -10,12 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -52,11 +50,6 @@ fun NewsListScreen(
     onAction: (NewsListAction) -> Unit
 ) {
     val pagerState = rememberPagerState { 2 }
-    val newsListState = rememberLazyListState()
-
-    LaunchedEffect(state.searchResult) {
-        newsListState.animateScrollToItem(0)
-    }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -79,27 +72,29 @@ fun NewsListScreen(
             onAction(NewsListAction.OnTabSelected(index))
         }
 
-        Spacer(Modifier.height(4.dp))
-
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxWidth().weight(1f)
+            modifier = Modifier.fillMaxSize().weight(1f)
         ) { pageIndex ->
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier.fillMaxSize()
+                    .background(MaterialTheme.colorScheme.surface),
+                contentAlignment = Alignment.Center
+            ) {
                 when (pageIndex) {
                     Tabs.ARTICLES_TAB -> {
-                        ArticlesPage(state, state.error, onAction, newsListState)
+                        ArticlesPage(
+                            isLoading = state.isLoading,
+                            searchResult = state.searchResult,
+                            error = state.error,
+                            onAction = onAction
+                        )
                     }
 
                     Tabs.FAVOURITES_TAB -> {}
                 }
             }
-
-
         }
-
     }
-
-
 }
 
