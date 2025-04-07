@@ -33,7 +33,7 @@ fun ColumnScope.TabsBar(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             TabRow(
                 selectedTabIndex = selectedTabIndex,
-                modifier = Modifier.padding(vertical = 12.dp)
+                modifier = Modifier.padding(top = 12.dp)
                     .widthIn(max = 800.dp)
                     .fillMaxWidth()
             ) {
