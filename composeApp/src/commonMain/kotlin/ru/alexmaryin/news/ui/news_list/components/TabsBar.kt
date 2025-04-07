@@ -27,14 +27,13 @@ fun ColumnScope.TabsBar(
     onClick: (Int) -> Unit
 ) {
     Surface(
-        modifier = Modifier.weight(1f)
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             TabRow(
                 selectedTabIndex = selectedTabIndex,
-                modifier = Modifier.padding(vertical = 12.dp)
+                modifier = Modifier.padding(top = 12.dp)
                     .widthIn(max = 800.dp)
                     .fillMaxWidth()
             ) {
