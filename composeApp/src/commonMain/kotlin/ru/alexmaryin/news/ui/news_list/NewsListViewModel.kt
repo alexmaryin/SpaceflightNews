@@ -38,7 +38,6 @@ class NewsListViewModel(
 
     fun onAction(action: NewsListAction) {
         when (action) {
-            is NewsListAction.OnNewsItemClick -> TODO()
             is NewsListAction.OnSearchQueryChange -> _state.update {
                 it.copy(searchQuery = action.query)
             }
@@ -46,6 +45,8 @@ class NewsListViewModel(
             is NewsListAction.OnTabSelected -> _state.update {
                 it.copy(selectedTabIndex = action.index)
             }
+
+            else -> Unit
         }
     }
 

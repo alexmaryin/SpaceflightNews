@@ -30,11 +30,11 @@ fun NewsListScreenRoot(
     NewsListScreen(
         state,
         onAction = { action ->
-            when (action) {
-                is NewsListAction.OnNewsItemClick -> onItemClick(action.article)
-                else -> Unit
+            if (action is NewsListAction.OnNewsItemClick) {
+                onItemClick(action.article)
+            } else {
+                viewModel.onAction(action)
             }
-            viewModel.onAction(action)
         }
     )
 }
