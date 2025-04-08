@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="search_hint">Искать...</string>
+    <string name="clear_hint">Очистить поисковую строку</string>
+    <string name="open_details">Открыть подробности</string>
+    <string name="articles_tab">Новостная лента</string>
+    <string name="favourites_tab">Избранное</string>
+    <string name="empty_search_results">По запросу ничего не найдено</string>
+    <string name="empty_favourite_results">Вы пока не поместили ни одной статьи в избранное</string>
+    <string name="disk_error">Проблема доступа к диску</string>
+    <string name="unknown_error">Невероятная ошибка</string>
+    <string name="request_timeout_error">Истекло время ожидания ответа</string>
+    <string name="too_many_requests_error">Проверьте не исчерпан ли Ваш лимит на запросы в API</string>
+    <string name="no_internet_error">Проверьте Ваше интернет-соединение</string>
+    <string name="server_error">Сервер не доступен</string>
+    <string name="serialization_error">Неправильная структура ответа от сервера API</string>
+</resources>
