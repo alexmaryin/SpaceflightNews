@@ -4,18 +4,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun RowScope.ArticleTitles(title: String, authors: String?, summary: String) {
     Column(
-        modifier = Modifier.fillMaxHeight()
-            .weight(1f),
+        modifier = Modifier.fillMaxHeight().padding(vertical = 8.dp).weight(1f),
         verticalArrangement = Arrangement.Center,
     ) {
         Text(

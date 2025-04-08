@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
@@ -17,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -29,7 +31,7 @@ import spaceflightnews.composeapp.generated.resources.image_placeholder
 @Composable
 fun ArticleImage(url: String, title: String, isFavourite: Boolean) {
     Box(
-        modifier = Modifier.width(150.dp).padding(16.dp),
+        modifier = Modifier.width(200.dp).padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
         var imageLoadResult by remember {
@@ -58,9 +60,9 @@ fun ArticleImage(url: String, title: String, isFavourite: Boolean) {
                     contentDescription = title,
                     contentScale = if (result.isSuccess) ContentScale.Crop else ContentScale.Fit,
                     modifier = Modifier.aspectRatio(
-                        ratio = 0.66f,
+                        ratio = 1.66f,
                         matchHeightConstraintsFirst = false
-                    )
+                    ).clip(RoundedCornerShape(12.dp))
                 )
                 if (isFavourite) {
                     Icon(

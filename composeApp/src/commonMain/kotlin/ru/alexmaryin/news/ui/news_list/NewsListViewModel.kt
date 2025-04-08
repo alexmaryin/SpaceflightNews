@@ -25,15 +25,16 @@ class NewsListViewModel(
     private val repository: SpaceNewsRepository
 ) : ViewModel() {
 
+
+    private val cachedArticles = emptyList<Article>()
+    private var searchJob: Job? = null
+
     private val _state = MutableStateFlow(NewsListState())
     val state = _state
         .onStart {
             if (cachedArticles.isEmpty()) observeSearchQuery()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _state.value)
-
-    private val cachedArticles = emptyList<Article>()
-    private var searchJob: Job? = null
 
     fun onAction(action: NewsListAction) {
         when (action) {
@@ -54,18 +55,14 @@ class NewsListViewModel(
             .distinctUntilChanged()
             .debounce(500L)
             .onEach { query ->
-                when {
-                    query.isBlank() -> _state.update {
-                        it.copy(
-                            error = null,
-                            searchResult = cachedArticles
-                        )
-                    }
-
-                    query.length > 5 -> {
-                        searchJob?.cancel()
-                        searchJob = searchNews(query)
-                    }
+                if (cachedArticles.isNotEmpty()) _state.update {
+                    it.copy(
+                        error = null,
+                        searchResult = cachedArticles
+                    )
+                } else {
+                    searchJob?.cancel()
+                    searchJob = searchNews(query)
                 }
             }
             .launchIn(viewModelScope)
