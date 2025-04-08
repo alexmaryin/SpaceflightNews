@@ -44,6 +44,7 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "androidx-paging" }
+#androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidx-paging" }
 androidx-paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version = "3.3.0-alpha02-0.5.1" }
 
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
@@ -51,6 +52,7 @@ kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-seria
 
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin-bom" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
+koin-android = { group = "io.insert-koin", name = "koin-android" }
 koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel" }
 koin-compose-navigation = { group = "io.insert-koin", name = "koin-compose-viewmodel-navigation" }
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -14,6 +15,7 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 import ru.alexmaryin.news.domain.models.Article
@@ -42,7 +44,8 @@ fun ArticleItem(
             ArticleTitles(article.title, authors, article.summary)
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = stringResource(Res.string.open_details)
+                contentDescription = stringResource(Res.string.open_details),
+                modifier = Modifier.size(40.dp)
             )
         }
     }

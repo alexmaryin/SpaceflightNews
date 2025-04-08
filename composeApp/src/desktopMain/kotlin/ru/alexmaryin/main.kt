@@ -2,12 +2,16 @@ package ru.alexmaryin
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import ru.alexmaryin.di.initKoin
 
-fun main() = application {
-    Window(
-        onCloseRequest = ::exitApplication,
-        title = "SpaceflightNews",
-    ) {
-        App()
+fun main() {
+    initKoin()
+    application {
+        Window(
+            onCloseRequest = ::exitApplication,
+            title = "SpaceflightNews",
+        ) {
+            App()
+        }
     }
 }
