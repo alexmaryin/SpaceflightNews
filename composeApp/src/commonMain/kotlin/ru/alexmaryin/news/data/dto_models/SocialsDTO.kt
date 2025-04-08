@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SocialsDTO(
     val x: String,
-    val youTube: String,
+    @SerialName("youtube") val youTube: String,
     val instagram: String,
     val linkedin: String,
     val mastodon: String,

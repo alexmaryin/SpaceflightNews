@@ -55,6 +55,7 @@ kotlin {
             implementation(libs.ktor.content.negotiation)
             implementation(libs.ktor.serialization)
             implementation(libs.kotlinx.serialization)
+            implementation(libs.ktor.logging)
 
             implementation(libs.coil.compose)
             implementation(libs.coil.network)
@@ -75,7 +76,7 @@ kotlin {
 
 android {
     namespace = "ru.alexmaryin"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdkVersion(libs.versions.android.compileSdk.get().toInt())
 
     defaultConfig {
         applicationId = "ru.alexmaryin"

@@ -12,6 +12,6 @@ interface RemoteNewsDataSource {
 
     companion object {
         const val BASE_URL = "https://api.spaceflightnewsapi.net/v4"
-        const val SEARCH_URL = "$BASE_URL/articles"
+        const val SEARCH_URL = "$BASE_URL/articles/"
     }
 }
