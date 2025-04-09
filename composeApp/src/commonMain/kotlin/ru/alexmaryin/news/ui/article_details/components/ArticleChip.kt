@@ -31,7 +31,7 @@ fun ArticleChip(
             }
         )
             .clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+            .background(MaterialTheme.colorScheme.primary)
             .padding(vertical = 8.dp, horizontal = 12.dp),
         contentAlignment = Alignment.Center
         ) {
