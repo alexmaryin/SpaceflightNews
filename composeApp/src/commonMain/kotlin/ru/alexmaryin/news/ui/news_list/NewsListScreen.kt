@@ -44,8 +44,6 @@ fun NewsListScreen(
     state: NewsListState,
     onAction: (NewsListAction) -> Unit
 ) {
-
-
     Column(
         modifier = Modifier.fillMaxSize()
             .statusBarsPadding()

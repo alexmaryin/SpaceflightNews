@@ -19,7 +19,6 @@ val sharedModule = module {
     single { HttpClientFactory.create(get()) }
     singleOf(::KtorRemoteNewsDataSource).bind<RemoteNewsDataSource>()
     singleOf(::DefaultSpaceNewsRepository).bind<SpaceNewsRepository>()
-
     viewModelOf(::NewsListViewModel)
     viewModelOf(::SelectedArticleViewModel)
 }

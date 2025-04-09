@@ -21,6 +21,8 @@ import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import ru.alexmaryin.news.ui.SelectedArticleViewModel
+import ru.alexmaryin.news.ui.article_details.ArticleDetailsState
+import ru.alexmaryin.news.ui.article_details.ArticlesDetailsScreen
 import ru.alexmaryin.news.ui.news_list.NewsListScreenRoot
 import ru.alexmaryin.news.ui.news_list.NewsListViewModel
 
@@ -59,9 +61,10 @@ fun App() {
                         navController.navigateUp()
                     }
 
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text("Article $selectedArticle")
-                    }
+                    ArticlesDetailsScreen(
+                        state = ArticleDetailsState(article = selectedArticle.value),
+                        onAction = {}
+                    )
                 }
             }
         }
