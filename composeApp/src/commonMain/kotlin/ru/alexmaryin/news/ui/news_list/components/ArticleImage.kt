@@ -3,12 +3,12 @@ package ru.alexmaryin.news.ui.news_list.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -29,9 +29,10 @@ import spaceflightnews.composeapp.generated.resources.Res
 import spaceflightnews.composeapp.generated.resources.image_placeholder
 
 @Composable
-fun ArticleImage(url: String, title: String, isFavourite: Boolean) {
+fun ArticleImage(isCompact: Boolean = false, url: String, title: String, isFavourite: Boolean) {
+    val modifier = if (isCompact) Modifier.fillMaxWidth() else Modifier.width(200.dp)
     Box(
-        modifier = Modifier.width(200.dp).padding(16.dp),
+        modifier = modifier.padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
         var imageLoadResult by remember {

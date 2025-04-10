@@ -186,7 +186,7 @@ fun ArticlesDetailsScreen(
                 )
 
                 Text(
-                    text = article.summary.repeat(100),
+                    text = article.summary,
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
                     style = MaterialTheme.typography.bodyLarge
                 )
