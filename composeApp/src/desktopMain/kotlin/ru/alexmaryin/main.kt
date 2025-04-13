@@ -12,7 +12,7 @@ fun main() {
             onCloseRequest = ::exitApplication,
             title = "SpaceflightNews",
         ) {
-            App()
+            App() // use bool in parameter for switch dark theme on/off for debug
         }
     }
 }

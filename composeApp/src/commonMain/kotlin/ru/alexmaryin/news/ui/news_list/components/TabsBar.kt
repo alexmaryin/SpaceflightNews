@@ -28,32 +28,34 @@ fun ColumnScope.TabsBar(
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
+        shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+        color = MaterialTheme.colorScheme.surfaceBright
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            TabRow(
-                selectedTabIndex = selectedTabIndex,
-                modifier = Modifier.padding(top = 12.dp)
-                    .widthIn(max = 800.dp)
-                    .fillMaxWidth()
-            ) {
-                // Articles tab
-                Tab(
-                    selected = selectedTabIndex == Tabs.ARTICLES_TAB,
-                    onClick = { onClick(Tabs.ARTICLES_TAB) },
-                    modifier = Modifier.weight(1f),
-                    unselectedContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                    text = { Text(stringResource(Res.string.articles_tab)) }
-                )
-                // Favourites tab
-                Tab(
-                    selected = selectedTabIndex == Tabs.FAVOURITES_TAB,
-                    onClick = { onClick(Tabs.FAVOURITES_TAB) },
-                    modifier = Modifier.weight(1f),
-                    unselectedContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                    text = { Text(stringResource(Res.string.favourites_tab)) }
-                )
-            }
+
+        TabRow(
+            selectedTabIndex = selectedTabIndex,
+            modifier = Modifier.padding(top = 12.dp)
+                .widthIn(max = 800.dp)
+                .fillMaxWidth(),
+            containerColor = MaterialTheme.colorScheme.surfaceBright,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        ) {
+            // Articles tab
+            Tab(
+                selected = selectedTabIndex == Tabs.ARTICLES_TAB,
+                onClick = { onClick(Tabs.ARTICLES_TAB) },
+                modifier = Modifier.weight(1f),
+                unselectedContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                text = { Text(stringResource(Res.string.articles_tab)) }
+            )
+            // Favourites tab
+            Tab(
+                selected = selectedTabIndex == Tabs.FAVOURITES_TAB,
+                onClick = { onClick(Tabs.FAVOURITES_TAB) },
+                modifier = Modifier.weight(1f),
+                unselectedContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                text = { Text(stringResource(Res.string.favourites_tab)) }
+            )
         }
     }
 }

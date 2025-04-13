@@ -1,5 +1,6 @@
 package ru.alexmaryin.app
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,9 +13,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import ru.alexmaryin.core.ui.theme.spaceNewsDarkScheme
+import ru.alexmaryin.core.ui.theme.spaceNewsLightScheme
 import ru.alexmaryin.news.ui.SelectedArticleViewModel
 import ru.alexmaryin.news.ui.article_details.ArticleDetailsState
 import ru.alexmaryin.news.ui.article_details.ArticlesDetailsScreen
@@ -23,8 +25,13 @@ import ru.alexmaryin.news.ui.news_list.NewsListViewModel
 
 @Composable
 @Preview
-fun App() {
-    MaterialTheme {
+fun App(
+    darkTheme: Boolean = isSystemInDarkTheme()
+) {
+    val colors = if (darkTheme) spaceNewsDarkScheme else spaceNewsLightScheme
+    MaterialTheme(
+        colorScheme = colors
+    ) {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = Navigation.NewsGraph) {
             navigation<Navigation.NewsGraph>(
@@ -51,14 +58,9 @@ fun App() {
                     val selectedArticle = selectedArticleViewModel
                         .selectedArticle.collectAsStateWithLifecycle()
 
-                    LaunchedEffect(true) {
-                        delay(5000L)
-                        navController.navigateUp()
-                    }
-
                     ArticlesDetailsScreen(
                         state = ArticleDetailsState(article = selectedArticle.value),
-                        onAction = {}
+                        onAction = { navController.navigateUp() } // TODO remove
                     )
                 }
             }

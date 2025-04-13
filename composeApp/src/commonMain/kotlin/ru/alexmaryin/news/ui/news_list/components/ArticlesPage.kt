@@ -42,7 +42,8 @@ fun ArticlesPage(
         searchResult.isEmpty() -> Text(
             text = stringResource(Res.string.empty_search_results),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface
         )
         else -> ArticlesList(
             articles = searchResult,

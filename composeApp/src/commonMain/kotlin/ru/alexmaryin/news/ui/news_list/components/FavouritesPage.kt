@@ -24,7 +24,8 @@ fun FavouritesPage(
         Text(
             text = stringResource(Res.string.empty_favourite_results),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface
         )
     } else {
         ArticlesList(

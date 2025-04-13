@@ -69,7 +69,7 @@ fun SearchBar(
             .fillMaxWidth()
             .background(
                 shape = RoundedCornerShape(100),
-                color = MaterialTheme.colorScheme.background
+                color = MaterialTheme.colorScheme.surfaceContainer
             )
             .minimumInteractiveComponentSize()
         ,

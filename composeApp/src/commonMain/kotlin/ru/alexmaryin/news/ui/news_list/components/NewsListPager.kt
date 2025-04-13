@@ -38,7 +38,7 @@ fun ColumnScope.NewsListPager(
     ) { pageIndex ->
         Box(
             modifier = Modifier.fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
+                .background(MaterialTheme.colorScheme.surfaceBright)
                 .padding(top = 6.dp),
             contentAlignment = Alignment.Center
         ) {
