@@ -46,6 +46,14 @@ class NewsListViewModel(
                 it.copy(selectedTabIndex = action.index)
             }
 
+            is NewsListAction.OnScrollToStart -> _state.update {
+                it.copy(isScrollToStart = true)
+            }
+
+            is NewsListAction.OnScrolledUp -> _state.update {
+                it.copy(isScrollToStart = false)
+            }
+
             else -> Unit
         }
     }

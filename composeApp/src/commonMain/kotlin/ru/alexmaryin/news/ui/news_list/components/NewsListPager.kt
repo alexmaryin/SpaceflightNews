@@ -22,12 +22,14 @@ fun ColumnScope.NewsListPager(
     state: NewsListState,
     onAction: (NewsListAction) -> Unit
 ) {
-    val pagerState = rememberPagerState(state.selectedTabIndex) { 2 }
+    val pagerState = rememberPagerState(state.selectedTabIndex) { Tabs.COUNT }
 
+    // pager following to selected tab
     LaunchedEffect(state.selectedTabIndex) {
         pagerState.animateScrollToPage(state.selectedTabIndex)
     }
 
+    // selection of tab following to the page
     LaunchedEffect(pagerState.currentPage) {
         onAction(NewsListAction.OnTabSelected(pagerState.currentPage))
     }
@@ -46,6 +48,7 @@ fun ColumnScope.NewsListPager(
                 Tabs.ARTICLES_TAB -> {
                     ArticlesPage(
                         isLoading = state.isLoading,
+                        isScrollToStart = state.isScrollToStart,
                         searchResult = state.searchResult,
                         error = state.error,
                         onAction = onAction
@@ -54,6 +57,7 @@ fun ColumnScope.NewsListPager(
 
                 Tabs.FAVOURITES_TAB -> {
                     FavouritesPage(
+                        isScrollToStart = state.isScrollToStart,
                         favouritesArticles = state.favouriteArticles,
                         onAction = onAction
                     )

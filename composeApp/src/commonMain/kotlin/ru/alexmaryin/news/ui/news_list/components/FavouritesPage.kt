@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import org.jetbrains.compose.resources.stringResource
@@ -15,10 +16,18 @@ import spaceflightnews.composeapp.generated.resources.empty_favourite_results
 
 @Composable
 fun FavouritesPage(
+    isScrollToStart: Boolean,
     favouritesArticles: List<Article>,
     onAction: (NewsListAction) -> Unit
 ) {
     val favouritesScrollState = rememberLazyListState()
+
+    LaunchedEffect(isScrollToStart) {
+        if (isScrollToStart) {
+            favouritesScrollState.animateScrollToItem(0)
+            onAction(NewsListAction.OnScrolledUp)
+        }
+    }
 
     if (favouritesArticles.isEmpty()) {
         Text(

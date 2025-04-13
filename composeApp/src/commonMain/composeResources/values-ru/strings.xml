@@ -14,4 +14,15 @@
     <string name="no_internet_error">Проверьте Ваше интернет-соединение</string>
     <string name="server_error">Сервер не доступен</string>
     <string name="serialization_error">Неправильная структура ответа от сервера API</string>
+    <string name="scroll_to_start">Вернуться к началу</string>
+    <string name="back_button">Вернуться назад</string>
+    <string name="from_source">источник:</string>
+    <string name="published_date">опубликовано:</string>
+    <plurals name="authors">
+        <item quantity="one">Автор:</item>
+        <item quantity="other">Авторы:</item>
+    </plurals>
+    <string name="summary">Аннотация:</string>
+    <string name="read_more">читать дальше:</string>
+    <string name="in_browser">в браузере:</string>
 </resources>

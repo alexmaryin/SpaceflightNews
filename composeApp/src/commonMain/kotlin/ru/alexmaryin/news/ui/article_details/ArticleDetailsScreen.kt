@@ -25,7 +25,6 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,19 +34,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import coil3.compose.rememberAsyncImagePainter
+import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.resources.stringResource
+import ru.alexmaryin.core.ui.components.PrimaryContainerText
+import ru.alexmaryin.core.ui.components.SurfaceText
+import ru.alexmaryin.core.ui.components.TintedTitle
 import ru.alexmaryin.core.ui.components.VerticalGradient
 import ru.alexmaryin.news.ui.article_details.components.ArticleChip
 import ru.alexmaryin.news.ui.article_details.components.TitledContent
+import spaceflightnews.composeapp.generated.resources.Res
+import spaceflightnews.composeapp.generated.resources.authors
+import spaceflightnews.composeapp.generated.resources.back_button
+import spaceflightnews.composeapp.generated.resources.from_source
+import spaceflightnews.composeapp.generated.resources.in_browser
+import spaceflightnews.composeapp.generated.resources.published_date
+import spaceflightnews.composeapp.generated.resources.read_more
+import spaceflightnews.composeapp.generated.resources.summary
 
 @Composable
 fun ArticlesDetailsScreenRoot(
@@ -89,7 +98,7 @@ fun ArticlesDetailsScreen(
         modifier = Modifier.fillMaxSize()
             .background(MaterialTheme.colorScheme.surfaceBright)
             .statusBarsPadding()
-            .padding(12.dp)
+//            .padding(12.dp)
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -131,15 +140,10 @@ fun ArticlesDetailsScreen(
             }
 
             // Main Title
-            Text(
+            TintedTitle(
                 text = state.article!!.title,
-                style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.fillMaxWidth()
-                    .padding(16.dp)
-                    .align(Alignment.BottomStart)
-                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.66f))
+                tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.66f),
+                modifier = Modifier.align(Alignment.BottomStart)
             )
 
             // Back button
@@ -155,7 +159,7 @@ fun ArticlesDetailsScreen(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                    contentDescription = "back",
+                    contentDescription = stringResource(Res.string.back_button),
                     tint = MaterialTheme.colorScheme.onSecondary
                 )
             }
@@ -168,73 +172,36 @@ fun ArticlesDetailsScreen(
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                TitledContent(title = "from source:") {
-                    ArticleChip {
-                        Text(
-                            text = article.newsSite,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    }
+                TitledContent(title = stringResource(Res.string.from_source)) {
+                    ArticleChip { PrimaryContainerText(article.newsSite) }
                 }
-                TitledContent(title = "published:") {
-                    ArticleChip {
-                        Text(
-                            text = article.publishedAt,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    }
+                TitledContent(title = stringResource(Res.string.published_date)) {
+                    ArticleChip { PrimaryContainerText(article.publishedAt) }
                 }
             }
 
             if (article.authors.isNotEmpty()) {
-                Text(
-                    text = "Authors:",
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+                SurfaceText(pluralStringResource(Res.plurals.authors, article.authors.size))
                 FlowRow(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
                     horizontalArrangement = Arrangement.Start
                 ) {
                     article.authors.map {
-                        ArticleChip {
-                            Text(
-                                text = it.name,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer
-                            )
-                        }
+                        ArticleChip { PrimaryContainerText(it.name) }
                     }
                 }
             }
 
-            Text(
-                text = "Summary:",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+            SurfaceText(stringResource(Res.string.summary))
 
-            Text(
-                text = article.summary,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+            SurfaceText(article.summary)
 
-            TitledContent("read more:") {
+            TitledContent(stringResource(Res.string.read_more)) {
                 ArticleChip(
-                    modifier = Modifier.clickable(
-                        enabled = article.url.isNotEmpty()
-                    ) {
+                    modifier = Modifier.clickable(enabled = article.url.isNotEmpty()) {
                         uriHandler.openUri(article.url)
                     }
-                ) {
-                    Text(
-                        text = "in browser",
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
+                ) { PrimaryContainerText(stringResource(Res.string.in_browser)) }
             }
 
             Spacer(Modifier.height(50.dp))

@@ -8,6 +8,7 @@ data class NewsListState(
     val searchResult: List<Article> = emptyList(),
     val favouriteArticles: List<Article> = emptyList(),
     val isLoading: Boolean = false,
+    val isScrollToStart: Boolean = false,
     val selectedTabIndex: Int = Tabs.ARTICLES_TAB,
     val error: UiText? = null
 )
