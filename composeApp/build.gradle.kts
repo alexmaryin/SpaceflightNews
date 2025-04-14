@@ -58,6 +58,7 @@ kotlin {
             implementation(libs.ktor.serialization)
             implementation(libs.kotlinx.serialization)
             implementation(libs.ktor.logging)
+            implementation(libs.kotlinx.datetime)
 
             implementation(libs.coil.compose)
             implementation(libs.coil.network)
