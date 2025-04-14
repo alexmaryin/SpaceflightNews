@@ -4,6 +4,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun VerticalGradient() = Brush.verticalGradient(
@@ -19,4 +20,15 @@ fun VerticalGradient() = Brush.verticalGradient(
         )
     }
 
+)
+
+@Composable
+fun FavouriteGradient(favourite: Boolean) = Brush.radialGradient(
+    colors = if (favourite) listOf(
+        Color.Red,
+        Color.Transparent
+    ) else listOf(
+        Color.White,
+        Color.Transparent
+    )
 )

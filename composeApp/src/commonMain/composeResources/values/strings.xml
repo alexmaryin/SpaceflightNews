@@ -16,6 +16,7 @@
     <string name="serialization_error">Wrong response format from remote API</string>
     <string name="scroll_to_start">Scroll to start</string>
     <string name="back_button">Go back</string>
+    <string name="favourite_button">Toggle favourite</string>
     <string name="from_source">from source:</string>
     <string name="published_date">published:</string>
     <plurals name="authors">

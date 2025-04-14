@@ -4,6 +4,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -18,8 +19,9 @@ import org.koin.compose.viewmodel.koinViewModel
 import ru.alexmaryin.core.ui.theme.spaceNewsDarkScheme
 import ru.alexmaryin.core.ui.theme.spaceNewsLightScheme
 import ru.alexmaryin.news.ui.SelectedArticleViewModel
-import ru.alexmaryin.news.ui.article_details.ArticleDetailsState
-import ru.alexmaryin.news.ui.article_details.ArticlesDetailsScreen
+import ru.alexmaryin.news.ui.article_details.ArticleDetailsAction
+import ru.alexmaryin.news.ui.article_details.ArticleDetailsViewModel
+import ru.alexmaryin.news.ui.article_details.ArticlesDetailsScreenRoot
 import ru.alexmaryin.news.ui.news_list.NewsListScreenRoot
 import ru.alexmaryin.news.ui.news_list.NewsListViewModel
 
@@ -55,13 +57,19 @@ fun App(
                 composable<Navigation.ArticleDetails> {
                     val selectedArticleViewModel =
                         it.sharedKoinViewModel<SelectedArticleViewModel>(navController)
-                    val selectedArticle = selectedArticleViewModel
+                    val selectedArticle by selectedArticleViewModel
                         .selectedArticle.collectAsStateWithLifecycle()
+                    val viewModel = koinViewModel<ArticleDetailsViewModel>()
 
-                    ArticlesDetailsScreen(
-                        state = ArticleDetailsState(article = selectedArticle.value),
-                        onAction = { navController.navigateUp() } // TODO remove
-                    )
+                    LaunchedEffect(selectedArticle) {
+                        selectedArticle?.let {
+                            viewModel.onAction(ArticleDetailsAction.onSelectedArticleChange(it))
+                        }
+                    }
+
+                    ArticlesDetailsScreenRoot(
+                        viewModel = viewModel
+                    ) { navController.navigateUp() }
                 }
             }
         }
