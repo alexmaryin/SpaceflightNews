@@ -8,18 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.format
-import kotlinx.datetime.format.DateTimeFormat
-import kotlinx.datetime.format.FormatStringsInDatetimeFormats
-import kotlinx.datetime.format.MonthNames
-import kotlinx.datetime.format.byUnicodePattern
-import kotlinx.datetime.serializers.LocalTimeIso8601Serializer
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.pluralStringResource
@@ -50,6 +41,7 @@ fun ArticleMeta(
         }
         val instant = Instant.parse(publicationDate)
         val local = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+
         val formattedLocal = local.toJavaLocalDateTime().format(
             DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT)
         )

@@ -27,4 +27,8 @@
     <string name="summary">Summary:</string>
     <string name="read_more">read more:</string>
     <string name="in_browser">in browser:</string>
+    <string name="days_ago">%1$d days ago</string>
+    <string name="hours_ago">%1$d hours ago</string>
+    <string name="minutes_ago">%1$d minutes ago</string>
+    <string name="by_authors">by %1$s</string>
 </resources>

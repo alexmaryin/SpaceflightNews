@@ -27,4 +27,8 @@
     <string name="summary">Аннотация:</string>
     <string name="read_more">читать дальше:</string>
     <string name="in_browser">в браузере:</string>
+    <string name="days_ago">%1$d дн. назад</string>
+    <string name="hours_ago">%1$d ч. назад</string>
+    <string name="minutes_ago">%1$d мин. назад</string>
+    <string name="by_authors">%1$s</string>
 </resources>
