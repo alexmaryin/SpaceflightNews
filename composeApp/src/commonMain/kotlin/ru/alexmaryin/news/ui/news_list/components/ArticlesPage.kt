@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 import ru.alexmaryin.core.ui.UiText
 import ru.alexmaryin.news.domain.models.Article
@@ -29,8 +30,13 @@ fun ArticlesPage(
     LaunchedEffect(isScrollToStart) {
         if (isScrollToStart) {
             newsListState.animateScrollToItem(0)
-            onAction(NewsListAction.OnScrolledUp)
         }
+    }
+
+    LaunchedEffect(newsListState.canScrollBackward) {
+        if (newsListState.canScrollBackward)
+            onAction(NewsListAction.OnScrollDown)
+        else onAction(NewsListAction.OnScrolledUp)
     }
 
     when {
@@ -41,12 +47,14 @@ fun ArticlesPage(
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.error
         )
+
         searchResult.isEmpty() -> Text(
             text = stringResource(Res.string.empty_search_results),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
+
         else -> ArticlesList(
             articles = searchResult,
             onArticleClick = { onAction(NewsListAction.OnNewsItemClick(it)) },

@@ -8,4 +8,6 @@ sealed interface NewsListAction {
     data class OnTabSelected(val index: Int): NewsListAction
     data object OnScrollToStart: NewsListAction
     data object OnScrolledUp: NewsListAction
+    data object OnScrollDown: NewsListAction
+    data object OnRefresh: NewsListAction
 }

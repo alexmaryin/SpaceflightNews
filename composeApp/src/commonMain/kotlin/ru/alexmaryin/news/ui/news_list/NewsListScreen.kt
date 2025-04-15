@@ -10,12 +10,12 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +28,7 @@ import ru.alexmaryin.news.domain.models.Article
 import ru.alexmaryin.news.ui.news_list.components.NewsListPager
 import ru.alexmaryin.news.ui.news_list.components.TabsBar
 import spaceflightnews.composeapp.generated.resources.Res
+import spaceflightnews.composeapp.generated.resources.refresh_articles
 import spaceflightnews.composeapp.generated.resources.scroll_to_start
 
 @Composable
@@ -75,8 +76,14 @@ fun NewsListScreen(
                     .padding(16.dp)
             )
 
+            val scrolledUp = state.scrollState == ScrollState.SCROLLED_UP
+
             IconButton(
-                onClick = { onAction(NewsListAction.OnScrollToStart) },
+                onClick = {
+                    onAction(
+                        if (scrolledUp) NewsListAction.OnRefresh else NewsListAction.OnScrollToStart
+                    )
+                },
                 colors = IconButtonDefaults.iconButtonColors().copy(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     contentColor = MaterialTheme.colorScheme.onSurface
@@ -84,8 +91,11 @@ fun NewsListScreen(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Filled.KeyboardArrowUp,
-                    contentDescription = stringResource(Res.string.scroll_to_start)
+                    imageVector = if (scrolledUp) Icons.Filled.Refresh
+                    else Icons.Filled.KeyboardArrowUp,
+                    contentDescription = stringResource(
+                        if (scrolledUp) Res.string.refresh_articles else Res.string.scroll_to_start
+                    )
                 )
             }
         }

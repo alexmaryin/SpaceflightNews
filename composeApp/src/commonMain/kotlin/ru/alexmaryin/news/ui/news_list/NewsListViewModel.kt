@@ -19,20 +19,18 @@ import ru.alexmaryin.core.domain.onError
 import ru.alexmaryin.core.domain.onSuccess
 import ru.alexmaryin.core.ui.toUiText
 import ru.alexmaryin.news.domain.SpaceNewsRepository
-import ru.alexmaryin.news.domain.models.Article
 
 class NewsListViewModel(
     private val repository: SpaceNewsRepository
 ) : ViewModel() {
 
 
-    private val cachedArticles = emptyList<Article>()
     private var searchJob: Job? = null
 
     private val _state = MutableStateFlow(NewsListState())
     val state = _state
         .onStart {
-            if (cachedArticles.isEmpty()) observeSearchQuery()
+            observeSearchQuery()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _state.value)
 
@@ -47,11 +45,20 @@ class NewsListViewModel(
             }
 
             is NewsListAction.OnScrollToStart -> _state.update {
-                it.copy(isScrollToStart = true)
+                it.copy(scrollState = ScrollState.SCROLL_TO_START)
             }
 
             is NewsListAction.OnScrolledUp -> _state.update {
-                it.copy(isScrollToStart = false)
+                it.copy(scrollState = ScrollState.SCROLLED_UP)
+            }
+
+            is NewsListAction.OnScrollDown -> _state.update {
+                it.copy(scrollState = ScrollState.SCROLLED_DOWN)
+            }
+
+            is NewsListAction.OnRefresh -> {
+                searchJob?.cancel()
+                searchJob = searchNews(state.value.searchQuery)
             }
 
             else -> Unit
@@ -64,15 +71,8 @@ class NewsListViewModel(
             .distinctUntilChanged()
             .debounce(500L)
             .onEach { query ->
-                if (cachedArticles.isNotEmpty()) _state.update {
-                    it.copy(
-                        error = null,
-                        searchResult = cachedArticles
-                    )
-                } else {
-                    searchJob?.cancel()
-                    searchJob = searchNews(query)
-                }
+                searchJob?.cancel()
+                searchJob = searchNews(query)
             }
             .launchIn(viewModelScope)
     }

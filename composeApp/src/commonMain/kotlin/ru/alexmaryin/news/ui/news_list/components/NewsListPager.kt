@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ru.alexmaryin.news.ui.news_list.NewsListAction
 import ru.alexmaryin.news.ui.news_list.NewsListState
+import ru.alexmaryin.news.ui.news_list.ScrollState
 import ru.alexmaryin.news.ui.news_list.Tabs
 
 @Composable
@@ -44,11 +45,12 @@ fun ColumnScope.NewsListPager(
                 .padding(top = 6.dp),
             contentAlignment = Alignment.Center
         ) {
+            val scrollToStart = state.scrollState == ScrollState.SCROLL_TO_START
             when (pageIndex) {
                 Tabs.ARTICLES_TAB -> {
                     ArticlesPage(
                         isLoading = state.isLoading,
-                        isScrollToStart = state.isScrollToStart,
+                        isScrollToStart = scrollToStart,
                         searchResult = state.searchResult,
                         error = state.error,
                         onAction = onAction
@@ -57,7 +59,7 @@ fun ColumnScope.NewsListPager(
 
                 Tabs.FAVOURITES_TAB -> {
                     FavouritesPage(
-                        isScrollToStart = state.isScrollToStart,
+                        isScrollToStart = scrollToStart,
                         favouritesArticles = state.favouriteArticles,
                         onAction = onAction
                     )
