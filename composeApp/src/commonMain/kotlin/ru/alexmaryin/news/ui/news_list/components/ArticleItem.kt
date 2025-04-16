@@ -73,7 +73,7 @@ fun ArticleItem(
                     modifier = Modifier.padding(16.dp).weight(1f),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    ArticleImage(isCompact = true, article.imageUrl, article.title, article.isFavourite)
+                    ArticleImage(isCompact = true, article.imageUrl, article.title)
                     adaptedContent()
                 }
             } else {
@@ -81,7 +81,7 @@ fun ArticleItem(
                     modifier = Modifier.height(IntrinsicSize.Min).padding(16.dp).weight(1f),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    ArticleImage(isCompact = false, article.imageUrl, article.title, article.isFavourite)
+                    ArticleImage(isCompact = false, article.imageUrl, article.title)
                     adaptedContent()
                 }
             }

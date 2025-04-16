@@ -17,7 +17,7 @@ import ru.alexmaryin.news.domain.SpaceNewsRepository
 
 class ArticleDetailsViewModel(
     private val repository: SpaceNewsRepository,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _state = MutableStateFlow(ArticleDetailsState())
     val state = _state.onStart {

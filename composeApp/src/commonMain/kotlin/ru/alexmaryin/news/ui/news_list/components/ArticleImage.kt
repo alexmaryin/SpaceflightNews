@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,7 +16,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -29,7 +25,7 @@ import spaceflightnews.composeapp.generated.resources.Res
 import spaceflightnews.composeapp.generated.resources.image_placeholder
 
 @Composable
-fun ArticleImage(isCompact: Boolean = false, url: String, title: String, isFavourite: Boolean) {
+fun ArticleImage(isCompact: Boolean = false, url: String, title: String) {
     val modifier = if (isCompact) Modifier.fillMaxWidth() else Modifier.width(200.dp)
     Box(
         modifier = modifier.padding(16.dp),
@@ -65,14 +61,6 @@ fun ArticleImage(isCompact: Boolean = false, url: String, title: String, isFavou
                         matchHeightConstraintsFirst = false
                     ).clip(RoundedCornerShape(12.dp))
                 )
-                if (isFavourite) {
-                    Icon(
-                        imageVector = Icons.Filled.Star,
-                        contentDescription = null,
-                        tint = Color.Yellow,
-                        modifier = Modifier.align(Alignment.BottomEnd)
-                    )
-                }
             }
         }
     }

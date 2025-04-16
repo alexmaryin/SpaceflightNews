@@ -2,7 +2,6 @@ package ru.alexmaryin.news.data.repository
 
 import androidx.sqlite.SQLiteException
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import ru.alexmaryin.core.domain.DataError
 import ru.alexmaryin.core.domain.EmptyResult
@@ -32,10 +31,9 @@ class DefaultSpaceNewsRepository(
             entities.map { it.toArticle() }
         }
 
-    // TODO("Check if it works and doesn't affect on performance
     override fun isArticleFavourite(id: Int): Flow<Boolean> {
-        return flow {
-            emit(localDataSource.getArticleById(id) != null)
+        return localDataSource.getAllArticles().map { entities ->
+            entities.any { it.article.id == id }
         }
     }
 

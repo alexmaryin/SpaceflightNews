@@ -24,7 +24,6 @@ private val articles = (1..100).map {
         publishedAt = "",
         updatedAt = "",
         featured = false,
-        isFavourite = Random.nextBoolean()
     )
 }
 

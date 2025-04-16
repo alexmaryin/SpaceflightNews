@@ -22,7 +22,6 @@ private fun ArticleItemPreview() {
             publishedAt = "",
             updatedAt = "",
             featured = false,
-            isFavourite = true
         )
     }
     MaterialTheme {

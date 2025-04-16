@@ -24,7 +24,6 @@ fun ArticleDTO.toArticle() = Article(
     featured = featured,
     launches = launches.map { it.toLaunch() },
     events = events.map { it.toEvent() },
-    isFavourite = false
 )
 
 private fun AuthorDTO.toAuthor() = Author(

@@ -24,7 +24,6 @@ fun ArticleWithRelations.toArticle() = Article(
     featured = article.featured,
     launches = launches.map { it.toLaunch() },
     events = events.map { it.toEvent() },
-    isFavourite = true
 )
 
 fun EventEntity.toEvent() = Event(
