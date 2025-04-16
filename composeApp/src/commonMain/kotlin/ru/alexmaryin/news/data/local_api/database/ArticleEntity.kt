@@ -2,7 +2,6 @@ package ru.alexmaryin.news.data.local_api.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.Relation
 
 @Entity
 data class ArticleEntity(

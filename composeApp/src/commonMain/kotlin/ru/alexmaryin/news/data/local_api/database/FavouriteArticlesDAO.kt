@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface FavouriteArticlesDAO {
 
     @Transaction
-    @Query("SELECT * FROM ArticleEntity")
+    @Query("SELECT * FROM ArticleEntity ORDER BY id DESC")
     fun getAllArticles(): Flow<List<ArticleWithRelations>>
 
     @Transaction
