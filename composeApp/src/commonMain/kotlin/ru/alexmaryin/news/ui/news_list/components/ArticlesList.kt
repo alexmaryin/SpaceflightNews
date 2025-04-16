@@ -30,10 +30,7 @@ fun ArticlesList(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        items(
-            items = articles,
-            key = { it.id }
-        ) { article ->
+        items(articles) { article ->
             ArticleItem(
                 article = article,
                 onClick = { onArticleClick(article) },

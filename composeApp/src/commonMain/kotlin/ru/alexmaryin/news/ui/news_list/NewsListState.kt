@@ -1,11 +1,13 @@
 package ru.alexmaryin.news.ui.news_list
 
+import androidx.paging.Pager
 import ru.alexmaryin.core.ui.UiText
 import ru.alexmaryin.news.domain.models.Article
 
 data class NewsListState(
     val searchQuery: String = "",
     val searchResult: List<Article> = emptyList(),
+    val pager: Pager<Int, Article>,
     val favouriteArticles: List<Article> = emptyList(),
     val isLoading: Boolean = false,
     val scrollState: ScrollState = ScrollState.SCROLLED_UP,

@@ -48,10 +48,12 @@ fun ColumnScope.NewsListPager(
             val scrollToStart = state.scrollState == ScrollState.SCROLL_TO_START
             when (pageIndex) {
                 Tabs.ARTICLES_TAB -> {
+                    state.searchResult
                     ArticlesPage(
                         isLoading = state.isLoading,
                         isScrollToStart = scrollToStart,
-                        searchResult = state.searchResult,
+//                        searchResult = state.searchResult,
+                        pager = state.pager,
                         error = state.error,
                         onAction = onAction
                     )

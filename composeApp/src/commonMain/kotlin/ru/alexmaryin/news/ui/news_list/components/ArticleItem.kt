@@ -55,8 +55,8 @@ fun ArticleItem(
             val period = (System.now() - published).toDateTimePeriod()
 //            println("${period.days} ${period.hours} ${period.minutes}") // TODO extract to function in core utils
             val term = when {
-                period.days >= 1 -> stringResource(Res.string.days_ago, period.days)
-                period.hours >= 1 -> stringResource(Res.string.hours_ago, period.hours)
+                period.hours > 24 -> stringResource(Res.string.days_ago, period.hours / 24)
+                period.hours in 1..24 -> stringResource(Res.string.hours_ago, period.hours)
                 period.minutes in 0..60 -> stringResource(Res.string.minutes_ago, period.minutes)
                 else -> ""
             }
