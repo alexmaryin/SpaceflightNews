@@ -1,7 +1,6 @@
 package ru.alexmaryin.news.ui.news_list.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -18,11 +17,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.Pager
-import androidx.paging.PagingSource
 import app.cash.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
-import ru.alexmaryin.core.ui.UiText
 import ru.alexmaryin.news.domain.models.Article
 import ru.alexmaryin.news.ui.news_list.NewsListAction
 import spaceflightnews.composeapp.generated.resources.Res
@@ -30,11 +26,9 @@ import spaceflightnews.composeapp.generated.resources.empty_search_results
 
 @Composable
 fun ArticlesPage(
-    isLoading: Boolean,
+    refresh: Boolean,
     isScrollToStart: Boolean,
-//    searchResult: List<Article>,
     pager: Pager<Int, Article>,
-    error: UiText?,
     onAction: (NewsListAction) -> Unit,
 ) {
     val newsListState = rememberLazyListState()
@@ -44,6 +38,11 @@ fun ArticlesPage(
         if (isScrollToStart) {
             newsListState.animateScrollToItem(0)
         }
+    }
+
+    if (refresh) {
+        articles.refresh()
+        onAction(NewsListAction.OnRefreshed)
     }
 
     LaunchedEffect(newsListState.canScrollBackward) {

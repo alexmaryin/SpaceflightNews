@@ -70,10 +70,13 @@ class NewsListViewModel(
                 it.copy(scrollState = ScrollState.SCROLLED_DOWN)
             }
 
-//            is NewsListAction.OnRefresh -> {
-//                searchJob?.cancel()
-//                searchJob = searchNews(state.value.searchQuery)
-//            }
+            is NewsListAction.OnRefresh -> _state.update {
+                it.copy(refresh = true)
+            }
+
+            is NewsListAction.OnRefreshed -> _state.update {
+                it.copy(refresh = false)
+            }
 
             else -> Unit
         }

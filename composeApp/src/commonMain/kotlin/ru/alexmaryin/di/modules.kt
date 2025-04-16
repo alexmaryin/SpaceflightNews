@@ -39,6 +39,7 @@ val sharedModule = module {
         Pager<Int, Article>(
             config = PagingConfig(
                 pageSize = RemoteNewsDataSource.DEFAULT_LIMIT,
+                initialLoadSize = RemoteNewsDataSource.DEFAULT_LIMIT,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { NewsPagingSource(get()) }

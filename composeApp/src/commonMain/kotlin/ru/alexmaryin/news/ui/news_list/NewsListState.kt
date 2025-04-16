@@ -9,7 +9,7 @@ data class NewsListState(
     val searchResult: List<Article> = emptyList(),
     val pager: Pager<Int, Article>,
     val favouriteArticles: List<Article> = emptyList(),
-    val isLoading: Boolean = false,
+    val refresh: Boolean = false,
     val scrollState: ScrollState = ScrollState.SCROLLED_UP,
     val selectedTabIndex: Int = Tabs.ARTICLES_TAB,
     val error: UiText? = null,

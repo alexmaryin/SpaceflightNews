@@ -25,7 +25,7 @@ class NewsPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
-        val offset = params.key ?: 0
+        val offset = params.key?.coerceAtLeast(0) ?: 0
         val limit = params.loadSize
 
         return try {

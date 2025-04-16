@@ -50,11 +50,10 @@ fun ColumnScope.NewsListPager(
                 Tabs.ARTICLES_TAB -> {
                     state.searchResult
                     ArticlesPage(
-                        isLoading = state.isLoading,
+                        refresh = state.refresh,
                         isScrollToStart = scrollToStart,
 //                        searchResult = state.searchResult,
                         pager = state.pager,
-                        error = state.error,
                         onAction = onAction
                     )
                 }
