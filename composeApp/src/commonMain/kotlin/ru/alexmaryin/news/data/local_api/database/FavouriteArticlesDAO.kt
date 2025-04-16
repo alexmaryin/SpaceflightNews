@@ -11,7 +11,7 @@ interface FavouriteArticlesDAO {
 
     @Transaction
     @Query("SELECT * FROM ArticleEntity")
-    suspend fun getAllArticles(): List<ArticleWithRelations>
+    fun getAllArticles(): Flow<List<ArticleWithRelations>>
 
     @Transaction
     @Query("SELECT * FROM ArticleEntity WHERE id = :id")

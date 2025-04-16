@@ -7,11 +7,12 @@ import ru.alexmaryin.news.data.dto_models.SpaceNewsResponseDTO
 interface RemoteNewsDataSource {
     suspend fun searchNews(
         query: String,
-        limit: Int = 10
+        limit: Int = DEFAULT_LIMIT
     ): Result<SpaceNewsResponseDTO, DataError.Remote>
 
     companion object {
         const val BASE_URL = "https://api.spaceflightnewsapi.net/v4"
         const val SEARCH_URL = "$BASE_URL/articles/"
+        const val DEFAULT_LIMIT = 10
     }
 }

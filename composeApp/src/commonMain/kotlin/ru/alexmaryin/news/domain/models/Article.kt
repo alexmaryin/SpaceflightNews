@@ -13,5 +13,5 @@ data class Article(
     val featured: Boolean,
     val launches: List<Launch> = emptyList(),
     val events: List<Event> = emptyList(),
-    val isFavourite: Boolean = false
+    val isFavourite: Boolean
 )

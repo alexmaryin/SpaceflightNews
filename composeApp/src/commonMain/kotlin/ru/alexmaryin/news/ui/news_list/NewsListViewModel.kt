@@ -26,11 +26,13 @@ class NewsListViewModel(
 
 
     private var searchJob: Job? = null
+    private var favouritesJob: Job? = null
 
     private val _state = MutableStateFlow(NewsListState())
     val state = _state
         .onStart {
             observeSearchQuery()
+            observeFavouritesNews()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _state.value)
 
@@ -100,5 +102,13 @@ class NewsListViewModel(
                     )
                 }
             }
+    }
+
+    private fun observeFavouritesNews() {
+        favouritesJob?.cancel()
+        favouritesJob = repository.getFavouriteArticles()
+            .onEach { favouriteArticles ->
+                _state.update { it.copy(favouriteArticles = favouriteArticles) }
+            }.launchIn(viewModelScope)
     }
 }

@@ -1,7 +1,6 @@
 package ru.alexmaryin.news.data.mappers
 
 import ru.alexmaryin.news.data.local_api.database.ArticleEntity
-import ru.alexmaryin.news.data.local_api.database.ArticleWithRelations
 import ru.alexmaryin.news.data.local_api.database.AuthorEntity
 import ru.alexmaryin.news.data.local_api.database.EventEntity
 import ru.alexmaryin.news.data.local_api.database.LaunchEntity
@@ -21,36 +20,31 @@ private fun Socials.toEntity() = SocialsEntity(
     blueSky = blueSky ?: ""
 )
 
-private fun Launch.toEntity(articleId: Int) = LaunchEntity(
+fun Launch.toEntity(articleId: Int) = LaunchEntity(
     id = id,
     articleId = articleId,
     provider = provider
 )
 
-private fun Event.toEntity(articleId: Int) = EventEntity(
+fun Event.toEntity(articleId: Int) = EventEntity(
     articleId = articleId,
     provider = provider
 )
 
-private fun Author.toEntity(articleId: Int) = AuthorEntity(
+fun Author.toEntity(articleId: Int) = AuthorEntity(
     articleId = articleId,
     name = name,
     socials = socials.toEntity()
 )
 
-fun Article.toEntity() = ArticleWithRelations(
-    article = ArticleEntity(
-        id = id,
-        title = title,
-        url = url,
-        imageUrl = imageUrl,
-        newsSite = newsSite,
-        summary = summary,
-        publishedAt = publishedAt,
-        updatedAt = updatedAt,
-        featured = featured
-    ),
-    authors = authors.map { it.toEntity(id) },
-    launches = launches.map { it.toEntity(id) },
-    events = events.map { it.toEntity(id) },
+fun Article.toEntity() = ArticleEntity(
+    id = id,
+    title = title,
+    url = url,
+    imageUrl = imageUrl,
+    newsSite = newsSite,
+    summary = summary,
+    publishedAt = publishedAt,
+    updatedAt = updatedAt,
+    featured = featured
 )
