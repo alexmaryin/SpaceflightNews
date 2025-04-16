@@ -31,6 +31,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+            implementation(libs.androidx.paging.compose.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -43,7 +44,6 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.androidx.paging.common)
-            implementation(libs.androidx.paging.compose)
 
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
@@ -70,10 +70,15 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.androidx.paging.compose)
         }
         dependencies {
             ksp(libs.androidx.room.compiler)
         }
+    }
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 }
 

@@ -5,7 +5,6 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [
-        SocialsEntity::class,
         LaunchEntity::class,
         EventEntity::class,
         AuthorEntity::class,

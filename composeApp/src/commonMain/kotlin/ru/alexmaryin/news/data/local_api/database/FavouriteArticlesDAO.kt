@@ -2,21 +2,49 @@ package ru.alexmaryin.news.data.local_api.database
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavouriteArticlesDAO {
 
-    @Upsert
-    suspend fun upsert(article: ArticleEntity)
-
+    @Transaction
     @Query("SELECT * FROM ArticleEntity")
-    fun getFavouritesArticles(): Flow<List<ArticleEntity>>
+    suspend fun getAllArticles(): List<ArticleWithRelations>
 
-    @Query("SELECT * FROM ArticleEntity WHERE id=:id")
-    suspend fun getFavouriteArticleById(id: Int): ArticleEntity?
+    @Transaction
+    @Query("SELECT * FROM ArticleEntity WHERE id = :id")
+    suspend fun getArticleById(id: Int): ArticleWithRelations?
 
-    @Query("DELETE FROM ArticleEntity WHERE id=:id")
-    suspend fun deleteFavouriteArticle(id: Int)
+    @Upsert
+    suspend fun insertArticleData(article: ArticleEntity)
+
+    @Upsert
+    suspend fun insertAuthors(authors: List<AuthorEntity>)
+
+    @Upsert
+    suspend fun insertLaunches(launches: List<LaunchEntity>)
+
+    @Upsert
+    suspend fun insertEvents(events: List<EventEntity>)
+
+    @Transaction
+    suspend fun insertArticle(
+        article: ArticleEntity,
+        authors: List<AuthorEntity>,
+        launches: List<LaunchEntity>,
+        events: List<EventEntity>
+    ) {
+        insertArticleData(article)
+        insertAuthors(authors)
+        insertLaunches(launches)
+        insertEvents(events)
+    }
+
+    @Query("DELETE FROM ArticleEntity")
+    suspend fun clearAll()
+
+    @Query("DELETE FROM ArticleEntity WHERE id = :articleId")
+    suspend fun deleteArticleById(articleId: Int)
 }
