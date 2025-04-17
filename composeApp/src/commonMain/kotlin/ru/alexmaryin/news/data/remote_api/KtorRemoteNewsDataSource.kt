@@ -3,6 +3,7 @@ package ru.alexmaryin.news.data.remote_api
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import app.cash.paging.PagingData
+import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.parameter.parametersOf
 import org.koin.mp.KoinPlatform
@@ -20,7 +21,7 @@ class KtorRemoteNewsDataSource : RemoteNewsDataSource {
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
-                KoinPlatform.getKoin().get<NewsPagingSource> { parametersOf(query) }
+                KoinPlatform.getKoin().get<PagingSource<Int, Article>> { parametersOf(query) }
             }
         )
         return pager.flow

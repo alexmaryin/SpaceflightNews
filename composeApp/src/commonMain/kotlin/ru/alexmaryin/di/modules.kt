@@ -1,5 +1,6 @@
 package ru.alexmaryin.di
 
+import androidx.paging.PagingSource
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
@@ -15,6 +16,7 @@ import ru.alexmaryin.news.data.remote_api.NewsPagingSource
 import ru.alexmaryin.news.data.remote_api.RemoteNewsDataSource
 import ru.alexmaryin.news.data.repository.DefaultSpaceNewsRepository
 import ru.alexmaryin.news.domain.SpaceNewsRepository
+import ru.alexmaryin.news.domain.models.Article
 import ru.alexmaryin.news.ui.SelectedArticleViewModel
 import ru.alexmaryin.news.ui.article_details.ArticleDetailsViewModel
 import ru.alexmaryin.news.ui.news_list.NewsListViewModel
@@ -33,7 +35,7 @@ val sharedModule = module {
     }
     single { get<ArticlesDatabase>().dao }
 
-    factoryOf(::NewsPagingSource)
+    factoryOf(::NewsPagingSource).bind<PagingSource<Int, Article>>()
 
     viewModelOf(::NewsListViewModel)
     viewModelOf(::SelectedArticleViewModel)
