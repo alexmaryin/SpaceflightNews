@@ -37,7 +37,7 @@ fun FavouritesPage(
             color = MaterialTheme.colorScheme.onSurface
         )
     } else {
-        ArticlesList(
+        FavouritesList(
             articles = favouritesArticles,
             onArticleClick = { onAction(NewsListAction.OnNewsItemClick(it)) },
             modifier = Modifier.fillMaxSize(),

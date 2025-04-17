@@ -16,8 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
-import androidx.paging.Pager
-import app.cash.paging.compose.collectAsLazyPagingItems
+import app.cash.paging.compose.LazyPagingItems
 import org.jetbrains.compose.resources.stringResource
 import ru.alexmaryin.news.domain.models.Article
 import ru.alexmaryin.news.ui.news_list.NewsListAction
@@ -26,23 +25,16 @@ import spaceflightnews.composeapp.generated.resources.empty_search_results
 
 @Composable
 fun ArticlesPage(
-    refresh: Boolean,
     isScrollToStart: Boolean,
-    pager: Pager<Int, Article>,
+    articles: LazyPagingItems<Article>,
     onAction: (NewsListAction) -> Unit,
 ) {
     val newsListState = rememberLazyListState()
-    val articles = pager.flow.collectAsLazyPagingItems()
 
     LaunchedEffect(isScrollToStart) {
         if (isScrollToStart) {
             newsListState.animateScrollToItem(0)
         }
-    }
-
-    if (refresh) {
-        articles.refresh()
-        onAction(NewsListAction.OnRefreshed)
     }
 
     LaunchedEffect(newsListState.canScrollBackward) {
@@ -51,37 +43,33 @@ fun ArticlesPage(
         else onAction(NewsListAction.OnScrolledUp)
     }
 
-    LazyColumn(
-        state = newsListState,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        if (articles.loadState.refresh == LoadState.Loading) {
-            item {
-                Text(
-                    text = stringResource(Res.string.empty_search_results),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-        }
+    when {
+        articles.loadState.refresh is LoadState.Loading -> CircularProgressIndicator()
+        articles.itemCount == 0 -> Text(
+            text = stringResource(Res.string.empty_search_results),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface
+        )
 
-        items(count = articles.itemCount) { index ->
-            val article = articles[index]
-            article?.let {
-                ArticleItem(
-                    article = it,
-                    onClick = { onAction(NewsListAction.OnNewsItemClick(it)) },
-                    modifier = Modifier.widthIn(max = 800.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                )
+        else -> LazyColumn(
+            state = newsListState,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            items(count = articles.itemCount) { index ->
+                val article = articles[index]
+                article?.let {
+                    ArticleItem(
+                        article = it,
+                        onClick = { onAction(NewsListAction.OnNewsItemClick(it)) },
+                        modifier = Modifier.widthIn(max = 800.dp)
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                    )
+                }
             }
-        }
-
-        if (articles.loadState.append == LoadState.Loading) {
-            item {
+            if (articles.loadState.append == LoadState.Loading) item {
                 CircularProgressIndicator()
             }
         }

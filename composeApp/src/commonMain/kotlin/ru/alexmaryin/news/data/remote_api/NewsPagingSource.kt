@@ -6,7 +6,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import ru.alexmaryin.news.data.dto_models.ArticleDTO
 import ru.alexmaryin.news.data.dto_models.SpaceNewsResponseDTO
 import ru.alexmaryin.news.data.mappers.toArticle
 import ru.alexmaryin.news.data.remote_api.RemoteNewsDataSource.Companion.SEARCH_URL

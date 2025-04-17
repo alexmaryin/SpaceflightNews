@@ -33,16 +33,15 @@ import ru.alexmaryin.news.domain.models.Article
 
 class NewsListViewModel(
     private val repository: SpaceNewsRepository,
-    private val pager: Pager<Int, Article>
+    pager: Pager<Int, Article>
 ) : ViewModel() {
 
-    private var searchJob: Job? = null
     private var favouritesJob: Job? = null
+    private val articlesFlow = pager.flow.cachedIn(viewModelScope)
 
-    private val _state = MutableStateFlow(NewsListState(pager = pager))
+    private val _state = MutableStateFlow(NewsListState(articlesFlow = articlesFlow))
     val state = _state
         .onStart {
-//            pager.flow.stateIn(viewModelScope)
             // observeSearchQuery()
             observeFavouritesNews()
         }
@@ -50,9 +49,9 @@ class NewsListViewModel(
 
     fun onAction(action: NewsListAction) {
         when (action) {
-//            is NewsListAction.OnSearchQueryChange -> _state.update {
-//                it.copy(searchQuery = action.query)
-//            }
+            is NewsListAction.OnSearchQueryChange -> _state.update {
+                it.copy(searchQuery = action.query)
+            }
 
             is NewsListAction.OnTabSelected -> _state.update {
                 it.copy(selectedTabIndex = action.index)

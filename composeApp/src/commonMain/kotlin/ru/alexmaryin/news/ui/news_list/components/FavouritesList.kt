@@ -17,7 +17,7 @@ import ru.alexmaryin.news.domain.models.Article
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArticlesList(
+fun FavouritesList(
     articles: List<Article>,
     onArticleClick: (Article) -> Unit,
     modifier: Modifier = Modifier,
