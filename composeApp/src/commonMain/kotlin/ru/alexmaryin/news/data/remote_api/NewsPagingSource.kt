@@ -13,7 +13,7 @@ import ru.alexmaryin.news.domain.models.Article
 
 class NewsPagingSource(
     private val httpClient: HttpClient,
-    private val searchQuery: String = ""
+    private val searchQuery: String
 ) : PagingSource<Int, Article>() {
 
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {

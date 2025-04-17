@@ -2,6 +2,7 @@ package ru.alexmaryin.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
@@ -31,6 +32,8 @@ val sharedModule = module {
             .build()
     }
     single { get<ArticlesDatabase>().dao }
+
+    factoryOf(::NewsPagingSource)
 
     viewModelOf(::NewsListViewModel)
     viewModelOf(::SelectedArticleViewModel)
