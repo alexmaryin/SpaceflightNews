@@ -13,16 +13,16 @@ class KtorRemoteNewsDataSource : RemoteNewsDataSource {
         query: String,
         limit: Int
     ): Flow<PagingData<Article>> {
-        val pagingSource = KoinPlatform.getKoin().get<NewsPagingSource> { parametersOf(query) }
         val pager = Pager<Int, Article>(
             config = PagingConfig(
                 pageSize = RemoteNewsDataSource.DEFAULT_LIMIT,
                 initialLoadSize = RemoteNewsDataSource.DEFAULT_LIMIT,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { pagingSource }
+            pagingSourceFactory = {
+                KoinPlatform.getKoin().get<NewsPagingSource> { parametersOf(query) }
+            }
         )
-
         return pager.flow
     }
 }
