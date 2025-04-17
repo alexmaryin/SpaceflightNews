@@ -2,12 +2,13 @@ package ru.alexmaryin.news.ui.news_list
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ru.alexmaryin.core.ui.UiText
 import ru.alexmaryin.news.domain.models.Article
 
 data class NewsListState(
     val searchQuery: String = "",
-    val articlesFlow: Flow<PagingData<Article>>,
+    val articlesFlow: Flow<PagingData<Article>> = emptyFlow(),
     val favouriteArticles: List<Article> = emptyList(),
     val refresh: Boolean = false,
     val scrollState: ScrollState = ScrollState.SCROLLED_UP,

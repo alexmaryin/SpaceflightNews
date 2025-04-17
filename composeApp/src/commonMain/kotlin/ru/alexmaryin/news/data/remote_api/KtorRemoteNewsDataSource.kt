@@ -1,26 +1,15 @@
 package ru.alexmaryin.news.data.remote_api
 
-import io.ktor.client.HttpClient
-import io.ktor.client.request.get
-import io.ktor.client.request.parameter
-import ru.alexmaryin.core.data.safeCall
-import ru.alexmaryin.core.domain.DataError
-import ru.alexmaryin.core.domain.Result
-import ru.alexmaryin.news.data.dto_models.SpaceNewsResponseDTO
-import ru.alexmaryin.news.data.remote_api.RemoteNewsDataSource.Companion.SEARCH_URL
+import app.cash.paging.Pager
+import app.cash.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import ru.alexmaryin.news.domain.models.Article
 
 class KtorRemoteNewsDataSource(
-    private val httpClient: HttpClient
+    private val pager: Pager<Int, Article>
 ) : RemoteNewsDataSource {
-    override suspend fun searchNews(
+    override fun searchNews(
         query: String,
         limit: Int
-    ): Result<SpaceNewsResponseDTO, DataError.Remote> {
-        return safeCall {
-            httpClient.get(urlString = SEARCH_URL) {
-                parameter("limit", limit)
-                parameter("search", query)
-            }
-        }
-    }
+    ): Flow<PagingData<Article>> = pager.flow
 }

@@ -12,7 +12,8 @@ import ru.alexmaryin.news.data.remote_api.RemoteNewsDataSource.Companion.SEARCH_
 import ru.alexmaryin.news.domain.models.Article
 
 class NewsPagingSource(
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
+    private val searchQuery: String = ""
 ) : PagingSource<Int, Article>() {
 
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
@@ -29,6 +30,7 @@ class NewsPagingSource(
 
         return try {
             val response = httpClient.get(urlString = SEARCH_URL) {
+                if (searchQuery.isNotBlank()) parameter("search", searchQuery)
                 parameter("offset", offset)
                 parameter("limit", limit)
             }.body<SpaceNewsResponseDTO>()

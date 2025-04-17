@@ -1,14 +1,14 @@
 package ru.alexmaryin.news.data.remote_api
 
-import ru.alexmaryin.core.domain.DataError
-import ru.alexmaryin.core.domain.Result
-import ru.alexmaryin.news.data.dto_models.SpaceNewsResponseDTO
+import app.cash.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import ru.alexmaryin.news.domain.models.Article
 
 interface RemoteNewsDataSource {
-    suspend fun searchNews(
+    fun searchNews(
         query: String,
         limit: Int = DEFAULT_LIMIT
-    ): Result<SpaceNewsResponseDTO, DataError.Remote>
+    ): Flow<PagingData<Article>>
 
     companion object {
         const val BASE_URL = "https://api.spaceflightnewsapi.net/v4"

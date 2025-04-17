@@ -2,18 +2,10 @@ package ru.alexmaryin.news.ui.news_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.map
-import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
@@ -23,26 +15,19 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
-import ru.alexmaryin.core.domain.onError
-import ru.alexmaryin.core.domain.onSuccess
-import ru.alexmaryin.core.ui.toUiText
-import ru.alexmaryin.news.data.remote_api.NewsPagingSource
 import ru.alexmaryin.news.domain.SpaceNewsRepository
-import ru.alexmaryin.news.domain.models.Article
 
 class NewsListViewModel(
-    private val repository: SpaceNewsRepository,
-    pager: Pager<Int, Article>
+    private val repository: SpaceNewsRepository
 ) : ViewModel() {
 
+    private var searchJob: Job? = null
     private var favouritesJob: Job? = null
-    private val articlesFlow = pager.flow.cachedIn(viewModelScope)
 
-    private val _state = MutableStateFlow(NewsListState(articlesFlow = articlesFlow))
+    private val _state = MutableStateFlow(NewsListState())
     val state = _state
         .onStart {
-            // observeSearchQuery()
+            observeSearchQuery()
             observeFavouritesNews()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _state.value)
@@ -81,42 +66,23 @@ class NewsListViewModel(
         }
     }
 
-//    @OptIn(FlowPreview::class)
-//    private fun observeSearchQuery() {
-//        state.map { it.searchQuery }
-//            .distinctUntilChanged()
-//            .debounce(500L)
-//            .onEach { query ->
-//                searchJob?.cancel()
-//                searchJob = searchNews(query)
-//            }
-//            .launchIn(viewModelScope)
-//    }
-//
-//    private fun searchNews(query: String) = viewModelScope.launch {
-//        _state.update {
-//            it.copy(isLoading = true)
-//        }
-//        repository.searchNews(query)
-//            .onSuccess { results ->
-//                _state.update {
-//                    it.copy(
-//                        isLoading = false,
-//                        error = null,
-//                        searchResult = results
-//                    )
-//                }
-//            }
-//            .onError { error ->
-//                _state.update {
-//                    it.copy(
-//                        isLoading = false,
-//                        searchResult = emptyList(),
-//                        error = error.toUiText()
-//                    )
-//                }
-//            }
-//    }
+    @OptIn(FlowPreview::class)
+    private fun observeSearchQuery() {
+        state.map { it.searchQuery }
+            .distinctUntilChanged()
+            .debounce(500L)
+            .onEach { query ->
+                searchJob?.cancel()
+                searchJob = searchNews(query)
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun searchNews(query: String) = viewModelScope.launch {
+        _state.update {
+            it.copy(articlesFlow = repository.searchNews(query))
+        }
+    }
 
     private fun observeFavouritesNews() {
         favouritesJob?.cancel()
