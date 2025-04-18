@@ -80,7 +80,10 @@ class NewsListViewModel(
 
     private fun searchNews(query: String) = viewModelScope.launch {
         _state.update {
-            it.copy(articlesFlow = repository.searchNews(query))
+            it.copy(
+                articlesFlow = repository.searchNews(query),
+                scrollState = ScrollState.SCROLL_TO_START
+            )
         }
     }
 

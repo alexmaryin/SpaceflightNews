@@ -11,12 +11,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import ru.alexmaryin.news.domain.models.Article
 import ru.alexmaryin.news.ui.news_list.NewsListAction
@@ -30,11 +32,10 @@ fun ArticlesPage(
     onAction: (NewsListAction) -> Unit,
 ) {
     val newsListState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
 
-    LaunchedEffect(isScrollToStart) {
-        if (isScrollToStart) {
-            newsListState.animateScrollToItem(0)
-        }
+    if (isScrollToStart) scope.launch {
+        newsListState.animateScrollToItem(0)
     }
 
     LaunchedEffect(newsListState.canScrollBackward) {
