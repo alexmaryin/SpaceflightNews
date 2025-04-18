@@ -1,6 +1,6 @@
 package ru.alexmaryin.news.data.remote_api
 
-import app.cash.paging.PagingData
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ru.alexmaryin.news.domain.models.Article
 

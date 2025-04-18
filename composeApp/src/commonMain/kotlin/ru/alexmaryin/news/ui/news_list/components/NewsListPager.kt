@@ -31,6 +31,7 @@ fun ColumnScope.NewsListPager(
         articles.refresh()
         onAction(NewsListAction.OnRefreshed)
     }
+    val scrollToStart = state.scrollState == ScrollState.SCROLL_TO_START
 
     // pager following to selected tab
     LaunchedEffect(state.selectedTabIndex) {
@@ -52,7 +53,7 @@ fun ColumnScope.NewsListPager(
                 .padding(top = 6.dp),
             contentAlignment = Alignment.Center
         ) {
-            val scrollToStart = state.scrollState == ScrollState.SCROLL_TO_START
+
             when (pageIndex) {
                 Tabs.ARTICLES_TAB -> {
                     ArticlesPage(

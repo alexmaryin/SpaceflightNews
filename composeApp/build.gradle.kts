@@ -65,8 +65,6 @@ kotlin {
 
             implementation(libs.sqlite)
             implementation(libs.androidx.room.runtime)
-//            implementation(libs.androidx.room.paging)
-
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

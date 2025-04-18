@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
-import app.cash.paging.compose.LazyPagingItems
+import androidx.paging.compose.LazyPagingItems
 import org.jetbrains.compose.resources.stringResource
 import ru.alexmaryin.news.domain.models.Article
 import ru.alexmaryin.news.ui.news_list.NewsListAction
@@ -49,7 +49,8 @@ fun ArticlesPage(
             text = stringResource(Res.string.empty_search_results),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(16.dp)
         )
 
         else -> LazyColumn(
@@ -70,7 +71,7 @@ fun ArticlesPage(
                 }
             }
             if (articles.loadState.append == LoadState.Loading) item {
-                CircularProgressIndicator()
+                CircularProgressIndicator(Modifier.padding(6.dp))
             }
         }
     }
