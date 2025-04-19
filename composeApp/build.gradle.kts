@@ -85,7 +85,7 @@ android {
     compileSdkVersion(libs.versions.android.compileSdk.get().toInt())
 
     defaultConfig {
-        applicationId = "ru.alexmaryin"
+        applicationId = "ru.alexmaryin.spacenewsexplorer"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -117,11 +117,11 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "ru.alexmaryin"
+            packageName = "SpaceNews Explorer"
             packageVersion = "1.0.0"
 
             windows {
-                iconFile.set(project.file("icon.png"))
+                iconFile.set(project.file("src/commonMain/composeResources/drawable/icon.png"))
             }
         }
     }
