@@ -49,8 +49,7 @@ fun ArticleImage(isCompact: Boolean = false, url: String, title: String) {
                 it.result.throwable.printStackTrace()
                 imageLoadResult = Result.failure(it.result.throwable)
             },
-            contentScale = ContentScale.Crop,
-            filterQuality = FilterQuality.None
+            filterQuality = FilterQuality.Low
         )
 
         when (val result = imageLoadResult) {
