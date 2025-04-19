@@ -20,6 +20,7 @@ kotlinx-datetime = "0.6.2"
 
 koin-bom = "4.0.3"
 
+kotzillaSdk = "1.0.1"
 navigation = "2.8.0-alpha10"
 
 ktor = "3.1.2"
@@ -59,6 +60,8 @@ koin-android = { group = "io.insert-koin", name = "koin-android" }
 koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel" }
 koin-compose-navigation = { group = "io.insert-koin", name = "koin-compose-viewmodel-navigation" }
 
+kotzilla-sdk = { group = "io.kotzilla", name = "kotzilla-sdk", version.ref = "kotzillaSdk" }
+kotzilla-ktor = { group = "io.kotzilla", name = "kotzilla-sdk-ktor3", version.ref = "kotzillaSdk" }
 navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }

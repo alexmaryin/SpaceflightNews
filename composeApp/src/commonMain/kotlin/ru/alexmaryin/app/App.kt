@@ -36,12 +36,10 @@ fun App(
     ) {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = Navigation.NewsGraph) {
-            navigation<Navigation.NewsGraph>(
-                startDestination = Navigation.NewsScreen
-            ) {
-                composable<Navigation.NewsScreen> {
+            navigation<Navigation.NewsGraph>(startDestination = Navigation.NewsScreen) {
+                composable<Navigation.NewsScreen> { entry ->
                     val selectedArticleViewModel =
-                        it.sharedKoinViewModel<SelectedArticleViewModel>(navController)
+                        entry.sharedKoinViewModel<SelectedArticleViewModel>(navController)
 
                     LaunchedEffect(true) {
                         selectedArticleViewModel.onSelectArticle(null)
@@ -54,9 +52,9 @@ fun App(
                         navController.navigate(Navigation.ArticleDetails(article.id))
                     }
                 }
-                composable<Navigation.ArticleDetails> {
+                composable<Navigation.ArticleDetails> { entry ->
                     val selectedArticleViewModel =
-                        it.sharedKoinViewModel<SelectedArticleViewModel>(navController)
+                        entry.sharedKoinViewModel<SelectedArticleViewModel>(navController)
                     val selectedArticle by selectedArticleViewModel
                         .selectedArticle.collectAsStateWithLifecycle()
                     val viewModel = koinViewModel<ArticleDetailsViewModel>()

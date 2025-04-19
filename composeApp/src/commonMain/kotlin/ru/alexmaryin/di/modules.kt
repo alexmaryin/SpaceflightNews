@@ -3,7 +3,6 @@ package ru.alexmaryin.di
 import androidx.paging.PagingSource
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
@@ -11,6 +10,7 @@ import org.koin.dsl.module
 import ru.alexmaryin.core.data.HttpClientFactory
 import ru.alexmaryin.news.data.local_api.database.ArticlesDatabase
 import ru.alexmaryin.news.data.local_api.database.ArticlesDbFactory
+import ru.alexmaryin.news.data.local_api.database.FavouriteArticlesDAO
 import ru.alexmaryin.news.data.remote_api.KtorRemoteNewsDataSource
 import ru.alexmaryin.news.data.remote_api.NewsPagingSource
 import ru.alexmaryin.news.data.remote_api.RemoteNewsDataSource
@@ -28,14 +28,14 @@ val sharedModule = module {
     singleOf(::KtorRemoteNewsDataSource).bind<RemoteNewsDataSource>()
     singleOf(::DefaultSpaceNewsRepository).bind<SpaceNewsRepository>()
 
-    single {
+    single<ArticlesDatabase> {
         get<ArticlesDbFactory>().create()
             .setDriver(BundledSQLiteDriver())
             .build()
     }
-    single { get<ArticlesDatabase>().dao }
+    single<FavouriteArticlesDAO> { get<ArticlesDatabase>().dao }
 
-    factoryOf(::NewsPagingSource).bind<PagingSource<Int, Article>>()
+    factory<PagingSource<Int, Article>> { (query: String) -> NewsPagingSource(get(), query) }
 
     viewModelOf(::NewsListViewModel)
     viewModelOf(::SelectedArticleViewModel)

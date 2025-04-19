@@ -9,15 +9,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import ru.alexmaryin.core.domain.HandlePagingItems
 import ru.alexmaryin.core.ui.components.SplashText

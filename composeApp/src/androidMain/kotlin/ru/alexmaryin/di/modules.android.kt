@@ -10,5 +10,5 @@ import ru.alexmaryin.news.data.local_api.database.ArticlesDbFactory
 actual val platformModule: Module
     get() = module {
         single<HttpClientEngine> { CIO.create() }
-        single { ArticlesDbFactory(androidApplication()) }
+        single<ArticlesDbFactory> { ArticlesDbFactory(androidApplication()) }
     }

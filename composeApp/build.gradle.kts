@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    id("io.kotzilla.kotzilla-plugin")
 }
 
 kotlin {
@@ -17,17 +18,18 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     jvm("desktop")
 
     room {
         schemaDirectory("$projectDir/schemas")
     }
-    
+
     sourceSets {
         val desktopMain by getting
-        
+
         androidMain.dependencies {
+            implementation(libs.kotzilla.ktor)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
@@ -88,8 +90,8 @@ android {
         applicationId = "ru.alexmaryin.spacenewsexplorer"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
     }
     packaging {
         resources {
@@ -118,7 +120,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "SpaceNews Explorer"
-            packageVersion = "1.0.0"
+            packageVersion = "1.1.0"
 
             windows {
                 iconFile.set(project.file("src/commonMain/composeResources/drawable/icon.png"))
