@@ -17,10 +17,12 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import ru.alexmaryin.core.domain.asHandleable
 import ru.alexmaryin.core.domain.onEmpty
 import ru.alexmaryin.core.domain.onError
 import ru.alexmaryin.core.domain.onRefresh
-import ru.alexmaryin.core.ui.components.BodyText
+import ru.alexmaryin.core.domain.onSuccess
+import ru.alexmaryin.core.ui.components.SplashText
 import ru.alexmaryin.core.ui.toUiText
 import ru.alexmaryin.news.domain.models.Article
 import ru.alexmaryin.news.ui.news_list.NewsListAction
@@ -46,17 +48,18 @@ fun ArticlesPage(
         else onAction(NewsListAction.OnScrolledUp)
     }
 
-    articles.onRefresh { CircularProgressIndicator() }
-        ?.onEmpty { BodyText(stringResource(Res.string.empty_search_results)) }
-        ?.onError { error -> BodyText(error.toUiText().asString(), isError = true) }
-        ?.let { page ->
+    articles.asHandleable()
+        .onRefresh { CircularProgressIndicator() }
+        .onEmpty { SplashText(stringResource(Res.string.empty_search_results)) }
+        .onError { error -> SplashText(error.toUiText().asString(), isError = true) }
+        .onSuccess { items ->
             LazyColumn(
                 state = newsListState,
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                items(count = page.itemCount) { index ->
-                    val article = page[index]
+                items(count = items.itemCount) { index ->
+                    val article = items[index]
                     article?.let {
                         ArticleItem(
                             article = it,

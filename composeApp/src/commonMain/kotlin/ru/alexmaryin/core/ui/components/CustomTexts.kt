@@ -12,11 +12,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.flow.Flow
-import org.jetbrains.compose.resources.stringResource
-import spaceflightnews.composeapp.generated.resources.Res
-import spaceflightnews.composeapp.generated.resources.by_authors
-import spaceflightnews.composeapp.generated.resources.empty_search_results
 
 @Composable
 fun SurfaceText(text: String, modifier: Modifier = Modifier) {
@@ -67,7 +62,7 @@ fun TintedTitle(text: String, tint: Color, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun BodyText (
+fun SplashText (
     text: String,
     isError: Boolean = false,
     modifier: Modifier = Modifier
