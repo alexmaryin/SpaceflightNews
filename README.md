@@ -6,6 +6,6 @@
 
 Uses [Spaceflight News API](https://thespacedevs.com/snapi "Spaceflight News API") for fetching news about Cosmos and science. 
 
-See [Privacy policy](https://github.com/alexmaryin/SpaceflightNews/blob/master/privacy.md "Privacy policy") if you wish but don't expect some kind of surpire.
+See [Privacy policy](https://github.com/alexmaryin/SpaceflightNews/blob/master/privacy.md "Privacy policy") if you wish but don't expect some kind of surprise.
 
 &copy; Alex Maryin, 2025.
