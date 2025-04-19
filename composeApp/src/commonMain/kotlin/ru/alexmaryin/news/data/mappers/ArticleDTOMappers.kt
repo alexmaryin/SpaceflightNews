@@ -28,7 +28,7 @@ fun ArticleDTO.toArticle() = Article(
 
 private fun AuthorDTO.toAuthor() = Author(
     name = name,
-    socials = socials?.toSocials() ?: Socials()
+    socials = socials?.toSocials()
 )
 
 private fun SocialsDTO.toSocials() = Socials(

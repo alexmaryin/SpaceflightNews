@@ -57,7 +57,9 @@ fun ArticleMeta(
             horizontalArrangement = Arrangement.Start
         ) {
             authors.map {
-                ArticleChip { PrimaryContainerText(it.name) }
+                ArticleChip {
+                    AuthorChip(it)
+                }
             }
         }
     }

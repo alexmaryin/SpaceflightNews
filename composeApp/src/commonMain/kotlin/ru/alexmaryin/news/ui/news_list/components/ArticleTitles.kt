@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
+import ru.alexmaryin.core.ui.components.SurfaceIAText
 import spaceflightnews.composeapp.generated.resources.Res
 import spaceflightnews.composeapp.generated.resources.by_authors
 
@@ -32,23 +33,12 @@ fun ArticleTitles(title: String, authors: String?, term: String, summary: String
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             authors?.let {
-                Text(
-                    text = stringResource(Res.string.by_authors, it),
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.33f)
-                )
-                Spacer(Modifier.width(12.dp))
+                SurfaceIAText(stringResource(Res.string.by_authors, it), modifier = Modifier.weight(1f))
             }
-            Text(
-                text = term,
-                style = MaterialTheme.typography.bodyLarge,
-                fontStyle = FontStyle.Italic,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.33f)
-            )
+            SurfaceIAText(term, modifier = Modifier.weight(1f))
         }
         Text(
             text = summary,
