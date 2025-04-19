@@ -10,18 +10,16 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-import ru.alexmaryin.core.domain.asHandleable
-import ru.alexmaryin.core.domain.onEmpty
-import ru.alexmaryin.core.domain.onError
-import ru.alexmaryin.core.domain.onRefresh
-import ru.alexmaryin.core.domain.onSuccess
+import ru.alexmaryin.core.domain.HandlePagingItems
 import ru.alexmaryin.core.ui.components.SplashText
 import ru.alexmaryin.core.ui.toUiText
 import ru.alexmaryin.news.domain.models.Article
@@ -36,10 +34,12 @@ fun ArticlesPage(
     onAction: (NewsListAction) -> Unit,
 ) {
     val newsListState = rememberLazyListState()
-    val scope = rememberCoroutineScope()
+    val isLoaded = articles.itemSnapshotList.items.isNotEmpty()
 
-    if (isScrollToStart) scope.launch {
-        newsListState.animateScrollToItem(0)
+    LaunchedEffect(isScrollToStart, isLoaded) {
+        if (isScrollToStart && isLoaded) {
+            newsListState.animateScrollToItem(0)
+        }
     }
 
     LaunchedEffect(newsListState.canScrollBackward) {
@@ -48,11 +48,11 @@ fun ArticlesPage(
         else onAction(NewsListAction.OnScrolledUp)
     }
 
-    articles.asHandleable()
-        .onRefresh { CircularProgressIndicator() }
-        .onEmpty { SplashText(stringResource(Res.string.empty_search_results)) }
-        .onError { error -> SplashText(error.toUiText().asString(), isError = true) }
-        .onSuccess { items ->
+    HandlePagingItems(articles) {
+        onRefresh { CircularProgressIndicator() }
+        onEmpty { SplashText(stringResource(Res.string.empty_search_results)) }
+        onError { error -> SplashText(error.toUiText().asString(), isError = true) }
+        onSuccess { items ->
             LazyColumn(
                 state = newsListState,
                 verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -75,5 +75,6 @@ fun ArticlesPage(
                 }
             }
         }
+    }
 }
 
