@@ -1,26 +1,30 @@
 package ru.alexmaryin.news.data.remote_api
 
-import io.ktor.client.HttpClient
-import io.ktor.client.request.get
-import io.ktor.client.request.parameter
-import ru.alexmaryin.core.data.safeCall
-import ru.alexmaryin.core.domain.DataError
-import ru.alexmaryin.core.domain.Result
-import ru.alexmaryin.news.data.dto_models.SpaceNewsResponseDTO
-import ru.alexmaryin.news.data.remote_api.RemoteNewsDataSource.Companion.SEARCH_URL
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import kotlinx.coroutines.flow.Flow
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+import org.koin.core.parameter.parametersOf
+import ru.alexmaryin.news.domain.models.Article
 
-class KtorRemoteNewsDataSource(
-    private val httpClient: HttpClient
-) : RemoteNewsDataSource {
-    override suspend fun searchNews(
+class KtorRemoteNewsDataSource : RemoteNewsDataSource, KoinComponent {
+    override fun searchNews(
         query: String,
         limit: Int
-    ): Result<SpaceNewsResponseDTO, DataError.Remote> {
-        return safeCall {
-            httpClient.get(urlString = SEARCH_URL) {
-                parameter("limit", limit)
-                parameter("search", query)
+    ): Flow<PagingData<Article>> {
+        val pager = Pager<Int, Article>(
+            config = PagingConfig(
+                pageSize = RemoteNewsDataSource.DEFAULT_LIMIT,
+                initialLoadSize = RemoteNewsDataSource.DEFAULT_LIMIT,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                get<PagingSource<Int, Article>> { parametersOf(query) }
             }
-        }
+        )
+        return pager.flow
     }
 }

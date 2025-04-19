@@ -31,7 +31,6 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
-            implementation(libs.androidx.paging.compose.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -44,6 +43,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.androidx.paging.common)
+            implementation(libs.androidx.paging.compose)
 
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
@@ -65,12 +65,10 @@ kotlin {
 
             implementation(libs.sqlite)
             implementation(libs.androidx.room.runtime)
-            implementation(libs.androidx.room.paging)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
-            implementation(libs.androidx.paging.compose)
         }
         dependencies {
             ksp(libs.androidx.room.compiler)
@@ -121,6 +119,10 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "ru.alexmaryin"
             packageVersion = "1.0.0"
+
+            windows {
+                iconFile.set(project.file("icon.png"))
+            }
         }
     }
 }

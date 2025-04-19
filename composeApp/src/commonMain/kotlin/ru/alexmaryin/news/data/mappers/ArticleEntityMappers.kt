@@ -12,12 +12,12 @@ import ru.alexmaryin.news.domain.models.Launch
 import ru.alexmaryin.news.domain.models.Socials
 
 private fun Socials.toEntity() = SocialsEntity(
-    x = x ?: "",
-    youTube = youTube ?: "",
-    instagram = instagram ?: "",
-    linkedin = linkedin ?: "",
-    mastodon = mastodon ?: "",
-    blueSky = blueSky ?: ""
+    x = x,
+    youTube = youTube,
+    instagram = instagram,
+    linkedin = linkedin,
+    mastodon = mastodon,
+    blueSky = blueSky
 )
 
 fun Launch.toEntity(articleId: Int) = LaunchEntity(
@@ -34,7 +34,7 @@ fun Event.toEntity(articleId: Int) = EventEntity(
 fun Author.toEntity(articleId: Int) = AuthorEntity(
     articleId = articleId,
     name = name,
-    socials = socials.toEntity()
+    socials = socials?.toEntity()
 )
 
 fun Article.toEntity() = ArticleEntity(

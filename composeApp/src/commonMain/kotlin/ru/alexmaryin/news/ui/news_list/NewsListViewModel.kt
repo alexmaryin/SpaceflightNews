@@ -15,15 +15,11 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.alexmaryin.core.domain.onError
-import ru.alexmaryin.core.domain.onSuccess
-import ru.alexmaryin.core.ui.toUiText
 import ru.alexmaryin.news.domain.SpaceNewsRepository
 
 class NewsListViewModel(
     private val repository: SpaceNewsRepository
 ) : ViewModel() {
-
 
     private var searchJob: Job? = null
     private var favouritesJob: Job? = null
@@ -58,9 +54,12 @@ class NewsListViewModel(
                 it.copy(scrollState = ScrollState.SCROLLED_DOWN)
             }
 
-            is NewsListAction.OnRefresh -> {
-                searchJob?.cancel()
-                searchJob = searchNews(state.value.searchQuery)
+            is NewsListAction.OnRefresh -> _state.update {
+                it.copy(refresh = true)
+            }
+
+            is NewsListAction.OnRefreshed -> _state.update {
+                it.copy(refresh = false)
             }
 
             else -> Unit
@@ -81,27 +80,11 @@ class NewsListViewModel(
 
     private fun searchNews(query: String) = viewModelScope.launch {
         _state.update {
-            it.copy(isLoading = true)
+            it.copy(
+                articlesFlow = repository.searchNews(query),
+                scrollState = ScrollState.SCROLL_TO_START
+            )
         }
-        repository.searchNews(query)
-            .onSuccess { results ->
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        error = null,
-                        searchResult = results
-                    )
-                }
-            }
-            .onError { error ->
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        searchResult = emptyList(),
-                        error = error.toUiText()
-                    )
-                }
-            }
     }
 
     private fun observeFavouritesNews() {

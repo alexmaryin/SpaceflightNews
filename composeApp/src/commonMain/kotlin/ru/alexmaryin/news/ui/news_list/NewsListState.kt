@@ -1,13 +1,16 @@
 package ru.alexmaryin.news.ui.news_list
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ru.alexmaryin.core.ui.UiText
 import ru.alexmaryin.news.domain.models.Article
 
 data class NewsListState(
     val searchQuery: String = "",
-    val searchResult: List<Article> = emptyList(),
+    val articlesFlow: Flow<PagingData<Article>> = emptyFlow(),
     val favouriteArticles: List<Article> = emptyList(),
-    val isLoading: Boolean = false,
+    val refresh: Boolean = false,
     val scrollState: ScrollState = ScrollState.SCROLLED_UP,
     val selectedTabIndex: Int = Tabs.ARTICLES_TAB,
     val error: UiText? = null,

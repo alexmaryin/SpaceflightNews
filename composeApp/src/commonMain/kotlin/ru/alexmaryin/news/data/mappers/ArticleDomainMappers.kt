@@ -47,5 +47,5 @@ fun SocialsEntity.toSocials() = Socials(
 
 fun AuthorEntity.toAuthor() = Author(
     name = name,
-    socials = socials.toSocials()
+    socials = socials?.toSocials()
 )

@@ -21,5 +21,5 @@ data class AuthorEntity(
     val name: String,
 
     @Embedded(prefix = "social_")
-    val socials: SocialsEntity
+    val socials: SocialsEntity? = null
 )
