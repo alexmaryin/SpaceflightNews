@@ -2,6 +2,7 @@ package ru.alexmaryin.news.ui.news_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -81,7 +82,7 @@ class NewsListViewModel(
     private fun searchNews(query: String) = viewModelScope.launch {
         _state.update {
             it.copy(
-                articlesFlow = repository.searchNews(query),
+                articlesFlow = repository.searchNews(query).cachedIn(viewModelScope),
                 scrollState = ScrollState.SCROLL_TO_START
             )
         }

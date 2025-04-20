@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import org.jetbrains.compose.resources.stringResource
 import ru.alexmaryin.core.domain.HandlePagingItems
 import ru.alexmaryin.core.ui.components.SplashText
@@ -54,7 +56,11 @@ fun ArticlesPage(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                items(count = items.itemCount) { index ->
+                items(
+                    count = items.itemCount,
+                    key = items.itemKey { it.id },
+                    contentType = items.itemContentType { "spaceNews articles" }
+                ) { index ->
                     val article = items[index]
                     article?.let {
                         ArticleItem(
