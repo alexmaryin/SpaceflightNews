@@ -1,10 +1,14 @@
 package ru.alexmaryin.core.domain
 
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyScopeMarker
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemKey
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
 import io.ktor.network.sockets.*
@@ -67,6 +71,26 @@ class PagingHandlerScope<T : Any>(
             handled = true
             body(result)
         } else this
+    }
+
+    @LazyScopeMarker
+    fun LazyListScope.onAppendItem(body: @Composable LazyItemScope.() -> Unit) {
+        if (items.loadState.append == LoadState.Loading) {
+            item { body(this) }
+        }
+    }
+
+    @LazyScopeMarker
+    fun LazyListScope.onPagingItems(key: (T) -> Any, body: @Composable LazyItemScope.(T) -> Unit) {
+        items(
+            count = items.itemCount,
+            key = items.itemKey(key),
+        ) { index ->
+            val item = items[index]
+            item?.let {
+                body(it)
+            }
+        }
     }
 }
 

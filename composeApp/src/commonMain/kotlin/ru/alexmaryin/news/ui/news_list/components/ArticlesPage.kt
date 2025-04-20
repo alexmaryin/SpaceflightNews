@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
@@ -56,25 +55,16 @@ fun ArticlesPage(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                items(
-                    count = items.itemCount,
-                    key = items.itemKey { it.id },
-                    contentType = items.itemContentType { "spaceNews articles" }
-                ) { index ->
-                    val article = items[index]
-                    article?.let {
-                        ArticleItem(
-                            article = it,
-                            onClick = { onAction(NewsListAction.OnNewsItemClick(it)) },
-                            modifier = Modifier.widthIn(max = 800.dp)
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                        )
-                    }
+                onPagingItems(key = { it.id }) { article ->
+                    ArticleItem(
+                        article = article,
+                        onClick = { onAction(NewsListAction.OnNewsItemClick(article)) },
+                        modifier = Modifier.widthIn(max = 800.dp)
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                    )
                 }
-                if (articles.loadState.append == LoadState.Loading) item {
-                    CircularProgressIndicator(Modifier.padding(6.dp))
-                }
+                onAppendItem { CircularProgressIndicator(Modifier.padding(6.dp)) }
             }
         }
     }
