@@ -3,6 +3,5 @@ package ru.alexmaryin.news.ui.article_details
 import ru.alexmaryin.news.domain.models.Article
 
 data class ArticleDetailsState(
-    val isFavourite: Boolean = false,
-    val article: Article? = null
+    val article: Article? = null,
 )

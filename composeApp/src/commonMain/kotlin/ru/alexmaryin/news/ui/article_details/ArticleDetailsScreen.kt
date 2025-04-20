@@ -64,7 +64,7 @@ private fun ArticlesDetailsScreen(
             ArticleHeader(
                 imageUrl = article.imageUrl,
                 title = article.title,
-                isFavourite = state.isFavourite,
+                isFavourite = article.isFavourite,
                 scrollState = scrollState,
                 onBackClick = { onAction(ArticleDetailsAction.onBackClick) },
                 onFavouriteClick = { onAction(ArticleDetailsAction.onFavouriteClick) }

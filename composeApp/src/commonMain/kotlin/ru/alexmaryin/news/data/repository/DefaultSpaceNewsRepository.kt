@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.map
 import ru.alexmaryin.core.domain.DataError
 import ru.alexmaryin.core.domain.EmptyResult
 import ru.alexmaryin.core.domain.Result
-import ru.alexmaryin.news.data.local_api.database.FavouriteArticlesDAO
+import ru.alexmaryin.news.data.local_api.database.ArticlesDAO
 import ru.alexmaryin.news.data.mappers.toArticle
 import ru.alexmaryin.news.data.mappers.toEntity
 import ru.alexmaryin.news.data.remote_api.RemoteNewsDataSource
@@ -16,26 +16,20 @@ import ru.alexmaryin.news.domain.models.Article
 
 class DefaultSpaceNewsRepository(
     private val remoteDataSource: RemoteNewsDataSource,
-    private val localDataSource: FavouriteArticlesDAO
+    private val localDataSource: ArticlesDAO
 ) : SpaceNewsRepository {
     override fun searchNews(query: String): Flow<PagingData<Article>> {
         return remoteDataSource.searchNews(query)
     }
 
     override fun getFavouriteArticles(): Flow<List<Article>> =
-        localDataSource.getAllArticles().map { entities ->
+        localDataSource.getFavouriteArticles().map { entities ->
             entities.map { it.toArticle() }
         }
 
-    override fun isArticleFavourite(id: Int): Flow<Boolean> {
-        return localDataSource.getAllArticles().map { entities ->
-            entities.any { it.article.id == id }
-        }
-    }
-
     override suspend fun markAsFavourite(article: Article): EmptyResult<DataError.Local> {
         return try {
-            localDataSource.insertArticle(
+            localDataSource.insertFavouriteArticle(
                 article = article.toEntity(),
                 authors = article.authors.map { it.toEntity(article.id) },
                 launches = article.launches.map { it.toEntity(article.id) },
@@ -48,6 +42,6 @@ class DefaultSpaceNewsRepository(
     }
 
     override suspend fun deleteFromFavourites(id: Int) {
-        localDataSource.deleteArticleById(id)
+        localDataSource.deleteFromFavourites(id)
     }
 }

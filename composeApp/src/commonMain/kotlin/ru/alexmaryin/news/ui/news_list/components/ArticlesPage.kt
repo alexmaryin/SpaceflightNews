@@ -13,8 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemContentType
-import androidx.paging.compose.itemKey
 import org.jetbrains.compose.resources.stringResource
 import ru.alexmaryin.core.domain.HandlePagingItems
 import ru.alexmaryin.core.ui.components.SplashText

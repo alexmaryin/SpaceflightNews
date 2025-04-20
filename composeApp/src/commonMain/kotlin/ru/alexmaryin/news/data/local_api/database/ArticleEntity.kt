@@ -13,5 +13,6 @@ data class ArticleEntity(
     val summary: String,
     val publishedAt: String,
     val updatedAt: String,
-    val featured: Boolean
+    val featured: Boolean,
+    val isFavourite: Boolean = false
 )
