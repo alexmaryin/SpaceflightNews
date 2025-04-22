@@ -1,16 +1,11 @@
 package ru.alexmaryin.news.ui.news_list
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -28,6 +23,7 @@ import ru.alexmaryin.news.domain.models.Article
 import ru.alexmaryin.news.ui.news_list.components.NewsListPager
 import ru.alexmaryin.news.ui.news_list.components.TabsBar
 import spaceflightnews.composeapp.generated.resources.Res
+import spaceflightnews.composeapp.generated.resources.app_name
 import spaceflightnews.composeapp.generated.resources.refresh_articles
 import spaceflightnews.composeapp.generated.resources.scroll_to_start
 
@@ -35,16 +31,17 @@ import spaceflightnews.composeapp.generated.resources.scroll_to_start
 fun NewsListScreenRoot(
     viewModel: NewsListViewModel = koinViewModel(),
     onItemClick: (Article) -> Unit,
+    onAboutClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     NewsListScreen(
         state,
         onAction = { action ->
-            if (action is NewsListAction.OnNewsItemClick) {
-                onItemClick(action.article)
-            } else {
-                viewModel.onAction(action)
+            when (action) {
+                is NewsListAction.OnNewsItemClick -> onItemClick(action.article)
+                is NewsListAction.AboutClicked -> onAboutClick()
+                else -> viewModel.onAction(action)
             }
         }
     )
@@ -57,13 +54,14 @@ fun NewsListScreen(
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
-            .statusBarsPadding()
+            .safeContentPadding()
             .background(MaterialTheme.colorScheme.primaryContainer),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             SearchBar(
                 query = state.searchQuery,
@@ -75,6 +73,20 @@ fun NewsListScreen(
                     .weight(1f)
                     .padding(16.dp)
             )
+
+            IconButton(
+                onClick = { onAction(NewsListAction.AboutClicked) },
+                colors = IconButtonDefaults.iconButtonColors().copy(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                    contentColor = MaterialTheme.colorScheme.onSurface
+                ),
+                modifier = Modifier.padding(vertical = 16.dp, horizontal = 4.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Info,
+                    contentDescription = stringResource(Res.string.app_name)
+                )
+            }
 
             val scrolledUp = state.scrollState == ScrollState.SCROLLED_UP
 
@@ -88,7 +100,7 @@ fun NewsListScreen(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     contentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(vertical = 16.dp, horizontal = 4.dp)
             ) {
                 Icon(
                     imageVector = if (scrolledUp) Icons.Filled.Refresh

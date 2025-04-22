@@ -19,6 +19,8 @@ import org.koin.compose.viewmodel.koinViewModel
 import ru.alexmaryin.core.ui.theme.spaceNewsDarkScheme
 import ru.alexmaryin.core.ui.theme.spaceNewsLightScheme
 import ru.alexmaryin.news.ui.SelectedArticleViewModel
+import ru.alexmaryin.news.ui.about.AboutScreenRoot
+import ru.alexmaryin.news.ui.about.AboutViewModel
 import ru.alexmaryin.news.ui.article_details.ArticleDetailsAction
 import ru.alexmaryin.news.ui.article_details.ArticleDetailsViewModel
 import ru.alexmaryin.news.ui.article_details.ArticlesDetailsScreenRoot
@@ -46,11 +48,13 @@ fun App(
                     }
 
                     NewsListScreenRoot(
-                        viewModel = koinViewModel<NewsListViewModel>()
-                    ) { article ->
-                        selectedArticleViewModel.onSelectArticle(article)
-                        navController.navigate(Navigation.ArticleDetails(article.id))
-                    }
+                        viewModel = koinViewModel<NewsListViewModel>(),
+                        onItemClick = { article ->
+                            selectedArticleViewModel.onSelectArticle(article)
+                            navController.navigate(Navigation.ArticleDetails(article.id))
+                        },
+                        onAboutClick = { navController.navigate(Navigation.AboutScreen) }
+                    )
                 }
                 composable<Navigation.ArticleDetails> { entry ->
                     val selectedArticleViewModel =
@@ -68,6 +72,11 @@ fun App(
                     ArticlesDetailsScreenRoot(
                         viewModel = viewModel
                     ) { navController.navigateUp() }
+                }
+
+                composable<Navigation.AboutScreen> { entry ->
+                    val viewModel = koinViewModel<AboutViewModel>()
+                    AboutScreenRoot(viewModel) { navController.navigateUp() }
                 }
             }
         }

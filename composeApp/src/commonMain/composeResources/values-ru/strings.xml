@@ -31,4 +31,14 @@
     <string name="hours_ago">%1$d ч. назад</string>
     <string name="minutes_ago">%1$d мин. назад</string>
     <string name="by_authors">%1$s</string>
+    <!--    About screen    -->
+    <string name="app_name">SpaceNews Explorer</string>
+    <string name="app_slogan">Собираем самые важные космические новости для вас</string>
+    <string name="app_description">Приложение отображает последние статьи из Spaceflight News API с функцией полнотекстового поиска по всем источникам + сохраняет список избранного.\nИспользует Spaceflight News API для сбора новостных статей, связанных с космосом с множества проверенных веб-сайтов.\nКогда данные доступны, они импортируются из RSS-каналов или API источников (NASA, EASA, смотрите список ниже). В противном случае они собираются с помощью web-робота. Во время обработки применяются некоторые базовые фильтры для удаления ненужных данных.</string>
+    <string name="app_source_list_caption">Нажмите, чтобы раскрыть полный список источников</string>
+    <string name="app_source_list">"ABC News", "AmericaSpace", "Arstechnica", "Blue Origin", "Boeing", "CNBC", "CNES", "ElonX", "ESA", "Euronews", "European Spaceflight", "Horizon", "Jet Propulsion Laboratory", "NASA", "NASASpaceflight", "National Geographic",  "National Space Society",     "Phys", "Planetary Society", "Reuters", "Space.com", "SpaceDaily", "SpaceFlight Insider", "Spaceflight Now", "SpaceNews",   "SpacePolicyOnline.com", "Space Scout", "SpaceX", "SyFy", "TechCrunch", "Teslarati", "The Drive", "The Japan Times", "The Launch Pad", "The National", "The New York Times", "The Space Devs", "The Space Review", "The Verge", "The Wall Street Journal", "United Launch Alliance", "Virgin Galactic"</string>
+    <string name="app_contact">Cвяжитесь с разработчиком по почте: </string>
+    <string name="app_url_caption">Хотите знать больше?</string>
+    <string name="app_privacy_policy_caption">Политика конфиденциальности</string>
+    <string name="app_author">\u00A9 Алекс Марьин, 2025. Версия 1.1</string>
 </resources>
