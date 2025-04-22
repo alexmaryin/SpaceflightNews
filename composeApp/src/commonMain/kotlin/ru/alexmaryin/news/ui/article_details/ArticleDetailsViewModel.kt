@@ -6,9 +6,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -20,9 +17,11 @@ class ArticleDetailsViewModel(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _state = MutableStateFlow(ArticleDetailsState())
-    val state = _state.onStart {
-        observeFavouriteStatus()
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _state.value)
+    val state = _state.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000L),
+        _state.value
+    )
 
     private val articleId = savedStateHandle.toRoute<Navigation.ArticleDetails>().articleId
 
@@ -33,25 +32,24 @@ class ArticleDetailsViewModel(
                     it.copy(article = action.article)
                 }
             }
+
             ArticleDetailsAction.onFavouriteClick -> {
-                viewModelScope.launch {
-                    if (state.value.isFavourite) {
-                        repository.deleteFromFavourites(articleId)
-                    } else {
-                        state.value.article?.let {
-                            repository.markAsFavourite(it)
+                state.value.article?.let { article ->
+                    viewModelScope.launch {
+                        if (article.isFavourite) {
+                            repository.deleteFromFavourites(articleId)
+                        } else {
+                            repository.markAsFavourite(article)
+                        }
+                        _state.update {
+                            it.copy(
+                                article = article.copy(isFavourite = !article.isFavourite)
+                            )
                         }
                     }
                 }
             }
             else -> Unit
         }
-    }
-
-    private fun observeFavouriteStatus() {
-        repository.isArticleFavourite(articleId)
-            .onEach { favourite ->
-                _state.update { it.copy(isFavourite = favourite) }
-            }.launchIn(viewModelScope)
     }
 }

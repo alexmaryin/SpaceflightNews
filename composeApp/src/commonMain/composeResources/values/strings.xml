@@ -31,4 +31,15 @@
     <string name="hours_ago">%1$d hours ago</string>
     <string name="minutes_ago">%1$d minutes ago</string>
     <string name="by_authors">by %1$s</string>
+<!--    About screen    -->
+    <string name="app_name">SpaceNews Explorer</string>
+    <string name="app_slogan">Collect important news about cosmos and astronomy for you</string>
+    <string name="app_description">The app shows latest articles from The Spaceflight News API with full-text search feature across the whole sources and favorites pin.\n Uses Spaceflight News API to aggregate Space-related news articles from numerous websites.\n When available, the data is imported from RSS feeds or the API of source websites (NASA, EASA, see the list below). Otherwise, it is acquired through automatic web scraping. Some basic filters are applied during processing to remove irrelevant data.</string>
+    <string name="app_source_list_caption">Click to see the full list of news sources</string>
+    <string name="app_source_list">"ABC News", "AmericaSpace", "Arstechnica", "Blue Origin", "Boeing", "CNBC", "CNES", "ElonX", "ESA", "Euronews", "European Spaceflight", "Horizon", "Jet Propulsion Laboratory", "NASA", "NASASpaceflight", "National Geographic",  "National Space Society",     "Phys", "Planetary Society", "Reuters", "Space.com", "SpaceDaily", "SpaceFlight Insider", "Spaceflight Now", "SpaceNews",   "SpacePolicyOnline.com", "Space Scout", "SpaceX", "SyFy", "TechCrunch", "Teslarati", "The Drive", "The Japan Times", "The Launch Pad", "The National", "The New York Times", "The Space Devs", "The Space Review", "The Verge", "The Wall Street Journal", "United Launch Alliance", "Virgin Galactic"</string>
+    <string name="app_contact">Contact with the developer by e-mail: </string>
+    <string name="app_url_caption">Want to know more?</string>
+    <string name="app_privacy_policy_caption">Privacy Policy</string>
+    <string name="app_author">\u00A9 Alex Maryin, 2025. Version 1.1</string>
+
 </resources>
