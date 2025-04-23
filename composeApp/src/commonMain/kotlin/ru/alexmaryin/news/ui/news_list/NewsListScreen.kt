@@ -54,7 +54,7 @@ fun NewsListScreen(
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
-            .statusBarsPadding()
+            .systemBarsPadding()
             .background(MaterialTheme.colorScheme.primaryContainer),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

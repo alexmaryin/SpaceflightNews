@@ -125,7 +125,9 @@ compose.desktop {
             packageVersion = "1.2.0"
 
             windows {
-                iconFile.set(project.file("src/commonMain/composeResources/drawable/icon.png"))
+                iconFile.set(project.file("src/commonMain/composeResources/drawable/win-icon.ico"))
+                menuGroup = "SpaceNews Explorer"
+                upgradeUuid = "0bb4936d-d01a-40e9-8dca-a72f56c6719a"
             }
         }
     }

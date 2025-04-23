@@ -57,7 +57,7 @@ private fun ArticlesDetailsScreen(
     Column(
         modifier = Modifier.fillMaxSize()
             .background(MaterialTheme.colorScheme.surfaceBright)
-            .statusBarsPadding()
+            .systemBarsPadding()
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
