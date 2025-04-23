@@ -1,6 +1,5 @@
 package ru.alexmaryin.news.data.local_api.database
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
@@ -11,7 +10,8 @@ import androidx.room.RoomDatabase
         AuthorEntity::class,
         ArticleEntity::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = true
 )
 abstract class ArticlesDatabase : RoomDatabase() {
     abstract val dao: ArticlesDAO

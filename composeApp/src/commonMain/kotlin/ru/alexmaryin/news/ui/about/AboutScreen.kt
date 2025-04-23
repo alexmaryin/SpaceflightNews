@@ -51,7 +51,7 @@ fun AboutScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize()
-            .safeContentPadding(),
+            .statusBarsPadding(),
         color = MaterialTheme.colorScheme.surface
     ) {
         Column(
