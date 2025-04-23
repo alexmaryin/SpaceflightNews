@@ -1,12 +1,18 @@
-# SpaceNews Explorer
+# [SpaceNews Explorer](https://sites.google.com/view/spacenews-explorer "official site")
 
 #### ![cmp_logo](https://github.com/alexmaryin/SpaceflightNews/blob/master/cmp_logo.png "cmp_logo") Compose multiplatform application for Android & Desktop
+
+
+## Now is available on Google Play: https://play.google.com/store/apps/details?id=ru.alexmaryin.spacenewsexplorer
+
 
 ![logo](https://github.com/alexmaryin/SpaceflightNews/blob/master/spacenewslogo.png "logo")
 
 Uses [Spaceflight News API](https://thespacedevs.com/snapi "Spaceflight News API") for fetching news about Cosmos and science. 
 
-See [Privacy policy](https://github.com/alexmaryin/SpaceflightNews/blob/master/privacy.md "Privacy policy") if you wish but don't expect some kind of surprise.
+Site: https://sites.google.com/view/spacenews-explorer
+
+See [Privacy policy](https://sites.google.com/view/spacenews-explorer/privacy-policy) if you wish but don't expect some kind of surprise.
 
 
 For contact: java.ul@gmail.com
