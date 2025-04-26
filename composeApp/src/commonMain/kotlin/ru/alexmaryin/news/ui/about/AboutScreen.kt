@@ -124,7 +124,8 @@ fun AboutScreen(
                     .clickable(onClick = { uriHandler.openUri(state.privacyPolicyUrl) })
             )
             HorizontalDivider(modifier = Modifier.padding(16.dp).clip(RoundedCornerShape(50)))
-            SurfaceText(stringResource(Res.string.app_author))
+            val version = stringResource(Res.string.app_version)
+            SurfaceText(stringResource(Res.string.app_author, version))
             HorizontalDivider(modifier = Modifier.padding(16.dp).clip(RoundedCornerShape(50)))
             Button(
                 onClick = { onAction(AboutAction.Back) }

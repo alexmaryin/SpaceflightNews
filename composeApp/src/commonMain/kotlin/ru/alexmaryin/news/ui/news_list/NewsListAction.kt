@@ -11,5 +11,4 @@ sealed interface NewsListAction {
     data object OnScrollDown: NewsListAction
     data object OnRefresh: NewsListAction
     data object OnRefreshed: NewsListAction
-    data object AboutClicked: NewsListAction
 }

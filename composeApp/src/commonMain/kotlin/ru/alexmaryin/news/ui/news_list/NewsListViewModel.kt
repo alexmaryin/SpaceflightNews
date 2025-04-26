@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.alexmaryin.news.domain.SpaceNewsRepository
+import ru.alexmaryin.news.ui.news_list.side_menu.SideMenuAction
 
 class NewsListViewModel(
     private val repository: SpaceNewsRepository
@@ -32,6 +33,20 @@ class NewsListViewModel(
             observeFavouritesNews()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _state.value)
+
+    fun onSideMenuAction(action: SideMenuAction) {
+        when (action) {
+            SideMenuAction.OpenSideMenu -> _state.update {
+                it.copy(sideMenuOpened = true)
+            }
+
+            SideMenuAction.CloseSideMenu -> _state.update {
+                it.copy(sideMenuOpened = false)
+            }
+
+            else -> Unit
+        }
+    }
 
     fun onAction(action: NewsListAction) {
         when (action) {

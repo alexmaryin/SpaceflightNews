@@ -60,12 +60,17 @@ class PagingHandlerScope<T : Any>(
                 is SocketTimeoutException -> DataError.Remote.REQUEST_TIMEOUT
                 is UnresolvedAddressException -> DataError.Remote.NO_INTERNET_CONNECTION
                 is ResponseException -> when (error.response.status.value) {
+                    400 -> DataError.Remote.BAD_REQUEST
+                    401 -> DataError.Remote.UNAUTHORIZED
+                    403 -> DataError.Remote.FORBIDDEN
+                    404 -> DataError.Remote.NOT_FOUND
+                    405 -> DataError.Remote.SERVER_ERROR
+                    409 -> DataError.Remote.CONFLICT
                     408 -> DataError.Remote.REQUEST_TIMEOUT
                     429 -> DataError.Remote.TOO_MANY_REQUESTS
                     in 500..599 -> DataError.Remote.SERVER_ERROR
                     else -> DataError.Remote.UNKNOWN_ERROR
                 }
-
                 else -> DataError.Remote.UNKNOWN_ERROR
             }
             handled = true
