@@ -38,7 +38,6 @@ private fun NewsListPreview() {
                 error = null // UiText.DynamicString("Unknown error!")
             ),
             onAction = {},
-            onSideMenuAction = {}
         )
     }
 }

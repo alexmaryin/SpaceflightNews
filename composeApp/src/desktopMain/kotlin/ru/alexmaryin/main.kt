@@ -11,6 +11,8 @@ import java.awt.*
 
 fun main() {
     Thread.setDefaultUncaughtExceptionHandler { _, e ->
+        println(e.message)
+        println(e.stackTraceToString())
         Dialog(Frame(), e.message ?: "Error").apply {
             layout = FlowLayout()
             val label = Label(e.message)
@@ -34,7 +36,7 @@ fun main() {
             title = "SpaceflightNews",
             icon = icon
         ) {
-            App() // use bool in parameter for switch dark theme on/off for debug
+            App()
         }
     }
 }
