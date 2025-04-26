@@ -7,6 +7,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import ru.alexmaryin.app.drawer.DrawerViewModel
 import ru.alexmaryin.core.data.HttpClientFactory
 import ru.alexmaryin.news.data.local_api.database.ArticlesDatabase
 import ru.alexmaryin.news.data.local_api.database.ArticlesDbFactory
@@ -42,4 +43,5 @@ val sharedModule = module {
     viewModelOf(::SelectedArticleViewModel)
     viewModelOf(::ArticleDetailsViewModel)
     viewModelOf(::AboutViewModel)
+    viewModelOf(::DrawerViewModel)
 }

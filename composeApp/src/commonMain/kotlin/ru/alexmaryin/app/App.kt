@@ -16,6 +16,9 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import ru.alexmaryin.app.drawer.DrawerAction
+import ru.alexmaryin.app.drawer.DrawerViewModel
+import ru.alexmaryin.app.drawer.SideMenuRoot
 import ru.alexmaryin.core.ui.theme.spaceNewsDarkScheme
 import ru.alexmaryin.core.ui.theme.spaceNewsLightScheme
 import ru.alexmaryin.news.ui.SelectedArticleViewModel
@@ -36,47 +39,56 @@ fun App(
     MaterialTheme(
         colorScheme = colors
     ) {
+        val drawerViewModel = koinViewModel<DrawerViewModel>()
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = Navigation.NewsGraph) {
-            navigation<Navigation.NewsGraph>(startDestination = Navigation.NewsScreen) {
-                composable<Navigation.NewsScreen> { entry ->
-                    val selectedArticleViewModel =
-                        entry.sharedKoinViewModel<SelectedArticleViewModel>(navController)
+        SideMenuRoot(
+            viewModel = drawerViewModel,
+            onAboutClick = { navController.navigate(Navigation.AboutScreen) }
+        ) {
+            NavHost(navController = navController, startDestination = Navigation.NewsGraph) {
+                navigation<Navigation.NewsGraph>(startDestination = Navigation.NewsScreen) {
+                    composable<Navigation.NewsScreen> { entry ->
+                        val selectedArticleViewModel =
+                            entry.sharedKoinViewModel<SelectedArticleViewModel>(navController)
 
-                    LaunchedEffect(true) {
-                        selectedArticleViewModel.onSelectArticle(null)
-                    }
-
-                    NewsListScreenRoot(
-                        viewModel = koinViewModel<NewsListViewModel>(),
-                        onItemClick = { article ->
-                            selectedArticleViewModel.onSelectArticle(article)
-                            navController.navigate(Navigation.ArticleDetails(article.id))
-                        },
-                        onAboutClick = { navController.navigate(Navigation.AboutScreen) }
-                    )
-                }
-                composable<Navigation.ArticleDetails> { entry ->
-                    val selectedArticleViewModel =
-                        entry.sharedKoinViewModel<SelectedArticleViewModel>(navController)
-                    val selectedArticle by selectedArticleViewModel
-                        .selectedArticle.collectAsStateWithLifecycle()
-                    val viewModel = koinViewModel<ArticleDetailsViewModel>()
-
-                    LaunchedEffect(selectedArticle) {
-                        selectedArticle?.let {
-                            viewModel.onAction(ArticleDetailsAction.onSelectedArticleChange(it))
+                        LaunchedEffect(true) {
+                            selectedArticleViewModel.onSelectArticle(null)
                         }
+
+                        NewsListScreenRoot(
+                            viewModel = koinViewModel<NewsListViewModel>(),
+                            onItemClick = { article ->
+                                selectedArticleViewModel.onSelectArticle(article)
+                                navController.navigate(Navigation.ArticleDetails(article.id))
+                            },
+                            onSideMenuClick = {
+                                drawerViewModel.onAction(DrawerAction.OpenDrawer)
+                            }
+                        )
                     }
 
-                    ArticlesDetailsScreenRoot(
-                        viewModel = viewModel
-                    ) { navController.navigateUp() }
-                }
+                    composable<Navigation.ArticleDetails> { entry ->
+                        val selectedArticleViewModel =
+                            entry.sharedKoinViewModel<SelectedArticleViewModel>(navController)
+                        val selectedArticle by selectedArticleViewModel
+                            .selectedArticle.collectAsStateWithLifecycle()
+                        val viewModel = koinViewModel<ArticleDetailsViewModel>()
 
-                composable<Navigation.AboutScreen> { entry ->
-                    val viewModel = koinViewModel<AboutViewModel>()
-                    AboutScreenRoot(viewModel) { navController.navigateUp() }
+                        LaunchedEffect(selectedArticle) {
+                            selectedArticle?.let {
+                                viewModel.onAction(ArticleDetailsAction.onSelectedArticleChange(it))
+                            }
+                        }
+
+                        ArticlesDetailsScreenRoot(
+                            viewModel = viewModel
+                        ) { navController.navigateUp() }
+                    }
+
+                    composable<Navigation.AboutScreen> { entry ->
+                        val viewModel = koinViewModel<AboutViewModel>()
+                        AboutScreenRoot(viewModel) { navController.navigateUp() }
+                    }
                 }
             }
         }
