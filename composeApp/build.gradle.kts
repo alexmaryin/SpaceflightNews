@@ -124,6 +124,7 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "SpaceNews Explorer"
             packageVersion = "1.3.0"
+            modules("java.instrument", "java.management", "jdk.unsupported")
 
             windows {
                 dirChooser = true
