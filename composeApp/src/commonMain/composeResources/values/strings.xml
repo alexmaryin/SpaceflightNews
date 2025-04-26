@@ -14,6 +14,11 @@
     <string name="no_internet_error">Check your internet connection</string>
     <string name="server_error">Server unreachable</string>
     <string name="serialization_error">Wrong response format from remote API</string>
+    <string name="bad_request_error">Wrong request format</string>
+    <string name="unauthorized_error">Server requires authentication</string>
+    <string name="forbidden_error">Response is restricted in your region</string>
+    <string name="not_found_error">API is down. Please try again later</string>
+    <string name="conflict_error">API requires different method</string>
     <string name="scroll_to_start">Scroll to start</string>
     <string name="refresh_articles">Refresh articles</string>
     <string name="back_button">Go back</string>
@@ -40,6 +45,15 @@
     <string name="app_contact">Contact with the developer by e-mail: </string>
     <string name="app_url_caption">Want to know more?</string>
     <string name="app_privacy_policy_caption">Privacy Policy</string>
-    <string name="app_author">\u00A9 Alex Maryin, 2025. Version 1.2</string>
+    <string name="app_author">\u00A9 Alex Maryin, 2025. Version %1$s</string>
+    <string name="app_version">1.2</string>
+    <!--   Drawer menu   -->
+    <string name="open_side_menu">Open side menu</string>
+    <string name="open_about">Open about screen</string>
+    <string name="close_side_menu">Close side menu</string>
+    <string name="app_theme_caption">Color theme:</string>
+    <string name="app_theme_dark">Dark</string>
+    <string name="app_theme_light">Light</string>
+    <string name="app_theme_system">System</string>
 
 </resources>

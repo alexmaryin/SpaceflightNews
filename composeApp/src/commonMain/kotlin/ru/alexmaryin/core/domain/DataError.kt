@@ -7,6 +7,11 @@ sealed interface DataError : Error {
         NO_INTERNET_CONNECTION,
         SERVER_ERROR,
         SERIALIZATION_ERROR,
+        BAD_REQUEST,
+        UNAUTHORIZED,
+        FORBIDDEN,
+        NOT_FOUND,
+        CONFLICT,
         UNKNOWN_ERROR
     }
 

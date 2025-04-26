@@ -14,6 +14,11 @@
     <string name="no_internet_error">Проверьте Ваше интернет-соединение</string>
     <string name="server_error">Сервер не доступен</string>
     <string name="serialization_error">Неправильная структура ответа от сервера API</string>
+    <string name="bad_request_error">Неверный формат запроса</string>
+    <string name="unauthorized_error">Сервер требует авторизации</string>
+    <string name="forbidden_error">Доступ запрещен в Вашем регионе</string>
+    <string name="not_found_error">API упал. Попробуйте, пожалуйста, позже</string>
+    <string name="conflict_error">В API изменен метод запроса</string>
     <string name="scroll_to_start">Вернуться к началу</string>
     <string name="refresh_articles">Обновить статьи</string>
     <string name="back_button">Вернуться назад</string>
@@ -40,5 +45,15 @@
     <string name="app_contact">Cвяжитесь с разработчиком по почте: </string>
     <string name="app_url_caption">Хотите знать больше?</string>
     <string name="app_privacy_policy_caption">Политика конфиденциальности</string>
-    <string name="app_author">\u00A9 Алекс Марьин, 2025. Версия 1.2</string>
+    <string name="app_author">\u00A9 Алекс Марьин, 2025. Версия %1$s</string>
+    <string name="app_version">1.2</string>
+    <!--   Drawer menu   -->
+    <string name="open_side_menu">Открыть боковое меню</string>
+    <string name="open_about">Открыть информацию о приложении</string>
+    <string name="close_side_menu">Закрыть боковое меню</string>
+    <string name="app_theme_caption">Цветовая тема:</string>
+    <string name="app_theme_dark">Темная</string>
+    <string name="app_theme_light">Светлая</string>
+    <string name="app_theme_system">Системная</string>
+
 </resources>

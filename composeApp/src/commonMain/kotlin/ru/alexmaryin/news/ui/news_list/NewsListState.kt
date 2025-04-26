@@ -13,6 +13,7 @@ data class NewsListState(
     val refresh: Boolean = false,
     val scrollState: ScrollState = ScrollState.SCROLLED_UP,
     val selectedTabIndex: Int = Tabs.ARTICLES_TAB,
+    val sideMenuOpened: Boolean = false,
     val error: UiText? = null,
 )
 
