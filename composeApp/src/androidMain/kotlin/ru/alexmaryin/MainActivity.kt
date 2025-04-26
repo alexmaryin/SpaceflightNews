@@ -12,7 +12,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            App() // use bool in parameter to switch dark theme on/off for debug
+            App()
         }
     }
 }

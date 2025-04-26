@@ -16,9 +16,13 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 import ru.alexmaryin.app.drawer.DrawerAction
 import ru.alexmaryin.app.drawer.DrawerViewModel
+import ru.alexmaryin.app.drawer.NewsAppTheme
 import ru.alexmaryin.app.drawer.SideMenuRoot
+import ru.alexmaryin.app.preferences.rememberPrefs
+import ru.alexmaryin.app.preferences.rememberThemeSource
 import ru.alexmaryin.core.ui.theme.spaceNewsDarkScheme
 import ru.alexmaryin.core.ui.theme.spaceNewsLightScheme
 import ru.alexmaryin.news.ui.SelectedArticleViewModel
@@ -32,18 +36,26 @@ import ru.alexmaryin.news.ui.news_list.NewsListViewModel
 
 @Composable
 @Preview
-fun App(
-    darkTheme: Boolean = isSystemInDarkTheme()
-) {
-    val colors = if (darkTheme) spaceNewsDarkScheme else spaceNewsLightScheme
+fun App() {
+    val prefs = rememberPrefs()
+    val themeSource = rememberThemeSource(prefs)
+    val theme by themeSource.getThemeMode().collectAsStateWithLifecycle(NewsAppTheme.SYSTEM)
+    val isDarkTheme = theme == NewsAppTheme.DARK || (theme == NewsAppTheme.SYSTEM && isSystemInDarkTheme())
+
+    val colors = if (isDarkTheme) spaceNewsDarkScheme else spaceNewsLightScheme
     MaterialTheme(
         colorScheme = colors
     ) {
-        val drawerViewModel = koinViewModel<DrawerViewModel>()
+        val drawerViewModel = koinViewModel<DrawerViewModel> { parametersOf(theme) }
+        LaunchedEffect(theme) {
+            drawerViewModel.onAction(DrawerAction.ChangeTheme(theme))
+        }
+
         val navController = rememberNavController()
         SideMenuRoot(
             viewModel = drawerViewModel,
-            onAboutClick = { navController.navigate(Navigation.AboutScreen) }
+            onAboutClick = { navController.navigate(Navigation.AboutScreen) },
+            onThemeChange = { newTheme -> themeSource.changeTheme(newTheme) }
         ) {
             NavHost(navController = navController, startDestination = Navigation.NewsGraph) {
                 navigation<Navigation.NewsGraph>(startDestination = Navigation.NewsScreen) {

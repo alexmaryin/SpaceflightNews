@@ -4,14 +4,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import ru.alexmaryin.core.ui.components.SurfaceIAText
 import ru.alexmaryin.core.ui.components.SurfaceText
@@ -21,14 +25,21 @@ import spaceflightnews.composeapp.generated.resources.*
 fun SideMenuRoot(
     viewModel: DrawerViewModel,
     onAboutClick: () -> Unit,
+    onThemeChange: suspend (NewsAppTheme) -> Unit,
     content: @Composable () -> Unit,
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
 
     SideMenu(
         opened = state.value.opened,
+        selectedTheme = state.value.colorTheme,
         onAction = { action ->
-            if (action is DrawerAction.AboutClicked) onAboutClick() else viewModel.onAction(action)
+            when (action) {
+                DrawerAction.AboutClicked -> onAboutClick()
+                is DrawerAction.ChangeTheme -> scope.launch { onThemeChange(action.newTheme) }
+                else -> viewModel.onAction(action)
+            }
         }
     ) {
         content()
@@ -39,6 +50,7 @@ fun SideMenuRoot(
 @Composable
 fun SideMenu(
     opened: Boolean,
+    selectedTheme: NewsAppTheme,
     onAction: (DrawerAction) -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -47,12 +59,19 @@ fun SideMenu(
     LaunchedEffect(opened) {
         if (opened) drawerState.open() else drawerState.close()
     }
-    LaunchedEffect(drawerState.isClosed) {
-        if (drawerState.isClosed && opened) onAction(DrawerAction.CloseDrawer)
+
+    val starBadge = @Composable { current: NewsAppTheme ->
+        if (current != selectedTheme) Unit else
+        Icon(
+            imageVector = Icons.Filled.Star,
+            contentDescription = null,
+            tint = Color.Yellow
+        )
     }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
+        gesturesEnabled = false,
         drawerContent = {
             ModalDrawerSheet(
                 drawerContainerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -77,6 +96,29 @@ fun SideMenu(
                         onAction(DrawerAction.CloseDrawer)
                     },
                     selected = false
+                )
+                HorizontalDivider(Modifier.padding(horizontal = 16.dp))
+                SurfaceText(
+                    stringResource(Res.string.app_theme_caption),
+                    modifier = Modifier.padding(16.dp)
+                )
+                NavigationDrawerItem(
+                    label = { Text(stringResource(Res.string.app_theme_light)) },
+                    onClick = { onAction(DrawerAction.ChangeTheme(NewsAppTheme.LIGHT)) },
+                    selected = false,
+                    badge = { starBadge(NewsAppTheme.LIGHT) }
+                )
+                NavigationDrawerItem(
+                    label = { Text(stringResource(Res.string.app_theme_dark)) },
+                    onClick = { onAction(DrawerAction.ChangeTheme(NewsAppTheme.DARK)) },
+                    selected = false,
+                    badge = { starBadge(NewsAppTheme.DARK) }
+                )
+                NavigationDrawerItem(
+                    label = { Text(stringResource(Res.string.app_theme_system)) },
+                    onClick = { onAction(DrawerAction.ChangeTheme(NewsAppTheme.SYSTEM)) },
+                    selected = false,
+                    badge = { starBadge(NewsAppTheme.SYSTEM) }
                 )
 
                 Spacer(Modifier.weight(1f))
