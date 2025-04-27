@@ -50,8 +50,6 @@ fun NewsListScreen(
     state: NewsListState,
     onAction: (NewsListAction) -> Unit,
 ) {
-    val scrolledUp = state.scrollState == ScrollState.SCROLLED_UP
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -83,11 +81,7 @@ fun NewsListScreen(
                 )
 
                 IconButton(
-                    onClick = {
-                        onAction(
-                            if (scrolledUp) NewsListAction.OnRefresh else NewsListAction.OnScrollToStart
-                        )
-                    },
+                    onClick = { onAction(NewsListAction.OnBarButtonClicked) },
                     colors = IconButtonDefaults.iconButtonColors().copy(
                         containerColor = MaterialTheme.colorScheme.surfaceContainer,
                         contentColor = MaterialTheme.colorScheme.onSurface
@@ -95,10 +89,9 @@ fun NewsListScreen(
                     modifier = Modifier.padding(vertical = 16.dp, horizontal = 4.dp)
                 ) {
                     Icon(
-                        imageVector = if (scrolledUp) Icons.Filled.Refresh
-                        else Icons.Filled.KeyboardArrowUp,
+                        imageVector = if (state.isAtTop) Icons.Filled.Refresh else Icons.Filled.KeyboardArrowUp,
                         contentDescription = stringResource(
-                            if (scrolledUp) Res.string.refresh_articles else Res.string.scroll_to_start
+                            if (state.isAtTop) Res.string.refresh_articles else Res.string.scroll_to_start
                         )
                     )
                 }

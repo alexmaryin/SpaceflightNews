@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import app.cash.paging.compose.collectAsLazyPagingItems
 import ru.alexmaryin.news.ui.news_list.NewsListAction
 import ru.alexmaryin.news.ui.news_list.NewsListState
-import ru.alexmaryin.news.ui.news_list.ScrollState
 import ru.alexmaryin.news.ui.news_list.Tabs
 
 @Composable
@@ -27,11 +26,10 @@ fun ColumnScope.NewsListPager(
 
     val pagerState = rememberPagerState(state.selectedTabIndex) { Tabs.COUNT }
     val articles = state.articlesFlow.collectAsLazyPagingItems()
-    if (state.refresh) {
+    if (state.isRefreshing) {
         articles.refresh()
         onAction(NewsListAction.OnRefreshed)
     }
-    val scrollToStart = state.scrollState == ScrollState.SCROLL_TO_START
 
     // pager following to selected tab
     LaunchedEffect(state.selectedTabIndex) {
@@ -57,7 +55,7 @@ fun ColumnScope.NewsListPager(
             when (pageIndex) {
                 Tabs.ARTICLES_TAB -> {
                     ArticlesPage(
-                        isScrollToStart = scrollToStart,
+                        scrollEvent = state.scrollEvent,
                         articles = articles,
                         onAction = onAction
                     )
@@ -65,7 +63,7 @@ fun ColumnScope.NewsListPager(
 
                 Tabs.FAVOURITES_TAB -> {
                     FavouritesPage(
-                        isScrollToStart = scrollToStart,
+                        scrollEvent = state.scrollEvent,
                         favouritesArticles = state.favouriteArticles,
                         onAction = onAction
                     )

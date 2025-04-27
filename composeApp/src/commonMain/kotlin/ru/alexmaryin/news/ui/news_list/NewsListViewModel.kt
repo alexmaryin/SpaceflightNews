@@ -18,12 +18,10 @@ class NewsListViewModel(
     private var favouritesJob: Job? = null
 
     private val _state = MutableStateFlow(NewsListState())
-    val state = _state
-        .onStart {
-            observeSearchQuery()
-            observeFavouritesNews()
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _state.value)
+    val state = _state.onStart {
+        observeSearchQuery()
+        observeFavouritesNews()
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), _state.value)
 
     fun onAction(action: NewsListAction) {
         when (action) {
@@ -35,24 +33,24 @@ class NewsListViewModel(
                 it.copy(selectedTabIndex = action.index)
             }
 
-            is NewsListAction.OnScrollToStart -> _state.update {
-                it.copy(scrollState = ScrollState.SCROLL_TO_START)
+            is NewsListAction.OnBarButtonClicked -> {
+                if (state.value.isAtTop) _state.update {
+                    it.copy(isRefreshing = true)
+                } else _state.update {
+                    it.copy(scrollEvent = ScrollEvent.SCROLL_UP)
+                }
             }
 
-            is NewsListAction.OnScrolledUp -> _state.update {
-                it.copy(scrollState = ScrollState.SCROLLED_UP)
+            is NewsListAction.OnScrollHandled -> _state.update {
+                it.copy(scrollEvent = null)
             }
 
-            is NewsListAction.OnScrollDown -> _state.update {
-                it.copy(scrollState = ScrollState.SCROLLED_DOWN)
-            }
-
-            is NewsListAction.OnRefresh -> _state.update {
-                it.copy(refresh = true)
+            is NewsListAction.OnScrollChanged -> _state.update {
+                it.copy(isAtTop = action.isAtTop)
             }
 
             is NewsListAction.OnRefreshed -> _state.update {
-                it.copy(refresh = false)
+                it.copy(isRefreshing = false)
             }
 
             else -> Unit
@@ -81,11 +79,13 @@ class NewsListViewModel(
                         val seenIds = mutableSetOf<Int>()
                         pagingData.filter { item ->
                             if (seenIds.contains(item.id)) false
-                            else { seenIds += item.id; true }
+                            else {
+                                seenIds += item.id; true
+                            }
                         }
                     }
                     .cachedIn(viewModelScope),
-                scrollState = ScrollState.SCROLL_TO_START
+                scrollEvent = ScrollEvent.SCROLL_UP
             )
         }
     }
