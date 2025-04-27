@@ -1,7 +1,9 @@
 package ru.alexmaryin.app
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -14,7 +16,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import ru.alexmaryin.app.drawer.DrawerAction
@@ -35,25 +36,26 @@ import ru.alexmaryin.news.ui.news_list.NewsListScreenRoot
 import ru.alexmaryin.news.ui.news_list.NewsListViewModel
 
 @Composable
-@Preview
 fun App() {
     val prefs = rememberPrefs()
     val themeSource = rememberThemeSource(prefs)
     val theme by themeSource.getThemeMode().collectAsStateWithLifecycle(NewsAppTheme.SYSTEM)
     val isDarkTheme = theme == NewsAppTheme.DARK || (theme == NewsAppTheme.SYSTEM && isSystemInDarkTheme())
-
     val colors = if (isDarkTheme) spaceNewsDarkScheme else spaceNewsLightScheme
-    MaterialTheme(
-        colorScheme = colors
-    ) {
+
+    MaterialTheme(colorScheme = colors) {
+        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
         val drawerViewModel = koinViewModel<DrawerViewModel> { parametersOf(theme) }
+
         LaunchedEffect(theme) {
             drawerViewModel.onAction(DrawerAction.ChangeTheme(theme))
         }
 
         val navController = rememberNavController()
+
         SideMenuRoot(
             viewModel = drawerViewModel,
+            drawerState = drawerState,
             onAboutClick = { navController.navigate(Navigation.AboutScreen) },
             onThemeChange = { newTheme -> themeSource.changeTheme(newTheme) }
         ) {
@@ -74,7 +76,7 @@ fun App() {
                                 navController.navigate(Navigation.ArticleDetails(article.id))
                             },
                             onSideMenuClick = {
-                                drawerViewModel.onAction(DrawerAction.OpenDrawer)
+                                drawerViewModel.onAction(DrawerAction.SideMenuChange(isOpen = true))
                             }
                         )
                     }

@@ -1,6 +1,6 @@
 package ru.alexmaryin.app.drawer
 
-data class DrawerState(
+data class DrawerUiState(
     val opened: Boolean = false,
     val appVersion: String = "",
     val colorTheme: NewsAppTheme

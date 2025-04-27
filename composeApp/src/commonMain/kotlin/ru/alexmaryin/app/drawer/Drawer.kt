@@ -1,5 +1,6 @@
 package ru.alexmaryin.app.drawer
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -8,13 +9,12 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import ru.alexmaryin.core.ui.components.SurfaceIAText
@@ -24,16 +24,29 @@ import spaceflightnews.composeapp.generated.resources.*
 @Composable
 fun SideMenuRoot(
     viewModel: DrawerViewModel,
+    drawerState: DrawerState,
     onAboutClick: () -> Unit,
     onThemeChange: suspend (NewsAppTheme) -> Unit,
-    content: @Composable () -> Unit,
+    content: @Composable (() -> Unit),
 ) {
-    val state = viewModel.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(drawerState) {
+        snapshotFlow { drawerState.isOpen }
+            .distinctUntilChanged()
+            .collect { isOpen ->
+                viewModel.onAction(DrawerAction.SideMenuChange(isOpen = isOpen))
+            }
+    }
+
+    LaunchedEffect(state.opened) {
+        if (state.opened) drawerState.open() else drawerState.close()
+    }
 
     SideMenu(
-        opened = state.value.opened,
-        selectedTheme = state.value.colorTheme,
+        state = drawerState,
+        selectedTheme = state.colorTheme,
         onAction = { action ->
             when (action) {
                 DrawerAction.AboutClicked -> onAboutClick()
@@ -49,29 +62,24 @@ fun SideMenuRoot(
 
 @Composable
 fun SideMenu(
-    opened: Boolean,
+    state: DrawerState,
     selectedTheme: NewsAppTheme,
     onAction: (DrawerAction) -> Unit,
     content: @Composable () -> Unit,
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
-    LaunchedEffect(opened) {
-        if (opened) drawerState.open() else drawerState.close()
-    }
 
     val starBadge = @Composable { current: NewsAppTheme ->
         if (current != selectedTheme) Unit else
-        Icon(
-            imageVector = Icons.Filled.Star,
-            contentDescription = null,
-            tint = Color.Yellow
-        )
+            Icon(
+                imageVector = Icons.Filled.Star,
+                contentDescription = null,
+                tint = Color.Yellow
+            )
     }
 
     ModalNavigationDrawer(
-        drawerState = drawerState,
-        gesturesEnabled = false,
+        drawerState = state,
+        gesturesEnabled = true,
         drawerContent = {
             ModalDrawerSheet(
                 drawerContainerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -85,7 +93,7 @@ fun SideMenu(
                 NavigationDrawerItem(
                     label = { Text(stringResource(Res.string.close_side_menu)) },
                     icon = { Icon(Icons.Outlined.Close, null) },
-                    onClick = { onAction(DrawerAction.CloseDrawer) },
+                    onClick = { onAction(DrawerAction.SideMenuChange(isOpen = false)) },
                     selected = false
                 )
                 NavigationDrawerItem(
@@ -93,7 +101,7 @@ fun SideMenu(
                     icon = { Icon(Icons.Outlined.Info, null) },
                     onClick = {
                         onAction(DrawerAction.AboutClicked)
-                        onAction(DrawerAction.CloseDrawer)
+                        onAction(DrawerAction.SideMenuChange(isOpen = false))
                     },
                     selected = false
                 )
@@ -127,7 +135,9 @@ fun SideMenu(
                 SurfaceIAText("v$version", modifier = Modifier.padding(16.dp))
             }
         },
-        modifier = Modifier.systemBarsPadding()
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .systemBarsPadding()
     ) {
         content()
     }
