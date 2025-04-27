@@ -15,7 +15,7 @@ class KtorRemoteNewsDataSource : RemoteNewsDataSource, KoinComponent {
         query: String,
         limit: Int
     ): Flow<PagingData<Article>> {
-        val pager = Pager<Int, Article>(
+        val pager = Pager(
             config = PagingConfig(
                 pageSize = RemoteNewsDataSource.DEFAULT_LIMIT,
                 initialLoadSize = RemoteNewsDataSource.DEFAULT_LIMIT,

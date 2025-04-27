@@ -3,6 +3,7 @@ package ru.alexmaryin.news.ui.news_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -73,7 +74,17 @@ class NewsListViewModel(
     private fun searchNews(query: String) = viewModelScope.launch {
         _state.update {
             it.copy(
-                articlesFlow = repository.searchNews(query).cachedIn(viewModelScope),
+                articlesFlow = repository.searchNews(query)
+                    // filtering is necessary because API could return the same items on
+                    // adjacent pages
+                    .map { pagingData ->
+                        val seenIds = mutableSetOf<Int>()
+                        pagingData.filter { item ->
+                            if (seenIds.contains(item.id)) false
+                            else { seenIds += item.id; true }
+                        }
+                    }
+                    .cachedIn(viewModelScope),
                 scrollState = ScrollState.SCROLL_TO_START
             )
         }

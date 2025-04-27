@@ -8,7 +8,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemKey
+import app.cash.paging.compose.itemKey
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
 import io.ktor.network.sockets.*
@@ -71,6 +71,7 @@ class PagingHandlerScope<T : Any>(
                     in 500..599 -> DataError.Remote.SERVER_ERROR
                     else -> DataError.Remote.UNKNOWN_ERROR
                 }
+
                 else -> DataError.Remote.UNKNOWN_ERROR
             }
             handled = true
@@ -86,7 +87,12 @@ class PagingHandlerScope<T : Any>(
     }
 
     @LazyScopeMarker
-    fun LazyListScope.onPagingItems(key: (T) -> Any, body: @Composable LazyItemScope.(T) -> Unit) {
+    fun LazyListScope.onLastItem(body: @Composable LazyItemScope.() -> Unit) {
+        if (items.loadState.refresh.endOfPaginationReached) item { body(this) }
+    }
+
+    @LazyScopeMarker
+    fun LazyListScope.onPagingItems(key: ((T) -> Any)?, body: @Composable LazyItemScope.(T) -> Unit) {
         items(
             count = items.itemCount,
             key = items.itemKey(key),
