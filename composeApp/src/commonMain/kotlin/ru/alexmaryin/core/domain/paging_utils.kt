@@ -88,7 +88,7 @@ class PagingHandlerScope<T : Any>(
 
     @LazyScopeMarker
     fun LazyListScope.onLastItem(body: @Composable LazyItemScope.() -> Unit) {
-        if (items.loadState.refresh.endOfPaginationReached) item { body(this) }
+        if (items.loadState.append.endOfPaginationReached) item { body(this) }
     }
 
     @LazyScopeMarker

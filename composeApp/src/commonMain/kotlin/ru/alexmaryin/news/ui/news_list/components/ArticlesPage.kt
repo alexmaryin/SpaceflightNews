@@ -67,6 +67,7 @@ fun ArticlesPage(
                     )
                 }
                 onAppendItem { CircularProgressIndicator(Modifier.padding(6.dp)) }
+                onLastItem { EasterEgg() }
             }
         }
     }

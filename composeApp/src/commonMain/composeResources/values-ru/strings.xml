@@ -36,6 +36,7 @@
     <string name="hours_ago">%1$d ч. назад</string>
     <string name="minutes_ago">%1$d мин. назад</string>
     <string name="by_authors">%1$s</string>
+    <string name="easter_caption">Вы долистали до края Вселенной! Поздравляем!</string>
     <!--    About screen    -->
     <string name="app_name">SpaceNews Explorer</string>
     <string name="app_slogan">Собираем самые важные космические новости для вас</string>

@@ -1,6 +1,8 @@
 package ru.alexmaryin.previews
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,7 +15,7 @@ import ru.alexmaryin.app.drawer.SideMenu
 fun SideMenuPreview() {
     Surface(Modifier.fillMaxSize()) {
         SideMenu(
-            opened = true,
+            state = DrawerState(DrawerValue.Open),
             selectedTheme = NewsAppTheme.LIGHT,
             onAction = {},
             {},

@@ -36,6 +36,7 @@
     <string name="hours_ago">%1$d hours ago</string>
     <string name="minutes_ago">%1$d minutes ago</string>
     <string name="by_authors">by %1$s</string>
+    <string name="easter_caption">You've scrolled to the edge of Universe! Congrats!</string>
 <!--    About screen    -->
     <string name="app_name">SpaceNews Explorer</string>
     <string name="app_slogan">Collect important news about cosmos and astronomy for you</string>
