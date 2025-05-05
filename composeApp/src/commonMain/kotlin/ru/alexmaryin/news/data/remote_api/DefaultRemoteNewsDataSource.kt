@@ -10,15 +10,15 @@ import org.koin.core.component.get
 import org.koin.core.parameter.parametersOf
 import ru.alexmaryin.news.domain.models.Article
 
-class KtorRemoteNewsDataSource : RemoteNewsDataSource, KoinComponent {
+class DefaultRemoteNewsDataSource : RemoteNewsDataSource, KoinComponent {
     override fun searchNews(
         query: String,
         limit: Int
     ): Flow<PagingData<Article>> {
         val pager = Pager(
             config = PagingConfig(
-                pageSize = RemoteNewsDataSource.DEFAULT_LIMIT,
-                initialLoadSize = RemoteNewsDataSource.DEFAULT_LIMIT,
+                pageSize = limit,
+                initialLoadSize = limit,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {

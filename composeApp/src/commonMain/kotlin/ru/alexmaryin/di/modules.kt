@@ -1,22 +1,19 @@
 package ru.alexmaryin.di
 
-import androidx.compose.material3.DropdownMenu
 import androidx.paging.PagingSource
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
-import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.alexmaryin.app.drawer.DrawerViewModel
-import ru.alexmaryin.app.drawer.NewsAppTheme
 import ru.alexmaryin.core.data.HttpClientFactory
+import ru.alexmaryin.news.data.local_api.database.ArticlesDAO
 import ru.alexmaryin.news.data.local_api.database.ArticlesDatabase
 import ru.alexmaryin.news.data.local_api.database.ArticlesDbFactory
-import ru.alexmaryin.news.data.local_api.database.ArticlesDAO
-import ru.alexmaryin.news.data.remote_api.KtorRemoteNewsDataSource
-import ru.alexmaryin.news.data.remote_api.NewsPagingSource
+import ru.alexmaryin.news.data.remote_api.DefaultRemoteNewsDataSource
+import ru.alexmaryin.news.data.remote_api.KtorPagingSource
 import ru.alexmaryin.news.data.remote_api.RemoteNewsDataSource
 import ru.alexmaryin.news.data.repository.DefaultSpaceNewsRepository
 import ru.alexmaryin.news.domain.SpaceNewsRepository
@@ -30,7 +27,7 @@ expect val platformModule: Module
 
 val sharedModule = module {
     single { HttpClientFactory.create(get()) }
-    singleOf(::KtorRemoteNewsDataSource).bind<RemoteNewsDataSource>()
+    singleOf(::DefaultRemoteNewsDataSource).bind<RemoteNewsDataSource>()
     singleOf(::DefaultSpaceNewsRepository).bind<SpaceNewsRepository>()
 
     single<ArticlesDatabase> {
@@ -40,7 +37,7 @@ val sharedModule = module {
     }
     single<ArticlesDAO> { get<ArticlesDatabase>().dao }
 
-    factory<PagingSource<Int, Article>> { (query: String) -> NewsPagingSource(get(), query) }
+    factory<PagingSource<Int, Article>> { (query: String) -> KtorPagingSource(get(), query) }
 
     viewModelOf(::NewsListViewModel)
     viewModelOf(::SelectedArticleViewModel)

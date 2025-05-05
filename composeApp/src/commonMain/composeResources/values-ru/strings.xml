@@ -32,6 +32,13 @@
     <string name="summary">Аннотация:</string>
     <string name="read_more">читать дальше:</string>
     <string name="in_browser">в браузере:</string>
+    <plurals name="years_ago">
+        <item quantity="one">%1$d год назад</item>
+        <item quantity="two">%1$d года назад</item>
+        <item quantity="few">%1$d года назад</item>
+        <item quantity="many">%1$d лет назад</item>
+        <item quantity="other">%1$d лет назад</item>
+    </plurals>
     <string name="days_ago">%1$d дн. назад</string>
     <string name="hours_ago">%1$d ч. назад</string>
     <string name="minutes_ago">%1$d мин. назад</string>

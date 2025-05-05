@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyScopeMarker
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import app.cash.paging.compose.itemKey
@@ -22,11 +21,12 @@ class PagingHandlerScope<T : Any>(
     private val items: LazyPagingItems<T>
 ) {
     private var handled = false
+    private val loadState = derivedStateOf { items.loadState }.value
 
     @Composable
     fun onEmpty(body: @Composable () -> Unit) {
         if (handled) return
-        if (items.loadState.refresh !is LoadState.Error && items.itemCount == 0) {
+        if (loadState.refresh !is LoadState.Error && items.itemCount == 0) {
             handled = true
             body()
         }
@@ -35,7 +35,7 @@ class PagingHandlerScope<T : Any>(
     @Composable
     fun onRefresh(body: @Composable () -> Unit) {
         if (handled) return
-        if (items.loadState.refresh is LoadState.Loading) {
+        if (loadState.refresh is LoadState.Loading) {
             handled = true
             body()
         }
@@ -52,8 +52,8 @@ class PagingHandlerScope<T : Any>(
     @Composable
     fun onError(body: @Composable (DataError) -> Unit) {
         if (handled) return
-        if (items.loadState.refresh is LoadState.Error) {
-            val error = (items.loadState.refresh as LoadState.Error).error
+        if (loadState.refresh is LoadState.Error) {
+            val error = (loadState.refresh as LoadState.Error).error
             val result = when (error) {
                 is NoTransformationFoundException -> DataError.Remote.SERIALIZATION_ERROR
                 is DoubleReceiveException -> DataError.Remote.SERIALIZATION_ERROR
@@ -81,14 +81,14 @@ class PagingHandlerScope<T : Any>(
 
     @LazyScopeMarker
     fun LazyListScope.onAppendItem(body: @Composable LazyItemScope.() -> Unit) {
-        if (items.loadState.append == LoadState.Loading) {
+        if (loadState.append == LoadState.Loading) {
             item { body(this) }
         }
     }
 
     @LazyScopeMarker
     fun LazyListScope.onLastItem(body: @Composable LazyItemScope.() -> Unit) {
-        if (items.loadState.append.endOfPaginationReached) item { body(this) }
+        if (loadState.append.endOfPaginationReached) item { body(this) }
     }
 
     @LazyScopeMarker
@@ -110,9 +110,5 @@ fun <T : Any> HandlePagingItems(
     items: LazyPagingItems<T>,
     content: @Composable PagingHandlerScope<T>.() -> Unit
 ) {
-    remember(items.loadState) {
-        derivedStateOf { items.loadState }
-    }.value
-
     PagingHandlerScope(items).content()
 }

@@ -10,7 +10,7 @@ import ru.alexmaryin.news.data.mappers.toArticle
 import ru.alexmaryin.news.data.remote_api.RemoteNewsDataSource.Companion.SEARCH_URL
 import ru.alexmaryin.news.domain.models.Article
 
-class NewsPagingSource(
+class KtorPagingSource(
     private val httpClient: HttpClient,
     private val searchQuery: String
 ) : PagingSource<Int, Article>() {

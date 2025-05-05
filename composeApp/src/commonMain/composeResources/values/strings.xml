@@ -32,6 +32,10 @@
     <string name="summary">Summary:</string>
     <string name="read_more">read more:</string>
     <string name="in_browser">in browser:</string>
+    <plurals name="years_ago">
+        <item quantity="one">%1$d year ago</item>
+        <item quantity="other">%1$d years ago</item>
+    </plurals>
     <string name="days_ago">%1$d days ago</string>
     <string name="hours_ago">%1$d hours ago</string>
     <string name="minutes_ago">%1$d minutes ago</string>

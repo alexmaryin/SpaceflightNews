@@ -32,6 +32,7 @@ fun SideMenuRoot(
     val scope = rememberCoroutineScope()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    // this starts to observe slide-opening instead of button click
     LaunchedEffect(drawerState) {
         snapshotFlow { drawerState.isOpen }
             .distinctUntilChanged()
