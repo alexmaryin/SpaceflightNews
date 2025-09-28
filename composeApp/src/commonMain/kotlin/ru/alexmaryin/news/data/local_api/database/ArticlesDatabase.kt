@@ -1,5 +1,6 @@
 package ru.alexmaryin.news.data.local_api.database
 
+import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
@@ -13,6 +14,7 @@ import androidx.room.RoomDatabase
     version = 1,
     exportSchema = true
 )
+@ConstructedBy(ArticlesDbConstructor::class)
 abstract class ArticlesDatabase : RoomDatabase() {
     abstract val dao: ArticlesDAO
 

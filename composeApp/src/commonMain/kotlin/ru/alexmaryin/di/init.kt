@@ -1,6 +1,5 @@
 package ru.alexmaryin.di
 
-import io.kotzilla.sdk.analytics.koin.analytics
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 

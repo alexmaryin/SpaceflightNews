@@ -99,7 +99,7 @@ fun App() {
                         ) { navController.navigateUp() }
                     }
 
-                    composable<Navigation.AboutScreen> { entry ->
+                    composable<Navigation.AboutScreen> { _ ->
                         val viewModel = koinViewModel<AboutViewModel>()
                         AboutScreenRoot(viewModel) { navController.navigateUp() }
                     }

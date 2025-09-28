@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
-    id("io.kotzilla.kotzilla-plugin")
 }
 
 kotlin {
@@ -19,19 +18,30 @@ kotlin {
         }
     }
 
-    jvm("desktop")
+    listOf(
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "ComposeApp"
+            isStatic = true
+        }
+    }
+
+    jvm()
 
     room {
         schemaDirectory("$projectDir/schemas")
     }
 
     sourceSets {
-        val desktopMain by getting
-
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.darwin)
         }
         commonMain.dependencies {
             implementation(libs.kotzilla.ktor)
@@ -71,12 +81,9 @@ kotlin {
             implementation(libs.sqlite)
             implementation(libs.androidx.room.runtime)
         }
-        desktopMain.dependencies {
+        jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
-        }
-        dependencies {
-            ksp(libs.androidx.room.compiler)
         }
     }
 
@@ -116,6 +123,11 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspJvm", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
+
 }
 
 compose.desktop {

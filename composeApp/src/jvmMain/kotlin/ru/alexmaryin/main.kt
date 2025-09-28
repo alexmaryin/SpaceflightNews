@@ -26,8 +26,6 @@ fun main() {
         }
     }
 
-
-
     initKoin()
     application {
         val icon = painterResource(Res.drawable.icon)

@@ -4,12 +4,14 @@
 
 package ru.alexmaryin.core.domain
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlinx.datetime.toDateTimePeriod
 import ru.alexmaryin.core.ui.UiText
 import spaceflightnews.composeapp.generated.resources.*
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 fun formatExpiredPeriod(dateTime: String): UiText {
     val published = Instant.parse(dateTime)
     val period = (Clock.System.now() - published).toDateTimePeriod()
