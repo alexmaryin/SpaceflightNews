@@ -1,11 +1,11 @@
 buildscript {
     repositories {
-        mavenCentral()
         google()
+        mavenCentral()
     }
-    dependencies {
-        classpath("io.kotzilla:kotzilla-plugin:1.0.1")
-    }
+//    dependencies {
+//        classpath(libs.kotzillaPlugin)
+//    }
 }
 
 plugins {

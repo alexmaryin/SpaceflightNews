@@ -1,0 +1,7 @@
+TEAM_ID=Alex Maryin
+
+PRODUCT_NAME=spaceflightnews
+PRODUCT_BUNDLE_IDENTIFIER=ru.alexmaryin.spaceflightnews.spaceflightnews(TEAM_ID)
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.3
