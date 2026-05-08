@@ -38,10 +38,10 @@
 
         .parallax-bg {
             position: fixed;
-            top: -10%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
             z-index: -2;
             background: url('references/artemis3.jpg') center center / cover no-repeat;
             will-change: transform;
@@ -1127,30 +1127,52 @@
                 observer.observe(el);
             });
 
-            // Parallax effect - desktop only, mouse movement
+            // Parallax effect - desktop: mouse movement, mobile: scroll position
             const parallaxBg = document.querySelector('.parallax-bg');
             let ticking = false;
             let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-            if (!isMobile && parallaxBg) {
-                let mouseX = 0, mouseY = 0;
+            if (parallaxBg) {
+                if (!isMobile) {
+                    // Desktop: parallax on mouse movement
+                    let mouseX = 0, mouseY = 0;
 
-                function updateParallax() {
-                    const offsetX = (window.innerWidth / 2 - mouseX) / (window.innerWidth / 2) * 25;
-                    const offsetY = (window.innerHeight / 2 - mouseY) / (window.innerHeight / 2) * 25;
+                    function updateParallax() {
+                        const offsetX = (window.innerWidth / 2 - mouseX) / (window.innerWidth / 2) * 25;
+                        const offsetY = (window.innerHeight / 2 - mouseY) / (window.innerHeight / 2) * 25;
 
-                    parallaxBg.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-                    ticking = false;
-                }
-
-                document.addEventListener('mousemove', (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                    if (!ticking) {
-                        window.requestAnimationFrame(updateParallax);
-                        ticking = true;
+                        parallaxBg.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+                        ticking = false;
                     }
-                });
+
+                    document.addEventListener('mousemove', (e) => {
+                        mouseX = e.clientX;
+                        mouseY = e.clientY;
+                        if (!ticking) {
+                            window.requestAnimationFrame(updateParallax);
+                            ticking = true;
+                        }
+                    });
+                } else {
+                    // Mobile: parallax on scroll
+                    function updateParallaxScroll() {
+                        const scrollY = window.scrollY || window.pageYOffset;
+                        const offset = scrollY * 0.15;
+                        
+                        parallaxBg.style.transform = `translateY(${offset}px)`;
+                        ticking = false;
+                    }
+
+                    document.addEventListener('scroll', () => {
+                        if (!ticking) {
+                            window.requestAnimationFrame(updateParallaxScroll);
+                            ticking = true;
+                        }
+                    });
+                    
+                    // Initial call
+                    updateParallaxScroll();
+                }
             }
         });
     </script>
