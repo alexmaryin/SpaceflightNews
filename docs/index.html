@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>SpaceNews Explorer - Compose Multiplatform App</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,13 +27,17 @@
             box-sizing: border-box;
         }
 
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: 
-                linear-gradient(135deg, rgba(10, 10, 18, 0.85) 0%, rgba(13, 13, 26, 0.85) 50%, rgba(10, 10, 18, 0.85) 100%);
+            background: transparent;
             color: var(--color-text);
             min-height: 100vh;
-            overflow-x: hidden;
+            overscroll-behavior: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .parallax-bg {
@@ -45,7 +49,9 @@
             z-index: -2;
             background: url('references/artemis3.jpg') center center / cover no-repeat;
             will-change: transform;
-            transition: transform 0.1s ease-out;
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .parallax-element {
@@ -225,75 +231,8 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-.features {
+        .features {
             padding: 120px 0;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 32px;
-        }
-
-        .feature-card {
-            background: var(--color-card);
-            border-radius: 16px;
-            padding: 40px 32px;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                        border-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid transparent;
-            will-change: transform;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
-                        0 0 30px rgba(0, 212, 255, 0.1);
-            border-color: rgba(0, 212, 255, 0.2);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-icon {
-            width: 64px;
-            height: 64px;
-            margin-bottom: 24px;
-            padding: 16px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 212, 255, 0.05) 100%);
-            color: var(--color-primary);
-        }
-
-        .feature-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.75rem;
-            margin-bottom: 12px;
-            color: #fff;
-        }
-
-        .section-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 64px;
-            background: linear-gradient(135deg, var(--color-primary) 0%, #fff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .features-grid {
@@ -309,6 +248,7 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            border: 1px solid transparent;
         }
 
         .feature-card::before {
@@ -323,6 +263,8 @@
         .feature-card:hover {
             transform: translateY(-8px);
             border: 1px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
+                        0 0 30px rgba(0, 212, 255, 0.1);
         }
 
         .feature-card:hover::before {
@@ -336,6 +278,7 @@
             padding: 16px;
             border-radius: 12px;
             background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+            color: var(--color-primary);
         }
 
         .feature-title {
@@ -343,6 +286,17 @@
             font-size: 1.5rem;
             margin-bottom: 12px;
             color: #fff;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 64px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .feature-description {
@@ -421,14 +375,14 @@
         }
 
         .info-section {
-            padding: 120px 0;
+            padding: 80px 0;
             background: linear-gradient(180deg, rgba(0, 212, 255, 0.03) 0%, transparent 100%);
         }
 
         .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
+            gap: 48px;
         }
 
         .info-card strong {
@@ -487,22 +441,6 @@
             height: 28px;
         }
 
-        .info-section {
-            padding: 80px 0;
-            background: linear-gradient(180deg, rgba(0, 212, 255, 0.03) 0%, transparent 100%);
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 48px;
-        }
-
-        .info-card strong {
-            color: var(--color-primary);
-            font-weight: 600;
-        }
-
         footer {
             padding: 64px 0 32px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -528,6 +466,7 @@
             color: #fff;
         }
 
+        .footer-description,
         .footer_description {
             color: var(--color-text-muted);
             margin-bottom: 32px;
@@ -646,6 +585,10 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 50%, #0a0a12 100%);
+            }
+
             .hero-section {
                 flex-direction: column;
                 gap: 32px;
@@ -717,6 +660,11 @@
             .screenshots-grid {
                 grid-template-columns: 1fr;
                 gap: 24px;
+                min-width: 0;
+            }
+
+            .screenshot-card {
+                min-width: 0;
             }
 
             .feature-card {
@@ -767,6 +715,7 @@
                 left: 0;
                 background-position: center center;
                 background-size: cover;
+                transform: none !important;
             }
 
             .container {
@@ -824,6 +773,53 @@
             }
         }
 
+        @media (max-width: 390px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-title span {
+                font-size: 0.875rem;
+            }
+
+            .tagline {
+                font-size: 0.875rem;
+            }
+
+            .hero-description {
+                font-size: 0.875rem;
+            }
+
+            .section-title {
+                font-size: 1.375rem;
+            }
+
+            .hero-visual {
+                max-width: 200px;
+            }
+
+            .feature-card {
+                padding: 20px 16px !important;
+            }
+
+            .feature-title {
+                font-size: 1.125rem;
+            }
+
+            .feature-description {
+                font-size: 0.8rem;
+            }
+
+            .screenshot-wrapper {
+                padding: 12px 8px 20px;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.875rem;
+            }
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -873,6 +869,19 @@
             height: 18px;
             object-fit: cover;
             border-radius: 2px;
+        }
+
+        @supports (padding: max(0px)) {
+            .container {
+                padding-left: max(16px, env(safe-area-inset-left));
+                padding-right: max(16px, env(safe-area-inset-right));
+            }
+
+            footer {
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right);
+                padding-bottom: max(24px, env(safe-area-inset-bottom));
+            }
         }
     </style>
 </head>
@@ -1127,52 +1136,31 @@
                 observer.observe(el);
             });
 
-            // Parallax effect - desktop: mouse movement, mobile: scroll position
+            // Parallax effect - desktop: mouse movement only
             const parallaxBg = document.querySelector('.parallax-bg');
             let ticking = false;
             let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            let isNarrowScreen = window.innerWidth <= 768;
 
-            if (parallaxBg) {
-                if (!isMobile) {
-                    // Desktop: parallax on mouse movement
-                    let mouseX = 0, mouseY = 0;
+            if (parallaxBg && !isMobile && !isNarrowScreen) {
+                let mouseX = 0, mouseY = 0;
 
-                    function updateParallax() {
-                        const offsetX = (window.innerWidth / 2 - mouseX) / (window.innerWidth / 2) * 25;
-                        const offsetY = (window.innerHeight / 2 - mouseY) / (window.innerHeight / 2) * 25;
+                function updateParallax() {
+                    const offsetX = (window.innerWidth / 2 - mouseX) / (window.innerWidth / 2) * 25;
+                    const offsetY = (window.innerHeight / 2 - mouseY) / (window.innerHeight / 2) * 25;
 
-                        parallaxBg.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-                        ticking = false;
-                    }
-
-                    document.addEventListener('mousemove', (e) => {
-                        mouseX = e.clientX;
-                        mouseY = e.clientY;
-                        if (!ticking) {
-                            window.requestAnimationFrame(updateParallax);
-                            ticking = true;
-                        }
-                    });
-                } else {
-                    // Mobile: parallax on scroll
-                    function updateParallaxScroll() {
-                        const scrollY = window.scrollY || window.pageYOffset;
-                        const offset = scrollY * 0.15;
-                        
-                        parallaxBg.style.transform = `translateY(${offset}px)`;
-                        ticking = false;
-                    }
-
-                    document.addEventListener('scroll', () => {
-                        if (!ticking) {
-                            window.requestAnimationFrame(updateParallaxScroll);
-                            ticking = true;
-                        }
-                    });
-                    
-                    // Initial call
-                    updateParallaxScroll();
+                    parallaxBg.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+                    ticking = false;
                 }
+
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    if (!ticking) {
+                        window.requestAnimationFrame(updateParallax);
+                        ticking = true;
+                    }
+                });
             }
         });
     </script>
