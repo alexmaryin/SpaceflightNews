@@ -646,14 +646,181 @@
         }
 
         @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column;
+                gap: 32px;
+                padding: 40px 0;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-visual {
+                flex: none;
+                width: 100%;
+                max-width: 280px;
+                margin: 0 auto;
+            }
+
+            .hero-visual img {
+                transform: rotate(0deg);
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 16px;
+            }
+
+            .tagline {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+
             .hero-title {
-                font-size: 2.5rem;
+                font-size: 2.25rem;
+                margin-bottom: 16px;
             }
+
             .hero-title span {
-                font-size: 1.25rem;
+                font-size: 1.125rem;
+                margin-top: 12px;
             }
+
+            .hero-description {
+                font-size: 1rem;
+                margin-bottom: 32px;
+                max-width: 100%;
+            }
+
             .cta-group {
                 flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+                margin-bottom: 40px;
+            }
+
+            .features,
+            .screenshots {
+                padding: 60px 0;
+            }
+
+            .features-grid,
+            .screenshots-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .feature-card {
+                padding: 24px 20px !important;
+            }
+
+            .feature-icon {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 16px;
+                padding: 12px;
+            }
+
+            .feature-title {
+                font-size: 1.25rem;
+                margin-bottom: 8px;
+            }
+
+            .feature-description {
+                font-size: 0.9rem;
+            }
+
+            .screenshot-wrapper {
+                padding: 16px 12px 24px;
+            }
+
+            .info-section {
+                padding: 60px 0;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .decorative-section {
+                padding: 60px 0;
+            }
+
+            .decorative-image {
+                display: none;
+            }
+
+            .parallax-bg {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background-position: center center;
+                background-size: cover;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            footer {
+                padding: 40px 0 24px;
+            }
+
+            .footer-title {
+                font-size: 1.25rem;
+            }
+
+            .social_links {
+                gap: 12px;
+            }
+
+            .social_link {
+                width: 36px;
+                height: 36px;
+            }
+
+            .lang-switcher {
+                top: 12px;
+                right: 12px;
+            }
+
+            .lang-btn {
+                width: 32px;
+                height: 24px;
+            }
+
+            .lang-btn img {
+                width: 20px;
+                height: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .hero-title span {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-visual {
+                max-width: 220px;
             }
         }
 
@@ -960,49 +1127,31 @@
                 observer.observe(el);
             });
 
-            // Parallax effect
+            // Parallax effect - desktop only, mouse movement
             const parallaxBg = document.querySelector('.parallax-bg');
             let ticking = false;
             let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            let hasInteracted = false;
 
-            function updateParallax() {
-                // Main background - only move after first interaction, no scale
-                if (parallaxBg && hasInteracted) {
-                    const mouseX = (window.innerWidth / 2 - mousePosition.x) / (window.innerWidth / 2);
-                    const mouseY = (window.innerHeight / 2 - mousePosition.y) / (window.innerHeight / 2);
-                    const bgTranslateX = mouseX * 25;
-                    const bgTranslateY = mouseY * 25;
+            if (!isMobile && parallaxBg) {
+                let mouseX = 0, mouseY = 0;
 
-                    parallaxBg.style.transform = `translate(${bgTranslateX}px, ${bgTranslateY}px)`;
+                function updateParallax() {
+                    const offsetX = (window.innerWidth / 2 - mouseX) / (window.innerWidth / 2) * 25;
+                    const offsetY = (window.innerHeight / 2 - mouseY) / (window.innerHeight / 2) * 25;
+
+                    parallaxBg.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+                    ticking = false;
                 }
 
-                ticking = false;
-            }
-
-            let mousePosition = { x: 0, y: 0 };
-
-            // Desktop mouse tracking - only after first interaction
-            if (!isMobile) {
                 document.addEventListener('mousemove', (e) => {
-                    if (!hasInteracted) {
-                        hasInteracted = true;
-                    }
-                    mousePosition = { x: e.clientX, y: e.clientY };
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
                     if (!ticking) {
                         window.requestAnimationFrame(updateParallax);
                         ticking = true;
                     }
                 });
             }
-
-            // Scroll handling for both mobile and desktop
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(updateParallax);
-                    ticking = true;
-                }
-            });
         });
     </script>
 </body>
