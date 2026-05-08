@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - SpaceNews Explorer</title>
+    <title>Политика конфиденциальности — SpaceNews Explorer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -230,6 +230,18 @@
             animation: fadeIn 0.8s ease-out;
         }
 
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px 16px;
+            }
+            .content {
+                padding: 24px;
+            }
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+
         .lang-switcher {
             position: fixed;
             top: 20px;
@@ -265,18 +277,6 @@
             object-fit: cover;
             border-radius: 2px;
         }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 24px 16px;
-            }
-            .content {
-                padding: 24px;
-            }
-            .page-title {
-                font-size: 2rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -291,68 +291,68 @@
     </div>
     
     <div class="container">
-        <a href="index.html" class="back-link fade-in">Back to Home</a>
+        <a href="index-ru.html" class="back-link fade-in">На главную</a>
 
         <header>
             <img src="references/icon.png" alt="SpaceNews Explorer" class="logo">
-            <h1 class="page-title fade-in">Privacy Policy</h1>
-            <p class="last-updated fade-in" style="animation-delay: 0.2s;">Last Updated: May 8, 2026</p>
+            <h1 class="page-title fade-in">Политика конфиденциальности</h1>
+            <p class="last-updated fade-in" style="animation-delay: 0.2s;">Последнее обновление: 8 мая 2026 г.</p>
         </header>
 
         <div class="content fade-in" style="animation-delay: 0.4s;">
             <div class="section">
-                <h2 class="section-title">1. Information Collection</h2>
+                <h2 class="section-title">1. Сбор информации</h2>
                 <p class="section-text">
-                    <span class="highlight">SpaceNews Explorer</span> does not collect, store, or transmit any personal data. The app is designed with privacy as a fundamental principle.
+                    <span class="highlight">SpaceNews Explorer</span> не собирает, не хранит и не передаёт никакие персональные данные. Приложение спроектировано с принципом конфиденциальности в своей основе.
                 </p>
                 <ul class="check-list">
-                    <li>No personal identification information collected</li>
-                    <li>No location data tracking</li>
-                    <li>No user behavior analytics</li>
-                    <li>No cookies or tracking scripts</li>
+                    <li>Не собирается персональная идентификационная информация</li>
+                    <li>Не отслеживаются данные о местоположении</li>
+                    <li>Не ведётся аналитика поведения пользователей</li>
+                    <li>Не используются cookies и отслеживающие скрипты</li>
                 </ul>
             </div>
 
             <div class="section">
-                <h2 class="section-title">2. Data Processing</h2>
+                <h2 class="section-title">2. Обработка данных</h2>
                 <p class="section-text">
-                    All data processing occurs locally on your device. The app uses the following local services:
+                    Вся обработка данных происходит локально на вашем устройстве. Приложение использует следующие локальные сервисы:
                 </p>
                 <ul class="check-list">
-                    <li><strong>Local Database:</strong> Favorite articles are stored in Room database on your device only</li>
-                    <li><strong>Offline Storage:</strong> Cached articles are saved locally for offline reading</li>
-                    <li><strong>Preferences:</strong> User settings (theme, etc.) stored in Android DataStore</li>
+                    <li><strong>Локальная база данных:</strong> Избранные статьи хранятся в базе данных Room только на вашем устройстве</li>
+                    <li><strong>Офлайн-хранилище:</strong> Кэшированные статьи сохраняются локально для чтения без интернета</li>
+                    <li><strong>Настройки:</strong> Пользовательские настройки (тема и др.) хранятся в Android DataStore</li>
                 </ul>
             </div>
 
             <div class="section">
-                <h2 class="section-title">3. API Data Usage</h2>
+                <h2 class="section-title">3. Использование данных API</h2>
                 <p class="section-text">
-                    The app fetches space news from <a href="https://thespacedevs.com/snapi" style="color: var(--color-primary);">The Spaceflight News API (SNAPI)</a> operated by <a href="https://thespacedevs.com" style="color: var(--color-primary);">The Space Devs</a>. While the API processes public space news data, our app:
+                    Приложение загружает новости космонавтики из <a href="https://thespacedevs.com/snapi" style="color: var(--color-primary);">The Spaceflight News API (SNAPI)</a>, управляемого <a href="https://thespacedevs.com" style="color: var(--color-primary);">The Space Devs</a>. Наше приложение:
                 </p>
                 <ul class="check-list">
-                    <li>Does not modify API responses</li>
-                    <li>Does not store user queries or search history</li>
-                    <li>Does not link API requests to user identity</li>
-                    <li>Respects API rate limits</li>
+                    <li>Не изменяет ответы API</li>
+                    <li>Не сохраняет пользовательские запросы или историю поиска</li>
+                    <li>Не связывает запросы к API с личностью пользователя</li>
+                    <li>Соблюдает ограничения частоты запросов API</li>
                 </ul>
             </div>
 
             <div class="section">
-                <h2 class="section-title">4. Third-Party Services</h2>
+                <h2 class="section-title">4. Сторонние сервисы</h2>
                 <p class="section-text">
-                    The app integrates with the following external services, but they do not collect personal data through our application:
+                    Приложение интегрируется со следующими внешними сервисами, однако они не собирают персональные данные через наше приложение:
                 </p>
                 <ul class="check-list">
-                    <li><a href="https://thespacedevs.com" style="color: var(--color-primary);">The Space Devs SNAPI</a> - Data source for space news</li>
-                    <li>Google Play Services - For app distribution and updates (Google Play only)</li>
+                    <li><a href="https://thespacedevs.com" style="color: var(--color-primary);">The Space Devs SNAPI</a> — источник новостей о космосе</li>
+                    <li>Google Play Services — для распространения и обновлений приложения (только Google Play)</li>
                 </ul>
             </div>
 
             <div class="section">
-                <h2 class="section-title">5. Contact</h2>
+                <h2 class="section-title">5. Контакты</h2>
                 <p class="section-text">
-                    If you have questions about this Privacy Policy, please contact:
+                    Если у вас есть вопросы по данной Политике конфиденциальности, пожалуйста, свяжитесь:
                 </p>
                 <p style="color: var(--color-primary); font-weight: 600;">
                     Alex Maryin<br>
@@ -361,9 +361,9 @@
             </div>
 
             <div class="section">
-                <h2 class="section-title">6. Changes to Policy</h2>
+                <h2 class="section-title">6. Изменения в политике</h2>
                 <p class="section-text">
-                    This privacy policy is subject to change. Any updates will be posted here with a new last updated date.
+                    Данная политика конфиденциальности может быть изменена. Любые обновления будут опубликованы здесь с новой датой последнего обновления.
                 </p>
             </div>
         </div>
@@ -371,7 +371,7 @@
         <footer>
             <div class="footer-content">
                 <p>&copy; Alex Maryin, 2025</p>
-                <p>SpaceNews Explorer is built with <a href="https://developer.android.com/jetpack/compose" style="color: var(--color-primary);">Jetpack Compose</a> and follows strict privacy principles.</p>
+                <p>SpaceNews Explorer создано с использованием <a href="https://developer.android.com/jetpack/compose" style="color: var(--color-primary);">Jetpack Compose</a> и строго придерживается принципов конфиденциальности.</p>
             </div>
         </footer>
     </div>
