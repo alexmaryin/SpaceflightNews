@@ -2,20 +2,18 @@
 
 #### ![cmp_logo](https://github.com/alexmaryin/SpaceflightNews/blob/master/cmp_logo.png "cmp_logo") Compose multiplatform application for Android & Desktop
 
-
-## Now is available on Google Play: https://play.google.com/store/apps/details?id=ru.alexmaryin.spacenewsexplorer
-
+## Now available on Google Play: https://play.google.com/store/apps/details?id=ru.alexmaryin.spacenewsexplorer
 
 ![logo](https://github.com/alexmaryin/SpaceflightNews/blob/master/spacenewslogo.png "logo")
 
-Uses [Spaceflight News API](https://thespacedevs.com/snapi "Spaceflight News API") for fetching news about Cosmos and science. 
+The app shows latest articles from [The Spaceflight News API (SNAPI)](https://thespacedevs.com/snapi) with a full-text search feature across all sources and the ability to save articles locally as favourites.
 
-Site: https://sites.google.com/view/spacenews-explorer
+**Main providers for SNAPI include:** NASA, EASA, European Spaceflight, SpaceNews, Ars Technica, The Launch Pad, and others.
 
-See [Privacy policy](https://sites.google.com/view/spacenews-explorer/privacy-policy) if you wish but don't expect some kind of surprise.
-
+See [Privacy policy](https://sites.google.com/view/spacenews-explorer/privacy-policy) for more information.
 
 For contact: java.ul@gmail.com
+
 ```
 MIT License
 
@@ -33,12 +31,10 @@ copies or substantial portions of the Software.
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+AUTHOR OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 ```
 
 &copy; Alex Maryin, 2025.
-
-

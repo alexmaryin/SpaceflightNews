@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceNews Explorer - Compose Multiplatform App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0a0a12;
+            --color-bg-gradient: #0a0a12 0%, #1a1a2e 100%;
+            --color-primary: #00d4ff;
+            --color-accent: #ff6b6b;
+            --color-text: #e0e0e0;
+            --color-text-muted: #a0a0b0;
+            --color-card: #161625;
+            --color-card-hover: #1f1f35;
+            --shadow-glow: 0 0 30px rgba(0, 212, 255, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: 
+                linear-gradient(135deg, rgba(10, 10, 18, 0.85) 0%, rgba(13, 13, 26, 0.85) 50%, rgba(10, 10, 18, 0.85) 100%);
+            color: var(--color-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .parallax-bg {
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            z-index: -2;
+            background: url('references/artemis3.jpg') center center / cover no-repeat;
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+        }
+
+        .parallax-element {
+            will-change: transform;
+        }
+
+        .cosmic-accent {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 107, 107, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cosmic-accent::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 80px 80px, 40px 40px;
+            opacity: 0.3;
+            animation: starfieldMove 60s linear infinite;
+        }
+
+        @keyframes starfieldMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(80px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 48px;
+            padding: 64px 0;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-visual {
+            flex: 0 0 320px;
+        }
+
+        .hero-visual img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transform: rotate(-5deg);
+            transition: var(--transition);
+        }
+
+        .hero-visual img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.5));
+        }
+
+        .tagline {
+            font-family: 'Cinzel', serif;
+            color: var(--color-primary);
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 0%, var(--color-primary) 50%, #ff6b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: var(--shadow-glow);
+        }
+
+        .hero-title span {
+            display: block;
+            font-size: 2rem;
+            color: var(--color-text-muted);
+            font-weight: 300;
+            margin-top: 16px;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            margin-bottom: 48px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: #000;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            background: #33ddff;
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+.features {
+            padding: 120px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--color-card);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+            will-change: transform;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
+                        0 0 30px rgba(0, 212, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 24px;
+            padding: 16px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 212, 255, 0.05) 100%);
+            color: var(--color-primary);
+        }
+
+        .feature-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.75rem;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 64px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--color-card);
+            border-radius: 16px;
+            padding: 32px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 24px;
+            padding: 16px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+        }
+
+        .feature-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .feature-description {
+            color: var(--color-text-muted);
+            line-height: 1.6;
+        }
+
+        .screenshots {
+            padding: 120px 0;
+            background: radial-gradient(circle at center, rgba(0, 212, 255, 0.03) 0%, transparent 70%);
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .screenshot-card {
+            background: var(--color-card);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-12px);
+        }
+
+        .screenshot-wrapper {
+            padding: 24px 16px 32px;
+            background: linear-gradient(135deg, #0a0a12 0%, #161625 100%);
+            border-radius: 16px;
+            position: relative;
+        }
+
+        .screenshot-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .screenshot {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: var(--transition);
+            margin-top: 16px;
+        }
+
+.screenshot-card:hover .screenshot {
+            transform: scale(1.03);
+        }
+
+        .screenshot-label {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .screenshot-label h3 {
+            color: var(--color-text);
+            font-size: 1.125rem;
+            margin-bottom: 4px;
+        }
+
+        .screenshot-label p {
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+        }
+
+        .info-section {
+            padding: 120px 0;
+            background: linear-gradient(180deg, rgba(0, 212, 255, 0.03) 0%, transparent 100%);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .info-card strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .screenshot-label {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .screenshot-label h3 {
+            color: var(--color-text);
+            font-size: 1.125rem;
+            margin-bottom: 4px;
+        }
+
+        .screenshot-label p {
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+        }
+
+        .screenshots-section-title {
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+
+        .platform_badges {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .platform_badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--color-card);
+            padding: 16px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--color-text);
+            transition: var(--transition);
+        }
+
+        .platform_badge:hover {
+            background: var(--color-card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .platform_icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        .info-section {
+            padding: 80px 0;
+            background: linear-gradient(180deg, rgba(0, 212, 255, 0.03) 0%, transparent 100%);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 48px;
+        }
+
+        .info-card strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 64px 0 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-logo {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 24px;
+        }
+
+        .footer-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .footer_description {
+            color: var(--color-text-muted);
+            margin-bottom: 32px;
+        }
+
+        .social_links {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .social_link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--color-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social_link:hover {
+            background: var(--color-primary);
+            transform: translateY(-4px);
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .footer-nav a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-nav a:hover {
+            color: var(--color-primary);
+        }
+
+        .copyright {
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+        }
+
+        .decorative-section {
+            position: relative;
+            padding: 120px 0;
+            overflow: hidden;
+        }
+
+        .decorative-image {
+            position: absolute;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .decorative-image.top-left {
+            top: -100px;
+            left: -100px;
+            width: 400px;
+            transform: rotate(-15deg);
+        }
+
+        .decorative-image.bottom-right {
+            bottom: -100px;
+            right: -100px;
+            width: 500px;
+            transform: rotate(15deg);
+        }
+
+        .decorative-image.bottom-left {
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            transform: rotate(-15deg);
+        }
+
+        .decorative-image.center-left {
+            top: 50%;
+            left: -150px;
+            transform: translateY(-50%) rotate(-10deg);
+            width: 350px;
+        }
+
+        .decorative-image.center-right {
+            top: 50%;
+            right: -150px;
+            transform: translateY(-50%) rotate(10deg);
+            width: 350px;
+        }
+
+        .hero-decoration {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-decoration.star-1 {
+            top: 20%;
+            right: 10%;
+            width: 200px;
+            transform: rotate(20deg);
+        }
+
+        .hero-decoration.star-2 {
+            bottom: 30%;
+            right: 5%;
+            width: 150px;
+            transform: rotate(-10deg);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-title span {
+                font-size: 1.25rem;
+            }
+            .ctagroup {
+                flex-direction: column;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-btn {
+            width: 36px;
+            height: 28px;
+            border-radius: 6px;
+            background: rgba(22, 22, 37, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .lang-btn:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+        }
+
+        .lang-btn img {
+            width: 24px;
+            height: 18px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-accent"></div>
+    <div class="parallax-bg"></div>
+    <div class="lang-switcher">
+        <a href="index.html" class="lang-btn" title="English">
+            <img src="references/flags/us.svg" alt="English" onerror="this.style.display='none'">
+        </a>
+        <a href="index-ru.html" class="lang-btn" title="Русский">
+            <img src="references/flags/ru.svg" alt="Русский" onerror="this.style.display='none'">
+        </a>
+    </div>
+    
+    <img src="references/saturn.jpg" alt="" class="parallax-element decorative-image bottom-right" aria-hidden="true">
+    
+    <header>
+        <div class="container">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <img src="references/icon.png" alt="SpaceNews Explorer" class="logo">
+                    <p class="tagline">SpaceNews Explorer</p>
+                    <h1 class="hero-title">
+                        Explore The Universe
+                        <span>Compose Multiplatform App</span>
+                    </h1>
+                    <p class="hero-description">
+                        Discover the latest space news from trusted sources including NASA, EASA, European Spaceflight, SpaceNews, Ars Technica, and more. With full-text search and local favorites, stay updated on space exploration anytime, anywhere.
+                    </p>
+                    <div class="cta-group">
+                        <a href="https://play.google.com/store/apps/details?id=ru.alexmaryin.spacenewsexplorer" class="btn btn-primary">
+                            Get it on Google Play
+                        </a>
+                        <a href="https://github.com/alexmaryin/SpaceflightNews" class="btn btn-secondary">
+                            View on GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img src="dark-images/dark-details.png" alt="SpaceNews Explorer App">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="features decorative-section">
+        <img src="references/artemis3.jpg" alt="" class="decorative-image center-left" aria-hidden="true">
+        <div class="container">
+            <h2 class="section-title">Features</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6V8a2 2 0 012-2h4a2 2 0 012 2v2m-4 6v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2m4 6a2 2 0 01-2 2H8a2 2 0 01-2-2v-2m4 6V6a2 2 0 00-2-2h4a2 2 0 002 2v2"></path>
+                    </svg>
+                    <h3 class="feature-title">Multiplatform</h3>
+                    <p class="feature-description">Native Android, Desktop, and iOS applications built with Jetpack Compose Multiplatform. One codebase, amazing performance on all platforms. iOS app ready (coming soon to App Store).</p>
+                </div>
+
+                <div class="feature-card fade-in" style="animation-delay: 0.2s;">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <h3 class="feature-title">Advanced Search</h3>
+                    <p class="feature-description">Full-text search across all sources. Find articles instantly by topic, author, or keyword.</p>
+                </div>
+
+                <div class="feature-card fade-in" style="animation-delay: 0.4s;">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                    <h3 class="feature-title">Favorites</h3>
+                    <p class="feature-description">Save your favorite articles locally with Room database. Access them offline anytime.</p>
+                </div>
+
+                <div class="feature-card fade-in" style="animation-delay: 0.6s;">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <h3 class="feature-title">Dark Mode</h3>
+                    <p class="feature-description">Built-in dark mode support with system-aware theme switching. Read comfortably in any lighting.</p>
+                </div>
+
+                <div class="feature-card fade-in" style="animation-delay: 0.8s;">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    <h3 class="feature-title">Lightning Fast</h3>
+                    <p class="feature-description">Paging library integration for smooth, efficient scrolling through thousands of articles.</p>
+                </div>
+
+                <div class="feature-card fade-in" style="animation-delay: 1s;">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    <h3 class="feature-title">CORS Support</h3>
+                    <p class="feature-description">Works with Ktor HTTP client and supports Content Security Policy for secure data fetching.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots decorative-section">
+        <img src="references/hubble.jpg" alt="" class="decorative-image center-right" aria-hidden="true">
+        <div class="container">
+            <h2 class="section-title">Screenshots</h2>
+            <div class="screenshots-grid">
+                <div class="screenshot-card fade-in">
+                    <div class="screenshot-wrapper">
+                        <img src="dark-images/dark-details.png" alt="App Screen" class="screenshot">
+                        <div class="screenshot-label">
+                            <h3>Dark Mode</h3>
+                            <p>Article Details</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-card fade-in" style="animation-delay: 0.2s;">
+                    <div class="screenshot-wrapper">
+                        <img src="dark-images/dark-search.png" alt="App Screen" class="screenshot">
+                        <div class="screenshot-label">
+                            <h3>Dark Mode</h3>
+                            <p>Search</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-card fade-in" style="animation-delay: 0.4s;">
+                    <div class="screenshot-wrapper">
+                        <img src="light-images/light-search.png" alt="App Screen" class="screenshot">
+                        <div class="screenshot-label">
+                            <h3>Light Theme</h3>
+                            <p>Search</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-card fade-in" style="animation-delay: 0.6s;">
+                    <div class="screenshot-wrapper">
+                        <img src="light-images/light-details.png" alt="App Screen" class="screenshot">
+                        <div class="screenshot-label">
+                            <h3>Light Theme</h3>
+                            <p>Article Details</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-card fade-in" style="animation-delay: 0.8s;">
+                    <div class="screenshot-wrapper">
+                        <img src="dark-images/dark-about.png" alt="App Screen" class="screenshot">
+                        <div class="screenshot-label">
+                            <h3>Dark Mode</h3>
+                            <p>About</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screenshot-card fade-in" style="animation-delay: 1s;">
+                    <div class="screenshot-wrapper">
+                        <img src="light-images/light-about.png" alt="App Screen" class="screenshot">
+                        <div class="screenshot-label">
+                            <h3>Light Theme</h3>
+                            <p>About</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section decorative-section">
+        <img src="references/hubble.jpg" alt="" class="decorative-image bottom-left" aria-hidden="true">
+        <div class="container">
+            <div class="info-grid">
+                <div class="feature-card fade-in" style="padding: 40px;">
+                    <h3 class="feature-title" style="margin-bottom: 16px;">Source Data</h3>
+                    <p class="feature-description" style="margin-bottom: 12px;">
+                        Data provided by <strong>The Spaceflight News API (SNAPI)</strong>
+                    </p>
+                    <p class="feature-description">
+                        API by <a href="https://thespacedevs.com" style="color: var(--color-primary); text-decoration: none;">The Space Devs</a>
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in" style="padding: 40px;">
+                    <h3 class="feature-title" style="margin-bottom: 16px;">Main Providers</h3>
+                    <p class="feature-description" style="line-height: 1.8;">
+                        <strong>NASA</strong>, <strong>EASA</strong>, <strong>European Spaceflight</strong>, <strong>SpaceNews</strong>, <strong>Ars Technica</strong>, <strong>The Launch Pad</strong>, and others
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in" style="padding: 40px;">
+                    <h3 class="feature-title" style="margin-bottom: 16px;">Supported Platforms</h3>
+                    <p class="feature-description" style="line-height: 1.8;">
+                        • <strong>Android</strong> (API 21+) • <strong>JVM Desktop</strong> • <strong>iOS</strong> (arm64 + simulator)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <img src="references/icon.png" alt="SpaceNews Explorer" class="footer-logo">
+                <h2 class="footer-title">SpaceNews Explorer</h2>
+                <p class="footer-description">
+                    A Compose Multiplatform application for space exploration enthusiasts. Stay updated with the latest news from NASA, EASA, and more.
+                </p>
+                <div class="footer-nav" style="margin-bottom: 40px;">
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                </div>
+                <div class="social_links">
+                    <a href="https://github.com/alexmaryin/SpaceflightNews" class="social_link" title="GitHub">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23a11.509 11.509 0 012.817-.392c.99.004 1.983.138 2.922.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="https://alexmaryin.ru/content/spacenews-explorer/" class="social_link" title="Blog">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:java.ul@gmail.com" class="social_link" title="Email">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </a>
+                </div>
+                <p class="copyright">
+                    &copy; Alex Maryin, 2025. MIT License
+                </p>
+                <p class="copyright" style="margin-top: 8px; font-size: 0.75rem;">
+                    Spaceflight News API by <a href="https://thespacedevs.com" style="color: var(--color-primary);">The Space Devs</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.8s ease-out';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Parallax effect
+            const parallaxBg = document.querySelector('.parallax-bg');
+            let ticking = false;
+            let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            let hasInteracted = false;
+
+            function updateParallax() {
+                // Main background - only move after first interaction, no scale
+                if (parallaxBg && hasInteracted) {
+                    const mouseX = (window.innerWidth / 2 - mousePosition.x) / (window.innerWidth / 2);
+                    const mouseY = (window.innerHeight / 2 - mousePosition.y) / (window.innerHeight / 2);
+                    const bgTranslateX = mouseX * 25;
+                    const bgTranslateY = mouseY * 25;
+
+                    parallaxBg.style.transform = `translate(${bgTranslateX}px, ${bgTranslateY}px)`;
+                }
+
+                ticking = false;
+            }
+
+            let mousePosition = { x: 0, y: 0 };
+
+            // Desktop mouse tracking - only after first interaction
+            if (!isMobile) {
+                document.addEventListener('mousemove', (e) => {
+                    if (!hasInteracted) {
+                        hasInteracted = true;
+                    }
+                    mousePosition = { x: e.clientX, y: e.clientY };
+                    if (!ticking) {
+                        window.requestAnimationFrame(updateParallax);
+                        ticking = true;
+                    }
+                });
+            }
+
+            // Scroll handling for both mobile and desktop
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
