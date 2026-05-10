@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
+import coil3.util.Logger
 import org.jetbrains.compose.resources.painterResource
 import spaceflightnews.composeapp.generated.resources.Res
 import spaceflightnews.composeapp.generated.resources.image_placeholder
