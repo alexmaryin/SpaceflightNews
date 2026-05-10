@@ -5,6 +5,7 @@ import ru.alexmaryin.news.data.dto_models.AuthorDTO
 import ru.alexmaryin.news.data.dto_models.EventDTO
 import ru.alexmaryin.news.data.dto_models.LaunchDTO
 import ru.alexmaryin.news.data.dto_models.SocialsDTO
+import ru.alexmaryin.news.data.util.ensureHttps
 import ru.alexmaryin.news.domain.models.Article
 import ru.alexmaryin.news.domain.models.Author
 import ru.alexmaryin.news.domain.models.Event
@@ -16,7 +17,7 @@ fun ArticleDTO.toArticle() = Article(
     title = title,
     authors = authors.map { it.toAuthor() },
     url = url,
-    imageUrl = imageUrl,
+    imageUrl = imageUrl.ensureHttps(),
     newsSite = newsSite,
     summary = summary,
     publishedAt = publishedAt,
@@ -32,12 +33,12 @@ private fun AuthorDTO.toAuthor() = Author(
 )
 
 private fun SocialsDTO.toSocials() = Socials(
-    x = x,
-    youTube = youTube,
-    instagram = instagram,
-    linkedin = linkedin,
-    mastodon = mastodon,
-    blueSky = blueSky,
+    x = x.ensureHttps(),
+    youTube = youTube.ensureHttps(),
+    instagram = instagram.ensureHttps(),
+    linkedin = linkedin.ensureHttps(),
+    mastodon = mastodon.ensureHttps(),
+    blueSky = blueSky.ensureHttps(),
 )
 
 private fun LaunchDTO.toLaunch() = Launch(

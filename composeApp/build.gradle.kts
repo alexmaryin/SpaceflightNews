@@ -100,8 +100,8 @@ android {
         applicationId = "ru.alexmaryin.spacenewsexplorer"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 4
-        versionName = "1.3"
+        versionCode = 5
+        versionName = "1.3.1"
     }
     packaging {
         resources {
@@ -137,7 +137,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "SpaceNews Explorer"
-            packageVersion = "1.3.0"
+            packageVersion = "1.3.1"
             modules("java.instrument", "java.management", "jdk.unsupported")
 
             windows {
