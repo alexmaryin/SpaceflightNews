@@ -10,7 +10,6 @@ class SpaceNewsApp : Application() {
         super.onCreate()
         initKoin {
             androidContext(this@SpaceNewsApp)
-//            analytics()
         }
     }
 }

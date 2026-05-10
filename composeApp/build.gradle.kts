@@ -39,6 +39,8 @@ kotlin {
             implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.10.3")
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+            implementation(libs.androidx.browser)
+            implementation(libs.coil.android)
         }
         iosMain.dependencies {
             implementation(libs.ktor.darwin)
@@ -74,7 +76,6 @@ kotlin {
             implementation(libs.kotlinx.datetime)
 
             implementation(libs.coil.compose)
-            implementation(libs.coil.network)
 
             implementation(libs.sqlite)
             implementation(libs.androidx.room.runtime)
@@ -82,6 +83,7 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.coil.network)
         }
     }
 
