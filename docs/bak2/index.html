@@ -37,7 +37,7 @@
         h1, h2, h3 {
             font-family: 'Orbitron', sans-serif;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-format: 2px;
         }
 
         /* Parallax Hero Section */
@@ -122,37 +122,12 @@
         .nav-links a:hover {
             color: var(--accent-color);
         }
- 
-        .lang-switch {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-left: 20px;
-        }
-        .lang-switch a {
-            display: block;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            transition: var(--transition);
-            opacity: 0.6;
-            border: 2px solid transparent;
-        }
-        .lang-switch a:hover {
-            opacity: 1;
-        }
-        .lang-switch a.active {
-            opacity: 1;
-            border-color: var(--accent-color);
-        }
 
+        /* Feature Section */
         .features {
             padding: 100px 20px;
             text-align: center;
-            background: linear-gradient(to bottom, rgba(5, 11, 24, 0.8), rgba(10, 25, 49, 0.8)), url('references/hubble.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: linear-gradient(to bottom, #050b18, #0a1931);
         }
 
         .feature-grid {
@@ -179,16 +154,13 @@
         .feature-card i {
             font-size: 3rem;
             color: var(--accent-color);
-            margin: 0 0 20px 0;
+            margin-um: 0 0 20px 0;
         }
 
         /* Showcase Section */
         .showcase {
             padding: 100px 20px;
-            background: linear-gradient(rgba(5, 11, 24, 0.8), rgba(5, 11, 24, 0.8)), url('references/saturn.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: #050b18;
         }
 
         .showcase h2 {
@@ -205,6 +177,12 @@
             margin: 0 auto;
         }
 
+        .screenshot-box {
+            flex: 1 1 45%;
+            min-width: 300px;
+            text-align: center;
+        }
+
         .screenshot-box img {
             width: 100%;
             border-radius: 10px;
@@ -212,57 +190,18 @@
             margin-bottom: 20px;
         }
 
-        .carousel {
-            position: relative;
-            max-width: 600px;
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        /* Decoration Elements */
+        .deco-bg {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+            width: 300px;
+            transition: transform 0.5s ease-out;
         }
 
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .carousel-slide {
-            min-width: 100%;
-        }
-
-        .carousel-slide img {
-            width: 100%;
-            display: block;
-            margin-bottom: 0;
-        }
-
-        .carousel-prev, .carousel-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            padding: 15px;
-            cursor: pointer;
-            z-index: 10;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .carousel-prev:hover, .carousel-next:hover {
-            background: var(--accent-color);
-        }
-
-        .carousel-prev { left: 20px; }
-        .carousel-next { right: 20px; }
-
-
+        #hubble { top: 20%; left: 5%; }
+        #saturn { bottom: 10%; right: 5%; }
 
         /* Footer */
         footer {
@@ -318,10 +257,6 @@
             <a href="#features">Features</a>
             <a href="#showcase">App Showcase</a>
             <a href="privacy-policy.html">Privacy</a>
-            <div class="lang-switch">
-                <a href="index.html" class="active"><img src="references/flags/us.svg" alt="EN" style="width:100%; height:100%; border-radius:50%;"></a>
-                <a href="index-ru.html"><img src="references/flags/ru.svg" alt="RU" style="width:100%; height:100%; border-radius:50%;"></a>
-            </div>
         </div>
     </nav>
 
@@ -332,7 +267,9 @@
         </div>
     </section>
 
-
+    <!-- Decorative Elements -->
+    <img src="references/hubble.jpg" id="hubble" class="deco-bg" alt="Hubble">
+    <img src="references/saturn.jpg" id="saturn" class="deco-bg" alt="Saturn">
 
     <section id="features" class="features">
         <h2>Unmatched Coverage</h2>
@@ -358,17 +295,17 @@
     <section id="showcase" class="showcase">
         <h2>App Showcase</h2>
         <div class="showcase-container">
-            <div class="carousel">
-                <div class="carousel-track">
-                    <div class="carousel-slide"><img src="light-images/light-about.png" alt="About - Light"></div>
-                    <div class="carousel-slide"><img src="dark-images/dark-about.png" alt="About - Dark"></div>
-                    <div class="carousel-slide"><img src="light-images/light-details.png" alt="Details - Light"></div>
-                    <div class="carousel-slide"><img src="dark-images/dark-details.png" alt="Details - Dark"></div>
-                    <div class="carousel-slide"><img src="light-images/light-search.png" alt="Search - Light"></div>
-                    <div class="carousel-slide"><img src="dark-images/dark-search.png" alt="Search - Dark"></div>
-                </div>
-                <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+            <!-- Light Mode -->
+            <div class="screenshot-box">
+                <h3>Light Mode</h3>
+                <img src="light-images/light-about.png" alt="App About Screen - Light Mode">
+                <p>Clean, readable interface for daytime exploration.</p>
+            </div>
+            <!-- Dark Mode -->
+            <div class="screenshot-box">
+                <h3>Dark Mode</h3>
+                <img src="dark-images/dark-about.png" alt="App About Screen - Dark Mode">
+                <p>Immersive, deep-space aesthetic for night viewing.</p>
             </div>
         </div>
     </section>
@@ -381,35 +318,20 @@
         </div>
         <div class="contact-info">
             <p>&copy; 2026 Spaceflight News Explorer. All rights reserved.</p>
-            <p>Contact: <a href="mailto:java.ul@gmail.com">java.ul@gmail.com</a>></p>
+            <p>Contact: <a href="mailto:java.ul@gmail.com">java.ul@gmail.com</a></p>
         </div>
     </footer>
 
     <script>
-        const track = document.querySelector('.carousel-track');
-        const slides = Array.from(track.children);
-        const nextButton = document.querySelector('.carousel-next');
-        const prevButton = document.querySelector('.carousel-prev');
-        let currentIndex = 0;
-
-        function updateCarousel() {
-            track.style.transform = `translateX(-${currentIndex * 100}%)`;
-        }
-
-        nextButton.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % slides.length;
-            updateCarousel();
+        // Subtle parallax effect for decorative elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hubble = document.getElementById('hubble');
+            const saturn = document.getElementById('saturn');
+            
+            hubble.style.transform = `translateY(${scrolled * 0.1}px)`;
+            saturn.style.transform = `translateY(-${scrolled * 0.15}px)`;
         });
-
-        prevButton.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-            updateCarousel();
-        });
-
-        setInterval(() => {
-            nextButton.click();
-        }, 5000);
     </script>
 </body>
-
 </html>
