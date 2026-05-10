@@ -109,7 +109,18 @@
             opacity: 1;
             border-color: var(--accent-color);
         }
- 
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .nav-brand {
+                justify-content: space-between;
+                width: 100%;
+            }
+        }
+
         @media (max-width: 600px) {
             h1 { font-size: 1.8rem; }
             .policy-card { padding: 20px; }
@@ -118,12 +129,18 @@
 </head>
 <body>
 
-    <header style="position: relative;">
-        <div style="position: absolute; top: 20px; right: 20px;" class="lang-switch">
-            <a href="privacy-policy.html" class="active"><img src="references/flags/us.svg" alt="EN" style="width:100%; height:100%; border-radius:50%;"></a>
-            <a href="privacy-policy-ru.html"><img src="references/flags/ru.svg" alt="RU" style="width:100%; height:100%; border-radius:50%;"></a>
+    <header style="position: relative; padding: 60px 20px; text-align: center; background: linear-gradient(to bottom, #0a1931, var(--bg-dark));">
+        <div class="nav-brand" style="position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" class="logo" style="display: flex; align-items: center; text-decoration: none; color: var(--text-light);">
+                <img src="references/icon.png" alt="SpaceNews Logo" style="height: 40px; margin-right: 15px;">
+                <span>Spaceflight News</span>
+            </a>
+            <div class="lang-switch">
+                <a href="privacy-policy.html" class="active"><img src="references/flags/us.svg" alt="EN" style="width:100%; height:100%; border-radius:50%;"></a>
+                <a href="privacy-policy-ru.html"><img src="references/flags/ru.svg" alt="RU" style="width:100%; height:100%; border-radius:50%;"></a>
+            </div>
         </div>
-        <h1>Privacy Policy</h1>
+        <h1 style="margin-top: 40px;">Privacy Policy</h1>
         <p>Spaceflight News Explorer</p>
     </header>
 

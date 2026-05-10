@@ -146,6 +146,17 @@
             border-color: var(--accent-color);
         }
 
+        .nav-brand {
+            display: flex;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .nav-brand {
+                justify-content: space-between;
+                width: 100%;
+            }
+        }
+
         .features {
             padding: 100px 20px;
             text-align: center;
@@ -310,18 +321,20 @@
 <body>
 
     <nav>
-        <a href="index.html" class="logo">
-            <img src="references/icon.png" alt="SpaceNews Logo">
-            <span>Spaceflight News</span>
-        </a>
-            <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#showcase">App Showcase</a>
-            <a href="privacy-policy.html">Privacy</a>
+        <div class="nav-brand">
+            <a href="index.html" class="logo">
+                <img src="references/icon.png" alt="SpaceNews Logo">
+                <span>Spaceflight News</span>
+            </a>
             <div class="lang-switch">
                 <a href="index.html" class="active"><img src="references/flags/us.svg" alt="EN" style="width:100%; height:100%; border-radius:50%;"></a>
                 <a href="index-ru.html"><img src="references/flags/ru.svg" alt="RU" style="width:100%; height:100%; border-radius:50%;"></a>
             </div>
+        </div
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#showcase">App Showcase</a>
+            <a href="privacy-policy.html">Privacy</a>
         </div>
     </nav>
 
