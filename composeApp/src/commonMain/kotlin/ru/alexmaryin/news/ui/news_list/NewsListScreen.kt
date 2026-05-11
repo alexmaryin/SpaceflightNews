@@ -54,7 +54,7 @@ fun NewsListScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             Row(
-                modifier = Modifier.fillMaxWidth().systemBarsPadding()
+                modifier = Modifier.fillMaxWidth().statusBarsPadding()
                     .background(MaterialTheme.colorScheme.primaryContainer),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {

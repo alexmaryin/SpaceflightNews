@@ -20,14 +20,20 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.ImageLoader
 import coil3.compose.rememberAsyncImagePainter
-import coil3.util.Logger
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 import spaceflightnews.composeapp.generated.resources.Res
 import spaceflightnews.composeapp.generated.resources.image_placeholder
 
 @Composable
-fun ArticleImage(isCompact: Boolean = false, url: String, title: String) {
+fun ArticleImage(
+    isCompact: Boolean = false,
+    url: String,
+    title: String,
+    imageLoader: ImageLoader = koinInject()
+) {
     val modifier = if (isCompact) Modifier.fillMaxWidth() else Modifier.width(200.dp)
     Box(
         modifier = modifier.padding(16.dp),
@@ -38,6 +44,7 @@ fun ArticleImage(isCompact: Boolean = false, url: String, title: String) {
         }
         val painter = rememberAsyncImagePainter(
             model = url,
+            imageLoader = imageLoader,
             onSuccess = {
                 imageLoadResult =
                     if (it.painter.intrinsicSize.width > 1 && it.painter.intrinsicSize.height > 1) {

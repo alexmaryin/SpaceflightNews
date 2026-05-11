@@ -22,12 +22,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
+import coil3.ImageLoader
 import coil3.compose.rememberAsyncImagePainter
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 import ru.alexmaryin.core.ui.components.FavouriteGradient
 import ru.alexmaryin.core.ui.components.TintedTitle
 import ru.alexmaryin.core.ui.components.VerticalGradient
-import ru.alexmaryin.news.ui.article_details.ImageAnimation
 import spaceflightnews.composeapp.generated.resources.Res
 import spaceflightnews.composeapp.generated.resources.back_button
 import spaceflightnews.composeapp.generated.resources.favourite_button
@@ -39,7 +40,8 @@ fun ArticleHeader(
     isFavourite: Boolean,
     scrollState: ScrollState,
     onBackClick: () -> Unit,
-    onFavouriteClick: () -> Unit
+    onFavouriteClick: () -> Unit,
+    imageLoader: ImageLoader = koinInject()
 ) {
     val scrollRangePx = with(LocalDensity.current) { ImageAnimation.scrollRange.toPx() }
     val scrollOffset = scrollState.value.toFloat().coerceIn(0f, scrollRangePx)
@@ -66,6 +68,7 @@ fun ArticleHeader(
         }
         val painter = rememberAsyncImagePainter(
             model = imageUrl,
+            imageLoader = imageLoader,
             onSuccess = {
                 imageLoadResult =
                     if (it.painter.intrinsicSize.width > 1 && it.painter.intrinsicSize.height > 1) {
@@ -131,4 +134,12 @@ fun ArticleHeader(
             )
         }
     }
+}
+
+
+object ImageAnimation {
+    val minHeight = 50.dp   // height of collapsed article image
+    val maxHeight = 400.dp  // initial height of article image
+    val maxBlur = 20.dp     // blur radius for collapsed image
+    val scrollRange = 600.dp // scroll sensitivity for collapsing
 }
