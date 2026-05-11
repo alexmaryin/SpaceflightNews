@@ -1,8 +1,7 @@
 package ru.alexmaryin.di
 
-import android.content.Context
-import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.cio.CIO
+import io.ktor.client.engine.*
+import io.ktor.client.engine.cio.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module

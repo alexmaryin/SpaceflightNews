@@ -6,6 +6,10 @@ import platform.UIKit.UIApplication
 actual class UriHandler {
     actual fun openUrl(url: String) {
         val nsUrl = NSURL.URLWithString(url) ?: return
-        UIApplication.sharedApplication.openURL(nsUrl)
+        UIApplication.sharedApplication.openURL(
+            nsUrl,
+            options = mapOf<Any?, Any?>(),
+            completionHandler = null
+        )
     }
 }

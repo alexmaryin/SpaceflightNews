@@ -1,5 +1,6 @@
 package ru.alexmaryin.di
 
+import coil3.PlatformContext
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
 import org.koin.core.module.Module
@@ -10,6 +11,7 @@ import ru.alexmaryin.news.data.local_api.database.ArticlesDbFactory
 actual val platformModule: Module
     get() = module {
         single<HttpClientEngine> { CIO.create() }
+        single<PlatformContext> { PlatformContext.INSTANCE }
         single<ArticlesDbFactory> { ArticlesDbFactory() }
         single { UriHandler() }
     }
