@@ -44,6 +44,7 @@ kotlin {
         }
         iosMain.dependencies {
             implementation(libs.ktor.darwin)
+            implementation(libs.coil.network)
         }
         commonMain.dependencies {
             implementation("org.jetbrains.compose.runtime:runtime:1.10.3")
