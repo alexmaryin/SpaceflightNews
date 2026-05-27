@@ -36,7 +36,7 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.10.3")
+            implementation(libs.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
             implementation(libs.androidx.browser)
@@ -47,14 +47,14 @@ kotlin {
             implementation(libs.coil.network)
         }
         commonMain.dependencies {
-            implementation("org.jetbrains.compose.runtime:runtime:1.10.3")
-            implementation("org.jetbrains.compose.foundation:foundation:1.10.3")
-            implementation("org.jetbrains.compose.material3:material3:1.9.0")
+            implementation(libs.runtime)
+            implementation(libs.foundation)
+            implementation(libs.material3)
             implementation(libs.material.icons)
-            implementation("org.jetbrains.compose.material3:material3-adaptive-navigation-suite:1.9.0")
-            implementation("org.jetbrains.compose.ui:ui:1.10.3")
-            implementation("org.jetbrains.compose.components:components-resources:1.10.3")
-            implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.10.3")
+            implementation(libs.material3.adaptive.navigation.suite)
+            implementation(libs.ui)
+            implementation(libs.components.resources)
+            implementation(libs.ui.tooling.preview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.androidx.paging.common)
@@ -123,7 +123,7 @@ android {
 }
 
 dependencies {
-    debugImplementation("org.jetbrains.compose.ui:ui-tooling:1.10.3")
+    debugImplementation(libs.ui.tooling.preview)
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspJvm", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
