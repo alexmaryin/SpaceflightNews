@@ -76,6 +76,7 @@ coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref 
 coil-network = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
 coil-android = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 
+
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "androidx-browser" }
 
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }

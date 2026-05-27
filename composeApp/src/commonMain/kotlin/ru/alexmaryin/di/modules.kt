@@ -2,6 +2,7 @@ package ru.alexmaryin.di
 
 import androidx.paging.PagingSource
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import coil3.ImageLoader
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -29,6 +30,8 @@ val sharedModule = module {
     single { HttpClientFactory.create(get()) }
     singleOf(::DefaultRemoteNewsDataSource).bind<RemoteNewsDataSource>()
     singleOf(::DefaultSpaceNewsRepository).bind<SpaceNewsRepository>()
+
+    single<ImageLoader> { createImageLoader(get()) }
 
     single<ArticlesDatabase> {
         get<ArticlesDbFactory>().create()

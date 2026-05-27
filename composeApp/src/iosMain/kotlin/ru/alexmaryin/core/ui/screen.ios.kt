@@ -14,8 +14,8 @@ actual fun rememberScreenSizeInfo(): ScreenSizeInfo {
     val density = LocalDensity.current.density
     return remember(containerSize, density) {
         ScreenSizeInfo(
-            widthDp = (containerSize.width * density).dp,
-            heightDp = (containerSize.height * density).dp
+            widthDp = (containerSize.width / density).dp,
+            heightDp = (containerSize.height / density).dp
         )
     }
 }

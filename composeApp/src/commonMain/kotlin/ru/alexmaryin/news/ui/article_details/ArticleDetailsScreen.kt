@@ -1,13 +1,7 @@
 package ru.alexmaryin.news.ui.article_details
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -37,13 +31,6 @@ fun ArticlesDetailsScreenRoot(
             }
         }
     )
-}
-
-object ImageAnimation {
-    val minHeight = 50.dp   // height of collapsed article image
-    val maxHeight = 400.dp  // initial height of article image
-    val maxBlur = 20.dp     // blur radius for collapsed image
-    val scrollRange = 300.dp // scroll sensitivity for collapsing
 }
 
 @OptIn(ExperimentalLayoutApi::class)

@@ -1,6 +1,6 @@
 # [SpaceNews Explorer](https://sites.google.com/view/spacenews-explorer "official site")
 
-#### ![cmp_logo](https://github.com/alexmaryin/SpaceflightNews/blob/master/cmp_logo.png "cmp_logo") Compose multiplatform application for Android & Desktop
+#### ![cmp_logo](https://github.com/alexmaryin/SpaceflightNews/blob/master/cmp_logo.png "cmp_logo") Compose multiplatform application for Android, Desktop & iOS
 
 ## Now available on Google Play: https://play.google.com/store/apps/details?id=ru.alexmaryin.spacenewsexplorer
 
