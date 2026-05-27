@@ -74,7 +74,7 @@
 				8CD865789FFD57A0949C9695 /* Compile Kotlin Framework */,
 				046995E8626A152709D1804C /* Sources */,
 				84D044FC8E355567EE547F96 /* Frameworks */,
-				5ADFC9F6C1C11B6B30C838BC /* Resources */
+				5ADFC9F6C1C11B6B30C838BC /* Resources */,
 			);
 			buildRules = (
 			);
