@@ -39,4 +39,5 @@
 - **No test suite exists** — any new code should include tests.
 - **Release signing** uses the debug signing config (`isMinifyEnabled = true`, `isShrinkResources = true`). Not production-ready signing.
 - `-Xexpect-actual-classes` compiler flag is set. Expect/actual pattern is used for platform-specific implementations (e.g., DataStore, screen utils, DateTime).
+- **iOS screen size**: `ScreenSizeInfo` on iOS converts pixels to dp by **dividing** by density (`px / density`). Multiplying produces incorrect widths that break compact layout detection.
 - No CI, no pre-commit hooks, no lint/typecheck scripts beyond Gradle's built-in checks.
